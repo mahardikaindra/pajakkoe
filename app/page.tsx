@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
@@ -149,7 +150,7 @@ const Navbar = ({ onConsult }: any) => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({top:0, behavior:'smooth'})}>
+          <div className="shrink-0 flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({top:0, behavior:'smooth'})}>
             <FileText className="text-brand-blue w-8 h-8" />
             <span className="font-bold text-xl text-slate-800">Pajak!Koe</span>
           </div>
@@ -231,7 +232,7 @@ const ChatBubble = ({ sender, text, time, image }: { sender: string; text: strin
 };
 
 const WhatsAppMockup = () => (
-  <div className="relative mx-auto w-full max-w-[320px] bg-slate-900 rounded-[35px] border-[8px] border-slate-900 shadow-2xl overflow-hidden">
+  <div className="relative mx-auto w-full max-w-[320px] bg-slate-900 rounded-[35px] border-8 border-slate-900 shadow-2xl overflow-hidden">
     {/* Screen Header */}
     <div className="bg-[#075E54] p-3 flex items-center gap-3 text-white">
       <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
@@ -568,7 +569,7 @@ const PricingCard = ({ data, onSelect }: { data: typeof PACKAGES[number]; onSele
     )}
     <div className="p-8 grow">
       <h3 className="text-xl font-bold text-slate-800">{data.name}</h3>
-      <p className="text-sm text-slate-500 mt-2 min-h-[40px]">{data.target}</p>
+      <p className="text-sm text-slate-500 mt-2 min-h-10">{data.target}</p>
       <div className="my-8">
         <span className="text-3xl font-bold text-slate-900">Rp {data.price}</span>
         <span className="text-slate-400 text-sm">{data.unit}</span>
@@ -576,7 +577,7 @@ const PricingCard = ({ data, onSelect }: { data: typeof PACKAGES[number]; onSele
       <ul className="space-y-4 text-slate-600 text-sm mb-8">
         {data.features.map((feat: any, i: number) => (
           <li key={i} className="flex items-start gap-3">
-            <Check className="text-green-500 w-5 h-5 flex-shrink-0" />
+            <Check className="text-green-500 w-5 h-5 shrink-0" />
             <span>{feat}</span>
           </li>
         ))}
