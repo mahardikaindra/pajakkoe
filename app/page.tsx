@@ -384,7 +384,7 @@ const App = () => {
                 <WhatsAppMockup />
                 
                 {/* Float Badge 1 */}
-                <div className="absolute -right-4 top-20 bg-white p-3 rounded-xl shadow-xl border border-slate-100 items-center gap-3 animate-bounce hidden md:flex">
+                {/* <div className="absolute -right-4 top-20 bg-white p-3 rounded-xl shadow-xl border border-slate-100 items-center gap-3 animate-bounce hidden md:flex">
                   <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600">
                     <Check size={20} strokeWidth={3} />
                   </div>
@@ -392,10 +392,10 @@ const App = () => {
                     <p className="text-xs text-slate-400 font-bold">Status</p>
                     <p className="text-sm font-bold text-slate-800">Aktif & Resmi!</p>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Float Badge 2 */}
-                 <div className="absolute -left-4 bottom-20 bg-white p-3 rounded-xl shadow-xl border border-slate-100 items-center gap-3 hidden md:flex">
+                 {/* <div className="absolute -left-4 bottom-20 bg-white p-3 rounded-xl shadow-xl border border-slate-100 items-center gap-3 hidden md:flex">
                   <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-brand-blue">
                     <ShieldCheck size={20} />
                   </div>
@@ -403,7 +403,7 @@ const App = () => {
                     <p className="text-xs text-slate-400 font-bold">Privasi</p>
                     <p className="text-sm font-bold text-slate-800">Tanpa Foto Utuh</p>
                   </div>
-                </div>
+                </div> */}
 
               </div>
               
