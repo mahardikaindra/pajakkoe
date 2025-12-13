@@ -3,6 +3,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { 
   FileText, 
   ShieldCheck, 
@@ -129,15 +130,8 @@ const WhatsAppIcon = ({ className }: any) => (
   </svg>
 );
 
-const Navbar = ({ onConsult }: any) => {
+const Navbar = ({ onConsult, scrolled }: any) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const scrollTo = (id: any) => {
     setIsOpen(false);
@@ -146,13 +140,19 @@ const Navbar = ({ onConsult }: any) => {
   };
 
   return (
+    // Navbar menyesuaikan warna saat di-scroll atau di atas banner gelap
     <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-sm py-2' : 'bg-transparent py-4'}`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="shrink-0 flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({top:0, behavior:'smooth'})}>
-            <FileText className="text-brand-blue w-8 h-8" />
-            <span className="font-bold text-xl text-slate-800">Pajak!Koe</span>
+          <div className="shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({top:0, behavior:'smooth'})}>
+            <Image src={scrolled ? "/images/logo.png" :"/images/logo-white.png"} alt="Pajak!Koe Logo" width={100} height={100} className="w-8 h-8" onError={(e: any) => { e.target.style.display='none'; }} />
+             {/* Fallback Icon if logo missing */}
+             <div className="w-8 h-8 bg-[#2c4f40] rounded flex items-center justify-center text-white ml-0" style={{display: 'none'}}>
+                <FileText size={18} />
+            </div>
+            {/* Warna teks logo berubah tergantung background/scroll */}
+            <span className={`ml-2 font-bold text-xl ${scrolled ? 'text-[#2c4f40]' : 'text-white'}`}>PAJAK!KOE</span>
           </div>
 
           {/* Desktop Menu */}
@@ -161,7 +161,7 @@ const Navbar = ({ onConsult }: any) => {
               <button 
                 key={item}
                 onClick={() => scrollTo(item.toLowerCase())}
-                className="text-slate-600 hover:text-brand-blue transition font-medium"
+                className={`${scrolled ? 'text-slate-600 hover:text-brand-blue' : 'text-slate-200 hover:text-white'} transition font-medium`}
               >
                 {item}
               </button>
@@ -172,11 +172,11 @@ const Navbar = ({ onConsult }: any) => {
           <div className="flex items-center gap-4">
             <button 
               onClick={() => onConsult('Umum')}
-              className="hidden md:block bg-blue-700 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 transition shadow-lg text-sm"
+              className={`hidden md:block px-5 py-2 rounded-full font-semibold transition shadow-lg text-sm ${scrolled ? 'bg-[#2c4f40] text-white hover:bg-[#223d32]' : 'bg-white text-[#2c4f40] hover:bg-slate-100'}`}
             >
               Konsultasi Gratis
             </button>
-            <button className="md:hidden text-slate-700" onClick={() => setIsOpen(!isOpen)}>
+            <button className={`${scrolled ? 'text-slate-700' : 'text-white'} md:hidden`} onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? <X /> : <Menu />}
             </button>
           </div>
@@ -275,6 +275,13 @@ const WhatsAppMockup = () => (
 // --- Main App Component ---
 
 const App = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   
   const handlePesanWA = (paket: string) => {
     const nomorWA = "6285600811256";
@@ -298,16 +305,6 @@ const App = () => {
         
         body { font-family: 'Poppins', sans-serif; }
         
-        .gradient-bg {
-          background: linear-gradient(135deg, #EFF6FF 0%, #FFFFFF 100%);
-        }
-        
-        .hero-pattern {
-          background-image: radial-gradient(#2563EB 0.5px, transparent 0.5px);
-          background-size: 20px 20px;
-          opacity: 0.1;
-        }
-        
         .animate-float {
           animation: float 6s ease-in-out infinite;
         }
@@ -329,21 +326,33 @@ const App = () => {
         }
       `}</style>
 
-      <Navbar onConsult={handlePesanWA} />
+      <Navbar onConsult={handlePesanWA} scrolled={scrolled} />
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 gradient-bg relative overflow-hidden min-h-screen flex items-center">
-        <div className="absolute inset-0 hero-pattern pointer-events-none"></div>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
+      {/* Hero Section with Full Background Image */}
+      <section className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden">
+        
+        {/* Background Image Container */}
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src={"/images/model.png"}
+            alt="Background Santai"
+            layout="fill"
+            objectFit="cover" 
+          />
+          {/* Overlay Gradient (Darker on left to make text readable) */}
+          <div className="absolute inset-0 bg-linear-to-r from-slate-900/95 via-slate-900/70 to-slate-900/30"></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             
-            {/* Left Content */}
+            {/* Left Content (Text) */}
             <div className="order-2 md:order-1 text-center md:text-left">
-              <span className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-green-200">
-                <Check size={14} /> Bayar Setelah Dokumen Jadi
+              <span className="inline-flex items-center gap-2 bg-[#2c4f40] text-white px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-green-500/30 shadow-lg">
+                <Check size={14} className="text-green-400" /> Bayar Setelah Dokumen Jadi
               </span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
-                Bikin NPWP Cuma <span className="text-brand-blue">30 Menit.</span> <br/>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 drop-shadow-lg">
+                Bikin NPWP Cuma <span className="text-green-400">30 Menit.</span> <br/>
                 Tanpa Bangun, <br/>
                 <span className="relative inline-block">
                   Tanpa Ribet.
@@ -352,64 +361,56 @@ const App = () => {
                   </svg>
                 </span>
               </h1>
-              <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
+              <p className="text-lg text-slate-200 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0 drop-shadow-md">
                 Hanya <strong>Rp 50.000</strong> sudah termasuk email resmi, aktivasi akun, dan kartu digital. Data aman tanpa perlu kirim foto dokumen utuh.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start bg-slate-50 border-t border-slate-100">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <button 
                   onClick={() => handlePesanWA('Paket Kilat 50rb')}
-                  className="bg-blue-700 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                  className="bg-green-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2 border border-green-400"
                 >
                   <WhatsAppIcon className="w-5 h-5" /> Pesan Sekarang (50rb)
                 </button>
                 <button 
                   onClick={() => document.getElementById('keunggulan')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-xl font-semibold hover:bg-slate-50 transition"
+                  className="bg-white/10 backdrop-blur-md text-white border border-white/30 px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition"
                 >
                   Lihat Info
                 </button>
               </div>
 
-              <div className="mt-8 flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-slate-500 font-medium">
-                <div className="flex items-center gap-1.5"><Clock className="text-orange-500 w-4 h-4" /> 30 Menit Jadi</div>
-                <div className="flex items-center gap-1.5"><ShieldCheck className="text-green-500 w-4 h-4" /> Privasi Aman</div>
-                <div className="flex items-center gap-1.5"><Wallet className="text-blue-500 w-4 h-4" /> Bayar Belakangan</div>
+              <div className="mt-8 flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-slate-300 font-medium">
+                <div className="flex items-center gap-1.5"><Clock className="text-orange-400 w-4 h-4" /> 30 Menit Jadi</div>
+                <div className="flex items-center gap-1.5"><ShieldCheck className="text-green-400 w-4 h-4" /> Privasi Aman</div>
+                <div className="flex items-center gap-1.5"><Wallet className="text-blue-400 w-4 h-4" /> Bayar Belakangan</div>
               </div>
             </div>
 
-            {/* Right Visual (Interactive WA Mockup) */}
-            <div className="order-1 md:order-2 relative flex justify-center items-center">
-              <div className="relative z-10 animate-float">
-                <WhatsAppMockup />
-                
-                {/* Float Badge 1 */}
-                {/* <div className="absolute -right-4 top-20 bg-white p-3 rounded-xl shadow-xl border border-slate-100 items-center gap-3 animate-bounce hidden md:flex">
+            {/* Right Visual (Interactive WA Mockup Only) */}
+            <div className="order-1 md:order-2 relative flex justify-center items-center h-[500px]">
+              <div className="relative w-full max-w-sm flex justify-center items-center">
+                {/* Floating WA Mockup */}
+                <div className="z-20 transform md:scale-100 animate-float drop-shadow-2xl">
+                   <WhatsAppMockup /> 
+                </div>
+
+                {/* Float Badge 1 (Status) */}
+                <div className="absolute -left-4 top-1/3 bg-white/90 backdrop-blur p-3 rounded-xl shadow-xl border border-white/50 flex items-center gap-3 animate-bounce hidden md:flex z-30">
                   <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600">
                     <Check size={20} strokeWidth={3} />
                   </div>
                   <div>
-                    <p className="text-xs text-slate-400 font-bold">Status</p>
-                    <p className="text-sm font-bold text-slate-800">Aktif & Resmi!</p>
+                    <p className="text-xs text-slate-500 font-bold">Status</p>
+                    <p className="text-sm font-bold text-slate-900">Aktif & Resmi!</p>
                   </div>
-                </div> */}
-
-                {/* Float Badge 2 */}
-                 {/* <div className="absolute -left-4 bottom-20 bg-white p-3 rounded-xl shadow-xl border border-slate-100 items-center gap-3 hidden md:flex">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-brand-blue">
-                    <ShieldCheck size={20} />
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-400 font-bold">Privasi</p>
-                    <p className="text-sm font-bold text-slate-800">Tanpa Foto Utuh</p>
-                  </div>
-                </div> */}
-
+                </div>
+                
+                {/* Decorative Blob */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-green-500 rounded-full blur-[100px] opacity-20 -z-10"></div>
               </div>
-              
-              {/* Decorative Elements */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-brand-blue rounded-full blur-[100px] opacity-20 -z-10"></div>
             </div>
+
           </div>
         </div>
       </section>
@@ -499,8 +500,8 @@ const App = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-6">
-              <FileText className="text-brand-blue w-6 h-6" />
-              <span className="font-bold text-2xl text-white">Pajak!Koe</span>
+              <Image src={"/images/logo-white.png"} alt="Pajak!Koe Logo" width={100} height={100} className="w-8 h-8" onError={(e: any) => { e.target.style.display='none'; }} />
+              <span className="font-bold text-2xl text-white">PAJAK!KOE</span>
             </div>
             <p className="text-slate-400 mb-8 max-w-sm leading-relaxed">
               Solusi NPWP instan 30 menit. Bayar setelah jadi, privasi aman.
@@ -525,7 +526,7 @@ const App = () => {
             <h4 className="font-bold text-white mb-6 text-lg">Kontak</h4>
             <ul className="space-y-4 text-slate-400">
               <li className="flex items-center gap-3"><WhatsAppIcon className="w-5 h-5" /> 0856-0081-1256</li>
-              <li className="flex items-center gap-3"><Mail className="w-5 h-5" /> halo@pajakkoe.id</li>
+              <li className="flex items-center gap-3"><Mail className="w-5 h-5" /> halo@pajakkoe.co.id</li>
               <li className="flex items-center gap-3"><Clock className="w-5 h-5" /> Senin - Sabtu, 09.00 - 17.00</li>
             </ul>
           </div>
