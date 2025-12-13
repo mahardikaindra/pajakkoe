@@ -19,7 +19,8 @@ import {
   Mail,
   Clock,
   Wallet,
-  Lock
+  Lock,
+  Send,
 } from 'lucide-react';
 
 // --- Data Constants ---
@@ -232,8 +233,7 @@ const ChatBubble = ({ sender, text, time, image }: { sender: string; text: strin
 };
 
 const WhatsAppMockup = () => (
-  <div className="relative mx-auto w-full max-w-[320px] bg-slate-900 rounded-[35px] border-8 border-slate-900 shadow-2xl overflow-hidden">
-    {/* Screen Header */}
+  <div className="relative mx-auto w-full max-w-[300px] bg-slate-900 rounded-[30px] border-8 border-slate-900 shadow-2xl overflow-hidden">
     <div className="bg-[#075E54] p-3 flex items-center gap-3 text-white">
       <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
         <FileText size={16} />
@@ -243,14 +243,8 @@ const WhatsAppMockup = () => (
         <p className="text-[10px] text-green-100">Online</p>
       </div>
     </div>
-    
-    {/* Chat Area */}
-    <div className="bg-[#e5ddd5] h-[500px] p-4 overflow-y-auto flex flex-col relative">
-      {/* Background Pattern Mock */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none" 
-           style={{backgroundImage: 'radial-gradient(#4a5568 1px, transparent 1px)', backgroundSize: '20px 20px'}}>
-      </div>
-      
+    <div className="bg-[#e5ddd5] h-[400px] p-4 overflow-y-auto flex flex-col relative">
+      <div className="absolute inset-0 opacity-5 pointer-events-none" style={{backgroundImage: 'radial-gradient(#4a5568 1px, transparent 1px)', backgroundSize: '20px 20px'}}></div>
       <div className="z-10">
         <ChatBubble sender="user" text="Min, mau bikin NPWP dong. Mager bangun nih, bisa?" time="09:00" image={undefined} />
         <ChatBubble sender="admin" text="Bisa banget kak! Cuman 30 menit jadi kok. Santai aja." time="09:01" image={undefined} />
@@ -260,12 +254,10 @@ const WhatsAppMockup = () => (
         <ChatBubble sender="user" text="Wih cepet banget! Oke aku transfer 50rb nya ya." time="09:32" image={undefined} />
       </div>
     </div>
-    
-    {/* Input Area Mock */}
     <div className="bg-slate-100 p-2 flex items-center gap-2">
       <div className="bg-white grow rounded-full h-8 px-3 text-xs flex items-center text-slate-400">Ketik pesan...</div>
       <div className="w-8 h-8 bg-[#00897b] rounded-full flex items-center justify-center text-white">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+        <Send size={16} />
       </div>
     </div>
   </div>
@@ -394,7 +386,18 @@ const App = () => {
                 {/* Floating WA Mockup */}
                 <div className="z-20 transform md:scale-100 animate-float drop-shadow-2xl">
                    <WhatsAppMockup /> 
+                </div>                
+                {/* Float Badge 2 (Fast Service) */}
+                <div className="absolute -right-4 bottom-1/4 bg-white/90 backdrop-blur p-3 rounded-xl shadow-xl border border-white/50 flex items-center gap-3 animate-bounce hidden md:flex z-30">
+                  <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600">
+                    <Clock size={20} strokeWidth={3} />
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 font-bold">Waktu Proses</p>
+                    <p className="text-sm font-bold text-slate-900">30 Menit Jadi!</p>
+                  </div>
                 </div>
+
 
                 {/* Float Badge 1 (Status) */}
                 <div className="absolute -left-4 top-1/3 bg-white/90 backdrop-blur p-3 rounded-xl shadow-xl border border-white/50 flex items-center gap-3 animate-bounce hidden md:flex z-30">

@@ -2,40 +2,52 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { 
-  Check, 
-  ArrowLeft,
-  User,
-  Phone,
-  Send,
-  Briefcase,
-  Building2
+  Check, ArrowLeft, User, Phone, 
+  Upload, Send, Briefcase, Building2, ImageIcon 
 } from 'lucide-react';
 
+import { 
+  collection, 
+  addDoc, 
+  serverTimestamp 
+} from "firebase/firestore";
+// import { 
+//   ref, 
+//   uploadBytes, 
+//   getDownloadURL 
+// } from "firebase/storage";
+import { db } from '../../firebase';
+
+const appId = process.env.NEXT_PUBLIC_APP_ID || 'default-app-id';
+
 const OrderForm = () => {
-
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyTdXU3FfszuvkBZrs0rgtMowEgMk1rmjDAShHnmUkiwM52a9PBg6V7E3cR3f9VtWvFg/exec";
-
   // State untuk data form
   const [formData, setFormData] = useState({
     nama: '',
-    namaBadan: '', // Khusus Badan Usaha
-    bentukBadan: 'PT', // Khusus Badan Usaha
-    jabatan: '', // Khusus Badan Usaha
-    pekerjaan: '', // Khusus Freelancer
+    namaBadan: '', 
+    bentukBadan: 'PT', 
+    jabatan: '', 
+    pekerjaan: '', 
     nik: '',
     noWa: '',
     alamat: '',
     paket: '',
     kategori: 'pribadi', // 'pribadi', 'freelance', 'badan'
     fotoKtp: null,
-    fotoAkta: null // Khusus Badan Usaha
+    fotoAkta: null 
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [previews, setPreviews] = useState({
+    fotoKtp: null,
+    fotoAkta: null
+  });
 
-  // Mengambil parameter dari URL
+  // 1. Mengambil parameter dari URL
   useEffect(() => {
     const getParams = () => {
       if (typeof window !== 'undefined') {
@@ -43,7 +55,6 @@ const OrderForm = () => {
         const paketParam = params.get('paket'); 
         const waParam = params.get('wa');
         
-        // Tentukan Kategori berdasarkan Paket
         let kategoriOtomatis = 'pribadi';
         let namaPaket = '';
 
@@ -72,15 +83,13 @@ const OrderForm = () => {
     getParams();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     
-    // Logika khusus jika user mengganti paket secara manual di dropdown
     if (name === 'paket') {
         let kategoriBaru = 'pribadi';
         if (value.includes('Freelancer')) kategoriBaru = 'freelance';
         if (value.includes('Badan')) kategoriBaru = 'badan';
-        
         setFormData(prev => ({ ...prev, [name]: value, kategori: kategoriBaru }));
     } else {
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -88,57 +97,80 @@ const OrderForm = () => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: string) => {
-    if (e.target.files?.[0]) {
-      setFormData(prev => ({ ...prev, [fieldName]: e.target.files![0] }));
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setFormData(prev => ({ ...prev, [fieldName]: file }));
+
+      // Buat URL preview
+      if (file.type.startsWith('image/')) {
+          const url = URL.createObjectURL(file);
+          setPreviews(prev => ({ ...prev, [fieldName]: url }));
+      } else {
+          // Jika bukan gambar (misal PDF), kosongkan preview visual
+          setPreviews(prev => ({ ...prev, [fieldName]: null }));
+      }
     }
   };
-  
-  // Helper untuk konversi file ke Base64 string agar bisa dikirim via JSON
-  const toBase64 = (file: File | null) => new Promise((resolve, reject) => {
-    if (!file) return resolve("");
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
 
+  // 2. Handle Submit ke Firebase (Tanpa Auth)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage('');
 
     try {
-        // 1. Konversi file gambar ke string base64
-        const fotoKtpBase64 = await toBase64(formData.fotoKtp);
-        const fotoAktaBase64 = await toBase64(formData.fotoAkta);
+        // let ktpUrl = null;
+        // let aktaUrl = null;
+        
+        // Buat ID unik sementara untuk folder karena tidak ada User ID
+        // Kita gunakan Nomor WA + Timestamp agar unik
+        const uniqueId = `${formData.noWa.replace(/\D/g,'')}_${Date.now()}`;
 
-        // 2. Siapkan payload data
-        // Catatan: Google Apps Script akan menerima ini sebagai text/string
-        const payload = {
-            timestamp: new Date().toLocaleString('id-ID'),
-            ...formData,
-            fotoKtp: fotoKtpBase64 ? "Ada File (Base64)" : "Tidak ada", // Mengirim string base64 penuh bisa berat, kirim indikator atau sesuaikan script backend
-            fotoAkta: fotoAktaBase64 ? "Ada File (Base64)" : "Tidak ada",
-            // Jika ingin mengirim file aslinya, Google Apps Script harus dikonfigurasi khusus untuk menangani base64 upload ke Drive
-        };
+        // A. Upload KTP ke Firebase Storage
+        if (formData.fotoKtp) {
+            // Path: uploads/{uniqueId}/ktp_{namafile}
+            // const ktpRef = ref(storage, `uploads/${uniqueId}/ktp_${(formData.fotoKtp as File).name}`);
+            // await uploadBytes(ktpRef, formData.fotoKtp);
+            // ktpUrl = await getDownloadURL(ktpRef);
+        }
 
-        // 3. Kirim ke Google Apps Script
-        // mode: 'no-cors' digunakan untuk menghindari error CORS browser saat hit Google Script
-        await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', 
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload)
+        // B. Upload Akta ke Firebase Storage (Jika ada)
+        if (formData.fotoAkta) {
+            // const aktaRef = ref(storage, `uploads/${uniqueId}/akta_${(formData.fotoAkta as File).name}`);
+            // await uploadBytes(aktaRef, formData.fotoAkta);
+            // aktaUrl = await getDownloadURL(aktaRef);
+        }
+
+        // C. Simpan Data Pesanan ke Firestore
+        // UNTUK LOKAL: Gunakan collection(db, 'orders')
+        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'orders'), {
+            submissionId: uniqueId, // Pengganti User ID
+            nama: formData.nama,
+            noWa: formData.noWa,
+            paket: formData.paket,
+            kategori: formData.kategori,
+            nik: formData.nik,
+            alamat: formData.alamat,
+            pekerjaan: formData.pekerjaan || '-',
+            namaBadan: formData.namaBadan || '-',
+            bentukBadan: formData.bentukBadan || '-',
+            jabatan: formData.jabatan || '-',
+            fotoKtpUrl: 'Tidak ada', //ktpUrl || 'Tidak ada',
+            fotoAktaUrl: 'Tidak ada', //aktaUrl || 'Tidak ada',
+            createdAt: serverTimestamp(),
+            status: 'Baru'
         });
 
-        // Karena no-cors, kita asumsikan sukses jika fetch tidak error network
-        setIsSubmitting(false);
         setIsSuccess(true);
+        setIsSubmitting(false);
 
     } catch (error) {
         console.error("Error submitting form:", error);
-        alert("Terjadi kesalahan saat mengirim data. Silakan hubungi admin via WA.");
+        let msg = (error as Error)?.message;
+        if (msg.includes("permission-denied")) {
+            msg = "Izin ditolak. Pastikan Security Rules Firestore & Storage diatur ke 'allow read, write: if true;'";
+        }
+        setErrorMessage("Gagal mengirim data: " + msg);
         setIsSubmitting(false);
     }
   };
@@ -152,7 +184,7 @@ const OrderForm = () => {
           </div>
           <h2 className="text-2xl font-bold text-slate-800 mb-2">Data Diterima!</h2>
           <p className="text-slate-600 mb-6">
-            Terima kasih. Data untuk <strong>{formData.paket}</strong> telah kami terima. Tim kami akan segera menghubungi Anda di <strong>{formData.noWa}</strong>.
+            Terima kasih. Data & Dokumen untuk <strong>{formData.paket}</strong> telah tersimpan aman. Tim kami akan segera menghubungi Anda di <strong>{formData.noWa}</strong>.
           </p>
           <button onClick={() => window.location.href = '/'} className="bg-[#2c4f40] text-white px-6 py-3 rounded-xl font-bold w-full hover:bg-[#223d32] transition">
             Kembali ke Beranda
@@ -187,6 +219,11 @@ const OrderForm = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="p-6 space-y-5">
+            {errorMessage && (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <span className="block sm:inline">{errorMessage}</span>
+                </div>
+            )}
             
             {/* 1. Pilih Paket */}
             <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
@@ -242,7 +279,7 @@ const OrderForm = () => {
                         <div>
                             <label className="block text-sm font-semibold text-slate-700 mb-2">Upload Akta (Opsional)</label>
                             <div className="relative">
-                                <input type="file" onChange={(e) => handleFileChange(e, 'fotoAkta')} className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+                                <input type="file" onChange={(e) => handleFileChange(e, 'fotoAkta')} className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" accept="image/*,application/pdf"/>
                             </div>
                         </div>
                     </div>
@@ -254,6 +291,30 @@ const OrderForm = () => {
                 <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
                     {formData.kategori === 'badan' ? 'Data Penanggung Jawab' : 'Data Pribadi'}
                 </h3>
+
+                {/* Upload KTP */}
+                <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Foto KTP</label>
+                    <div className="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center cursor-pointer hover:bg-slate-50 transition relative">
+                         <input type="file" onChange={(e) => handleFileChange(e, 'fotoKtp')} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*" required={formData.kategori !== 'badan'} />
+                         {previews.fotoKtp ? (
+                            <div className="relative w-full h-48">
+                                <Image src={previews.fotoKtp} alt="Preview KTP" fill className="object-contain" />
+                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                                    <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-bold flex items-center gap-2">
+                                        <ImageIcon size={16} /> Ganti Foto
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center py-4">
+                                <Upload className="w-8 h-8 text-slate-400 mb-2" />
+                                <p className="text-sm font-medium text-slate-600">Klik untuk upload foto KTP</p>
+                                <p className="text-xs text-slate-400 mt-1">Format JPG/PNG, Max 2MB</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
 
                 {/* Nama Lengkap */}
                 <div>
@@ -297,10 +358,16 @@ const OrderForm = () => {
                     <label className="block text-sm font-semibold text-slate-700 mb-2">Alamat Lengkap</label>
                     <textarea name="alamat" value={formData.alamat} onChange={handleChange} placeholder="Jalan, RT/RW, Kelurahan, Kecamatan" rows={2} className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#2c4f40] outline-none resize-none" required></textarea>
                 </div>
+
+                
             </div>
 
-            <button type="submit" disabled={isSubmitting} className="w-full bg-[#2c4f40] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#223d32] transition shadow-lg flex items-center justify-center gap-2 mt-4">
-              {isSubmitting ? 'Memproses...' : <><Send size={20} /> Kirim Data</>}
+            <button type="submit" disabled={isSubmitting} className="w-full bg-[#2c4f40] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#223d32] transition shadow-lg flex items-center justify-center gap-2 mt-4 disabled:opacity-50 disabled:cursor-not-allowed">
+              {isSubmitting ? (
+                <span>Mengirim...</span>
+              ) : (
+                <><Send size={20} /> Kirim Data</>
+              )}
             </button>
             
           </form>
