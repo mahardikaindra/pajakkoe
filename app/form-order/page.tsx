@@ -13,6 +13,9 @@ import {
 } from 'lucide-react';
 
 const OrderForm = () => {
+
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJoOmJxZKAhDvoIxBEaxIurtGykwiwNusLRl5NUp468eK0yrmnr1DVOxeyB_ccG-eCEA/exec";
+
   // State untuk data form
   const [formData, setFormData] = useState({
     nama: '',
@@ -89,15 +92,55 @@ const OrderForm = () => {
       setFormData(prev => ({ ...prev, [fieldName]: e.target.files![0] }));
     }
   };
+  
+  // Helper untuk konversi file ke Base64 string agar bisa dikirim via JSON
+  const toBase64 = (file: File | null) => new Promise((resolve, reject) => {
+    if (!file) return resolve("");
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulasi kirim data
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 2000);
+
+    try {
+        // 1. Konversi file gambar ke string base64
+        const fotoKtpBase64 = await toBase64(formData.fotoKtp);
+        const fotoAktaBase64 = await toBase64(formData.fotoAkta);
+
+        // 2. Siapkan payload data
+        // Catatan: Google Apps Script akan menerima ini sebagai text/string
+        const payload = {
+            timestamp: new Date().toLocaleString('id-ID'),
+            ...formData,
+            fotoKtp: fotoKtpBase64 ? "Ada File (Base64)" : "Tidak ada", // Mengirim string base64 penuh bisa berat, kirim indikator atau sesuaikan script backend
+            fotoAkta: fotoAktaBase64 ? "Ada File (Base64)" : "Tidak ada",
+            // Jika ingin mengirim file aslinya, Google Apps Script harus dikonfigurasi khusus untuk menangani base64 upload ke Drive
+        };
+
+        // 3. Kirim ke Google Apps Script
+        // mode: 'no-cors' digunakan untuk menghindari error CORS browser saat hit Google Script
+        await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', 
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        });
+
+        // Karena no-cors, kita asumsikan sukses jika fetch tidak error network
+        setIsSubmitting(false);
+        setIsSuccess(true);
+
+    } catch (error) {
+        console.error("Error submitting form:", error);
+        alert("Terjadi kesalahan saat mengirim data. Silakan hubungi admin via WA.");
+        setIsSubmitting(false);
+    }
   };
 
   if (isSuccess) {
