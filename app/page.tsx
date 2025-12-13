@@ -284,7 +284,8 @@ const App = () => {
   }, []);
   
   const handlePesanWA = (paket: string) => {
-    const nomorWA = "6285600811256";
+    // const nomorWA = "6285600811256";
+    const nomorWA = "6282240072717";
     let pesan = "";
     
     if (paket === 'Tanya-tanya' || paket === 'Umum') {
