@@ -14,7 +14,7 @@ import {
 
 const OrderForm = () => {
 
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJoOmJxZKAhDvoIxBEaxIurtGykwiwNusLRl5NUp468eK0yrmnr1DVOxeyB_ccG-eCEA/exec";
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyTdXU3FfszuvkBZrs0rgtMowEgMk1rmjDAShHnmUkiwM52a9PBg6V7E3cR3f9VtWvFg/exec";
 
   // State untuk data form
   const [formData, setFormData] = useState({
