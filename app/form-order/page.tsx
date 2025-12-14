@@ -32,10 +32,12 @@ const OrderForm = () => {
     pekerjaan: '', 
     nik: '',
     noWa: '',
+    nokk: '',
     alamat: '',
     paket: '',
     kategori: 'pribadi', // 'pribadi', 'freelance', 'badan'
     fotoKtp: null,
+    fotoKK: null,
     fotoAkta: null 
   });
 
@@ -120,6 +122,7 @@ const OrderForm = () => {
 
     try {
         // let ktpUrl = null;
+        // let kkUrl = null;
         // let aktaUrl = null;
         
         // Buat ID unik sementara untuk folder karena tidak ada User ID
@@ -132,6 +135,12 @@ const OrderForm = () => {
             // const ktpRef = ref(storage, `uploads/${uniqueId}/ktp_${(formData.fotoKtp as File).name}`);
             // await uploadBytes(ktpRef, formData.fotoKtp);
             // ktpUrl = await getDownloadURL(ktpRef);
+        }
+
+        if (formData.fotoKK) {
+            // const kkRef = ref(storage, `uploads/${uniqueId}/kk_${(formData.fotoKK as File).name}`);
+            // await uploadBytes(kkRef, formData.fotoKK);
+            // kkUrl = await getDownloadURL(kkRef);
         }
 
         // B. Upload Akta ke Firebase Storage (Jika ada)
@@ -150,12 +159,14 @@ const OrderForm = () => {
             paket: formData.paket,
             kategori: formData.kategori,
             nik: formData.nik,
+            nokk: formData.nokk,
             alamat: formData.alamat,
             pekerjaan: formData.pekerjaan || '-',
             namaBadan: formData.namaBadan || '-',
             bentukBadan: formData.bentukBadan || '-',
             jabatan: formData.jabatan || '-',
             fotoKtpUrl: 'Tidak ada', //ktpUrl || 'Tidak ada',
+            fotoKKUrl: 'Tidak ada', //kkUrl || 'Tidak ada',
             fotoAktaUrl: 'Tidak ada', //aktaUrl || 'Tidak ada',
             createdAt: serverTimestamp(),
             status: 'Baru'
@@ -316,6 +327,30 @@ const OrderForm = () => {
                     </div>
                 </div>
 
+                {/* Upload KK */}
+                <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Foto Kartu Keluarga</label>
+                    <div className="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center cursor-pointer hover:bg-slate-50 transition relative">
+                         <input type="file" onChange={(e) => handleFileChange(e, 'fotoKK')} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*" />
+                         {previews.fotoKtp ? (
+                            <div className="relative w-full h-48">
+                                <Image src={previews.fotoKtp} alt="Preview KK" fill className="object-contain" />
+                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                                    <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-bold flex items-center gap-2">
+                                        <ImageIcon size={16} /> Ganti Foto
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center py-4">
+                                <Upload className="w-8 h-8 text-slate-400 mb-2" />
+                                <p className="text-sm font-medium text-slate-600">Klik untuk upload foto Kartu Keluarga</p>
+                                <p className="text-xs text-slate-400 mt-1">Format JPG/PNG, Max 2MB</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
                 {/* Nama Lengkap */}
                 <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">
@@ -350,7 +385,13 @@ const OrderForm = () => {
                 {/* NIK */}
                 <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">NIK (16 Digit)</label>
-                    <input type="number" name="nik" value={formData.nik} onChange={handleChange} placeholder="Nomor Induk Kependudukan" className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#2c4f40] outline-none" required />
+                    <input type="number" name="nik" maxLength={16} value={formData.nik} onChange={handleChange} placeholder="Nomor Induk Kependudukan" className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#2c4f40] outline-none" required />
+                </div>
+
+                {/* NO KK */}
+                <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Nomor KK (16 Digit)</label>
+                    <input type="number" name="noKk" maxLength={16} value={formData.nik} onChange={handleChange} placeholder="Nomor Kartu Keluarga" className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#2c4f40] outline-none" required />
                 </div>
 
                  {/* Alamat */}
