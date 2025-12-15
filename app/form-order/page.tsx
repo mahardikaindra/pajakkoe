@@ -63,12 +63,14 @@ const OrderForm = () => {
         if (paketParam === 'kilat') {
             kategoriOtomatis = 'pribadi';
             namaPaket = 'Paket Kilat (50rb)';
-        } else if (paketParam === 'freelancer') {
-            kategoriOtomatis = 'freelance';
-            namaPaket = 'Paket Freelancer (75rb)';
-        } else if (paketParam === 'badan') {
+        }
+        // else if (paketParam === 'freelancer') {
+        //     kategoriOtomatis = 'freelance';
+        //     namaPaket = 'Paket Freelancer (75rb)';
+        // } 
+        else if (paketParam === 'badan') {
             kategoriOtomatis = 'badan';
-            namaPaket = 'Paket UMKM / Badan (80rb)';
+            namaPaket = 'Paket UMKM / Badan (75rb)';
         } else {
             namaPaket = paketParam || '';
         }
@@ -90,7 +92,7 @@ const OrderForm = () => {
     
     if (name === 'paket') {
         let kategoriBaru = 'pribadi';
-        if (value.includes('Freelancer')) kategoriBaru = 'freelance';
+        // if (value.includes('Freelancer')) kategoriBaru = 'freelance';
         if (value.includes('Badan')) kategoriBaru = 'badan';
         setFormData(prev => ({ ...prev, [name]: value, kategori: kategoriBaru }));
     } else {
@@ -225,7 +227,7 @@ const OrderForm = () => {
             <p className="text-green-100 text-sm">
                 {formData.kategori === 'badan' 
                     ? 'Formulir khusus pendaftaran NPWP Badan Usaha.' 
-                    : 'Formulir pendaftaran NPWP Pribadi/Freelance.'}
+                    : 'Formulir pendaftaran NPWP Pribadi.'}
             </p>
           </div>
 
@@ -248,8 +250,7 @@ const OrderForm = () => {
               >
                 <option value="">-- Pilih Paket --</option>
                 <option value="Paket Kilat (50rb)">Paket Kilat (50rb)</option>
-                <option value="Paket Freelancer (75rb)">Paket Freelancer (75rb)</option>
-                <option value="Paket UMKM / Badan (80rb)">Paket UMKM / Badan (80rb)</option>
+                <option value="Paket UMKM / Badan (75rb)">Paket UMKM / Badan (75rb)</option>
               </select>
             </div>
 
