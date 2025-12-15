@@ -42,33 +42,33 @@ const PACKAGES = [
     cta: 'Paket Kilat 50rb',
     popular: true,
     borderColor: 'border-brand-blue',
-    buttonStyle: 'bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white',
+    buttonStyle: 'bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-[#2c4f40]',
     iconColor: 'text-brand-blue'
   },
-  {
-    id: 'freelancer',
-    name: 'Paket Freelancer',
-    target: 'Content Creator, Dokter, Notaris, dll',
-    price: '75.000',
-    unit: '/npwp',
-    features: [
-      'Semua fitur Paket Kilat',
-      'Konsultasi KLU (Lapangan Usaha)',
-      'Tips Pajak Freelancer',
-      'Aktivasi EFIN (Opsional)',
-      'Bayar Setelah Dokumen Jadi'
-    ],
-    cta: 'Paket Freelancer',
-    popular: false,
-    borderColor: 'border-slate-100',
-    buttonStyle: 'bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white',
-    iconColor: 'text-brand-blue'
-  },
+  // {
+  //   id: 'freelancer',
+  //   name: 'Paket Freelancer',
+  //   target: 'Content Creator, Dokter, Notaris, dll',
+  //   price: '75.000',
+  //   unit: '/npwp',
+  //   features: [
+  //     'Semua fitur Paket Kilat',
+  //     'Konsultasi KLU (Lapangan Usaha)',
+  //     'Tips Pajak Freelancer',
+  //     'Aktivasi EFIN (Opsional)',
+  //     'Bayar Setelah Dokumen Jadi'
+  //   ],
+  //   cta: 'Paket Freelancer',
+  //   popular: false,
+  //   borderColor: 'border-slate-100',
+  //   buttonStyle: 'bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-[#2c4f40]',
+  //   iconColor: 'text-brand-blue'
+  // },
   {
     id: 'badan',
     name: 'Paket UMKM / Badan',
     target: 'Untuk CV, PT, atau PT Perorangan',
-    price: '80.000',
+    price: '75.000',
     unit: '/badan',
     features: [
       'Pembuatan NPWP Badan',
@@ -80,7 +80,7 @@ const PACKAGES = [
     cta: 'Paket UMKM Badan',
     popular: false,
     borderColor: 'border-slate-100',
-    buttonStyle: 'bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white',
+    buttonStyle: 'bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-[#2c4f40]',
     iconColor: 'text-slate-800'
   }
 ];
@@ -333,7 +333,7 @@ const App = () => {
             objectFit="cover" 
           />
           {/* Overlay Gradient (Darker on left to make text readable) */}
-          <div className="absolute inset-0 bg-linear-to-r from-slate-900/95 via-slate-900/70 to-slate-900/30"></div>
+          <div className="absolute inset-0 bg-linear-to-r from-[#2C4F40]/95 via-[#2C4F40]/70 to-[#2C4F40]/30"></div>
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
@@ -383,10 +383,13 @@ const App = () => {
             {/* Right Visual (Interactive WA Mockup Only) */}
             <div className="order-1 md:order-2 relative flex justify-center items-center h-[500px]">
               <div className="relative w-full max-w-sm flex justify-center items-center">
-                {/* Floating WA Mockup */}
-                <div className="z-20 transform md:scale-100 animate-float drop-shadow-2xl">
+                {/* When Mobile dont showing Floating WA Mockup */}
+                <div className="md:block hidden z-20 transform md:scale-100 animate-float drop-shadow-2xl">
+                    <WhatsAppMockup />
+                </div>
+                {/* <div className="z-20 transform md:scale-100 animate-float drop-shadow-2xl">
                    <WhatsAppMockup /> 
-                </div>                
+                </div>                 */}
                 {/* Float Badge 2 (Fast Service) */}
                 <div className="absolute -right-4 bottom-1/4 bg-white/90 backdrop-blur p-3 rounded-xl shadow-xl border border-white/50 flex items-center gap-3 animate-bounce hidden md:flex z-30">
                   <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600">
@@ -458,7 +461,7 @@ const App = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-4">Harga Pas Dikantong</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             {PACKAGES.map((pkg) => (
               <PricingCard key={pkg.id} data={pkg} onSelect={handlePesanWA} />
             ))}
