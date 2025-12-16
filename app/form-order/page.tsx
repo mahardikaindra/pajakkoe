@@ -33,11 +33,13 @@ const OrderForm = () => {
     nik: '',
     noWa: '',
     nokk: '',
+    nomorSK: '',
     alamat: '',
     paket: '',
     kategori: 'pribadi', // 'pribadi', 'freelance', 'badan'
     fotoKtp: null,
     fotoKK: null,
+    fotoSK: null,
     fotoAkta: null 
   });
 
@@ -46,7 +48,9 @@ const OrderForm = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [previews, setPreviews] = useState({
     fotoKtp: null,
-    fotoAkta: null
+    fotoAkta: null,
+    fotoSK: null,
+    fotoKK: null
   });
 
   // 1. Mengambil parameter dari URL
@@ -170,6 +174,7 @@ const OrderForm = () => {
             fotoKtpUrl: 'Tidak ada', //ktpUrl || 'Tidak ada',
             fotoKKUrl: 'Tidak ada', //kkUrl || 'Tidak ada',
             fotoAktaUrl: 'Tidak ada', //aktaUrl || 'Tidak ada',
+            fotoSKUrl: 'Tidak ada', //aktaUrl || 'Tidak ada',
             createdAt: serverTimestamp(),
             status: 'Baru'
         });
@@ -295,6 +300,19 @@ const OrderForm = () => {
                             </div>
                         </div>
                     </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-semibold text-slate-700 mb-2">Surat Keputusan</label>
+                            <input type="text" name="nomorSK" value={formData.nomorSK} onChange={handleChange} placeholder="Contoh: 0912370123" className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:border-[#2c4f40] outline-none" required />
+
+                        </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-slate-700 mb-2">Upload SK (Opsional)</label>
+                            <div className="relative">
+                                <input type="file" onChange={(e) => handleFileChange(e, 'fotoSK')} className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" accept="image/*,application/pdf"/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
 
@@ -329,7 +347,7 @@ const OrderForm = () => {
                 </div>
 
                 {/* Upload KK */}
-                <div>
+                {formData.kategori === 'pribadi' && <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">Foto Kartu Keluarga</label>
                     <div className="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center cursor-pointer hover:bg-slate-50 transition relative">
                          <input type="file" onChange={(e) => handleFileChange(e, 'fotoKK')} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*" />
@@ -350,7 +368,7 @@ const OrderForm = () => {
                             </div>
                         )}
                     </div>
-                </div>
+                </div>}
 
                 {/* Nama Lengkap */}
                 <div>
@@ -384,16 +402,19 @@ const OrderForm = () => {
                 )}
 
                 {/* NIK */}
-                <div>
+                {formData.kategori === 'pribadi' ? <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">NIK (16 Digit)</label>
                     <input type="number" name="nik" maxLength={16} value={formData.nik} onChange={handleChange} placeholder="Nomor Induk Kependudukan" className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#2c4f40] outline-none" required />
-                </div>
+                </div> : <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">NIK Notaris (16 Digit)</label>
+                    <input type="number" name="nik" maxLength={16} value={formData.nik} onChange={handleChange} placeholder="Nomor Induk Kependudukan" className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#2c4f40] outline-none" required />
+                </div>}
 
                 {/* NO KK */}
-                <div>
+                {formData.kategori === 'pribadi' && <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">Nomor KK (16 Digit)</label>
                     <input type="number" name="noKk" maxLength={16} value={formData.nik} onChange={handleChange} placeholder="Nomor Kartu Keluarga" className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#2c4f40] outline-none" required />
-                </div>
+                </div>}
 
                  {/* Alamat */}
                  <div>

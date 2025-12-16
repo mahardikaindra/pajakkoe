@@ -515,7 +515,7 @@ const App = () => {
             </p>
             <div className="flex space-x-6">
               {[Instagram, Twitter, Facebook].map((Icon, i) => (
-                <a key={i} href="#" className="hover:text-white transition-colors"><Icon size={24} /></a>
+                <a key={i} href="https://www.instagram.com/pajakkoe.id?igsh=Mjg4ODlvYTh4dHEz" className="hover:text-white transition-colors"><Icon size={24} /></a>
               ))}
             </div>
           </div>
