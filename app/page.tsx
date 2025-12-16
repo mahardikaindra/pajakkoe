@@ -549,7 +549,7 @@ const App = () => {
       </section>
 
       {/* Pricing Section */}
-      <section id="paket" className="py-24 bg-slate-50">
+      <section id="paket" className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-brand-blue font-bold tracking-wider uppercase text-sm bg-blue-100 px-3 py-1 rounded-full">Pilihan Paket</span>
@@ -565,12 +565,12 @@ const App = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-slate-50">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-16">Kata Mereka</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {TESTIMONIALS.map((testi, idx) => (
-              <div key={idx} className="p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-lg transition duration-300">
+              <div key={idx} className="p-8 rounded-2xl bg-white border border-slate-100 hover:shadow-lg transition duration-300">
                 <div className="flex text-yellow-400 mb-4 gap-1">
                   {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
                 </div>
@@ -586,7 +586,7 @@ const App = () => {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-24 bg-slate-50">
+      <section id="faq" className="py-24 bg-white">
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-12">Pertanyaan Sering Diajukan</h2>
           <div className="space-y-4">
