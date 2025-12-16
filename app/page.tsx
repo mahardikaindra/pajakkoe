@@ -22,6 +22,7 @@ import {
   Lock,
   Send,
   MapPin,
+  AlertTriangle,
 } from 'lucide-react';
 
 // --- Data Constants ---
@@ -453,6 +454,100 @@ const App = () => {
         </div>
       </section>
 
+      {/* EDUKASI NPWP (New Section) */}
+      <section className="py-20 bg-slate-50 border-t border-slate-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-[#2c4f40] font-bold tracking-wider uppercase text-sm bg-[#2c4f40]/10 px-3 py-1 rounded-full">INFO PENTING</span>
+            <h2 className="text-3xl font-bold text-slate-900 mt-4 mb-4">Pentingnya Memiliki NPWP</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">Jangan sampai terhambat urusan finansial dan bisnis hanya karena belum punya NPWP. Simak risiko dan manfaatnya berikut ini.</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Risiko Section */}
+            <div className="bg-white p-8 rounded-2xl shadow-sm border border-red-100 hover:shadow-md transition">
+                <div className="flex items-center gap-3 mb-6 border-b border-red-50 pb-4">
+                    <div className="p-3 bg-red-100 rounded-full text-red-600 shadow-sm">
+                        <AlertTriangle size={24} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-800">Risiko Tidak Punya NPWP</h3>
+                </div>
+                
+                <div className="space-y-6">
+                    <div className="flex gap-4">
+                        <div className="mt-1 min-w-[24px]"><X size={20} className="text-red-500" /></div>
+                        <div>
+                            <h4 className="font-bold text-slate-800 mb-1">Sanksi & Denda Lebih Mahal</h4>
+                            <p className="text-slate-600 text-sm leading-relaxed">
+                                Penghasilan Anda akan dipotong pajak <strong>20% lebih tinggi</strong> dari tarif normal. Ada juga risiko sanksi administrasi hingga pidana jika sengaja tidak mendaftar.
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex gap-4">
+                        <div className="mt-1 min-w-[24px]"><X size={20} className="text-red-500" /></div>
+                        <div>
+                            <h4 className="font-bold text-slate-800 mb-1">Hambatan Perbankan</h4>
+                            <p className="text-slate-600 text-sm leading-relaxed">
+                                Sulit membuka rekening bank baru dan hampir mustahil mengajukan pinjaman seperti KPR, KTA, atau kredit modal usaha.
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex gap-4">
+                        <div className="mt-1 min-w-[24px]"><X size={20} className="text-red-500" /></div>
+                        <div>
+                            <h4 className="font-bold text-slate-800 mb-1">Terhambat Bisnis & Aset</h4>
+                            <p className="text-slate-600 text-sm leading-relaxed">
+                                Tidak bisa mengurus izin usaha (SIUP), ikut tender pemerintah, hingga kendala saat jual beli properti atau kendaraan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Manfaat Section */}
+            <div className="bg-white p-8 rounded-2xl shadow-sm border border-green-100 hover:shadow-md transition">
+                 <div className="flex items-center gap-3 mb-6 border-b border-green-50 pb-4">
+                    <div className="p-3 bg-green-100 rounded-full text-green-600 shadow-sm">
+                        <ShieldCheck size={24} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-800">Manfaat Memiliki NPWP</h3>
+                </div>
+
+                <ul className="space-y-6">
+                    <li className="flex gap-4">
+                        <div className="mt-1 bg-green-50 p-1 rounded text-green-600 h-fit shadow-sm"><Check size={16}/></div>
+                        <div>
+                            <h4 className="font-bold text-slate-800 mb-1">Kemudahan Administrasi Bank</h4>
+                            <p className="text-slate-600 text-sm">Syarat wajib buka rekening, pengajuan kredit, dan cetak rekening koran menjadi lancar.</p>
+                        </div>
+                    </li>
+                    <li className="flex gap-4">
+                        <div className="mt-1 bg-green-50 p-1 rounded text-green-600 h-fit shadow-sm"><Check size={16}/></div>
+                        <div>
+                            <h4 className="font-bold text-slate-800 mb-1">Legalitas Bisnis Terjamin</h4>
+                            <p className="text-slate-600 text-sm">Bisa mengurus SIUP, TDP, dan dokumen legal lainnya untuk pengembangan usaha Anda.</p>
+                        </div>
+                    </li>
+                    <li className="flex gap-4">
+                        <div className="mt-1 bg-green-50 p-1 rounded text-green-600 h-fit shadow-sm"><Check size={16}/></div>
+                        <div>
+                            <h4 className="font-bold text-slate-800 mb-1">Akses Investasi</h4>
+                            <p className="text-slate-600 text-sm">Syarat utama untuk mulai investasi saham, reksa dana, dan obligasi negara.</p>
+                        </div>
+                    </li>
+                     <li className="flex gap-4">
+                        <div className="mt-1 bg-green-50 p-1 rounded text-green-600 h-fit shadow-sm"><Check size={16}/></div>
+                        <div>
+                            <h4 className="font-bold text-slate-800 mb-1">Potongan Pajak Normal</h4>
+                            <p className="text-slate-600 text-sm">Menghindari potongan pajak penghasilan yang membengkak (kenaikan 20%).</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Section */}
       <section id="paket" className="py-24 bg-slate-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -554,8 +649,8 @@ const App = () => {
         <div className="max-w-6xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-sm text-slate-500 flex flex-col md:flex-row justify-between items-center gap-4">
           <p>&copy; {new Date().getFullYear()} Pajak!Koe All rights reserved.</p>
           <div className="flex gap-6 text-white">
-            <a href="https://pajakkoe.co.id/syarat-ketentuan" target="_blank" rel="noopener noreferrer" className="hover:text-brand-blue transition">Syarat & Ketentuan</a>
-            <a href="https://pajakkoe.co.id/kebijakan-privasi" target="_blank" rel="noopener noreferrer" className="hover:text-brand-blue transition">Kebijakan Privasi</a>
+            <a href="https://pajakkoe.co.id/syarat-ketentuan" target="_top" rel="noopener noreferrer" className="hover:text-brand-blue transition">Syarat & Ketentuan</a>
+            <a href="https://pajakkoe.co.id/kebijakan-privasi" target="_top" rel="noopener noreferrer" className="hover:text-brand-blue transition">Kebijakan Privasi</a>
           </div>
         </div>
       </footer>
