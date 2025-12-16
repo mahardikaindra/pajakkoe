@@ -21,6 +21,7 @@ import {
   Wallet,
   Lock,
   Send,
+  MapPin,
 } from 'lucide-react';
 
 // --- Data Constants ---
@@ -276,8 +277,7 @@ const App = () => {
   }, []);
   
   const handlePesanWA = (paket: string) => {
-    // const nomorWA = "6285600811256";
-    const nomorWA = "6282240072717";
+    const nomorWA = "6285797946263";
     let pesan = "";
     
     if (paket === 'Tanya-tanya' || paket === 'Umum') {
@@ -511,8 +511,20 @@ const App = () => {
               <span className="font-bold text-2xl text-white">PAJAK!KOE</span>
             </div>
             <p className="text-slate-400 mb-8 max-w-sm leading-relaxed">
+              Part of PT Koe Group Indonesia<br/>
+              SK AHU No: AHU-069446.AH.01.30.Tahun 2025<br/>
               Solusi NPWP instan 30 menit. Bayar setelah jadi, privasi aman.
             </p>
+            {/* Location */}
+            <div className="flex items-start mb-6 gap-3">
+              <MapPin className="w-5 h-5 text-slate-400" />
+              <p className="text-slate-400 mb-8 max-w-sm leading-relaxed">
+                HQuarters Lantai 20 Jl Asia Afrika No 158, Kota Bandung
+              </p>
+            </div>
+            <div>
+              <h4 className="font-bold text-white mb-4 text-lg">Ikuti Kami</h4>
+            </div>
             <div className="flex space-x-6">
               {[Instagram, Twitter, Facebook].map((Icon, i) => (
                 <a key={i} href="https://www.instagram.com/pajakkoe.id?igsh=Mjg4ODlvYTh4dHEz" className="hover:text-white transition-colors"><Icon size={24} /></a>
@@ -532,14 +544,19 @@ const App = () => {
           <div>
             <h4 className="font-bold text-white mb-6 text-lg">Kontak</h4>
             <ul className="space-y-4 text-slate-400">
-              <li className="flex items-center gap-3"><WhatsAppIcon className="w-5 h-5" /> 0856-0081-1256</li>
-              <li className="flex items-center gap-3"><Mail className="w-5 h-5" /> halo@pajakkoe.co.id</li>
+              <li className="flex items-center gap-3"><WhatsAppIcon className="w-5 h-5" /> 0857-9794-6263</li>
+              <li className="flex items-center gap-3"><Mail className="w-5 h-5" /> marketing@pajakkoe.co.id</li>
               <li className="flex items-center gap-3"><Clock className="w-5 h-5" /> Senin - Sabtu, 09.00 - 17.00</li>
             </ul>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-center text-sm text-slate-500">
-          &copy; {new Date().getFullYear()} Pajak!Koe All rights reserved.
+        {/* Copyright & Legal Links */}
+        <div className="max-w-6xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-sm text-slate-500 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p>&copy; {new Date().getFullYear()} Pajak!Koe All rights reserved.</p>
+          <div className="flex gap-6 text-white">
+            <a href="https://pajakkoe.co.id/syarat-ketentuan" target="_blank" rel="noopener noreferrer" className="hover:text-brand-blue transition">Syarat & Ketentuan</a>
+            <a href="https://pajakkoe.co.id/kebijakan-privasi" target="_blank" rel="noopener noreferrer" className="hover:text-brand-blue transition">Kebijakan Privasi</a>
+          </div>
         </div>
       </footer>
 
