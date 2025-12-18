@@ -16,7 +16,7 @@ import {
   Lock,
 } from "lucide-react";
 // Removed next/image as it requires Next.js environment
-import Image from "next/image"; 
+import Image from "next/image";
 
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -43,7 +43,7 @@ const OrderForm = () => {
     statusPerkawinan: "",
     kategori: "pribadi",
     fotoKtp: "", // Nanti akan diisi URL setelah upload
-    fotoKK: "",  // Nanti akan diisi URL setelah upload
+    fotoKK: "", // Nanti akan diisi URL setelah upload
   };
 
   const initialFormDataBadan = {
@@ -56,7 +56,7 @@ const OrderForm = () => {
     kategori: "badan",
     namaBadanUsaha: "",
     jenisBadanUsaha: "",
-    fotoSK: "",   // Nanti akan diisi URL setelah upload
+    fotoSK: "", // Nanti akan diisi URL setelah upload
     fotoAkta: "", // Nanti akan diisi URL setelah upload
   };
 
@@ -73,14 +73,14 @@ const OrderForm = () => {
   const [isAggrementChecked, setIsAgreementChecked] = useState(false);
   const [showAggrementPopup, setShowAggrementPopup] = useState(false);
   const [showPersonalFields, setShowPersonalFields] = useState(false);
-  
+
   const [formData, setFormData] = useState(initialFormData);
   const [formDataBadan, setFormDataBadan] = useState(initialFormDataBadan);
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  
+
   const [previews, setPreviews] = useState<{
     fotoKtp?: string;
     fotoKK?: string;
@@ -138,8 +138,7 @@ const OrderForm = () => {
     }
   };
 
-
-    const handleChange = (
+  const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
@@ -148,7 +147,7 @@ const OrderForm = () => {
     if (name === "paket") {
       let kategoriBaru = "pribadi";
       if (value.includes("Badan")) kategoriBaru = "badan";
-      
+
       // Update URL Param saat paket berubah
       updateUrlParam(value);
 
@@ -167,8 +166,7 @@ const OrderForm = () => {
     }
   };
 
-    
-    const handleChangeBadan = (
+  const handleChangeBadan = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
@@ -274,7 +272,7 @@ const OrderForm = () => {
 
     try {
       const uniqueId = `${formData.noWa.replace(/\D/g, "")}_${Date.now()}`;
-      
+
       let fotoKtpUrl = "-";
       let fotoKKUrl = "-";
 
@@ -297,7 +295,7 @@ const OrderForm = () => {
           ...formData,
           appId: appId,
           fotoKtp: fotoKtpUrl, // Simpan URL hasil upload
-          fotoKK: fotoKKUrl,   // Simpan URL hasil upload
+          fotoKK: fotoKKUrl, // Simpan URL hasil upload
           createdAt: serverTimestamp(),
           uniqueId: uniqueId,
         },
@@ -307,7 +305,9 @@ const OrderForm = () => {
       setIsSubmitting(false);
     } catch (error) {
       console.error("Error submitting form: ", error);
-      setErrorMessage("Gagal mengirim data. Silakan periksa koneksi internet Anda dan coba lagi.");
+      setErrorMessage(
+        "Gagal mengirim data. Silakan periksa koneksi internet Anda dan coba lagi.",
+      );
       setIsSubmitting(false);
     }
   };
@@ -319,7 +319,7 @@ const OrderForm = () => {
 
     try {
       const uniqueId = `${formDataBadan.noWa.replace(/\D/g, "")}_${Date.now()}`;
-      
+
       let fotoSKUrl = "-";
       let fotoAktaUrl = "-";
 
@@ -341,7 +341,7 @@ const OrderForm = () => {
         {
           ...formDataBadan,
           appId: appId,
-          fotoSK: fotoSKUrl,     // Simpan URL
+          fotoSK: fotoSKUrl, // Simpan URL
           fotoAkta: fotoAktaUrl, // Simpan URL
           createdAt: serverTimestamp(),
           uniqueId: uniqueId,
@@ -352,7 +352,9 @@ const OrderForm = () => {
       setIsSubmitting(false);
     } catch (error) {
       console.error("Error submitting form: ", error);
-      setErrorMessage("Gagal mengirim data. Silakan periksa koneksi internet Anda dan coba lagi.");
+      setErrorMessage(
+        "Gagal mengirim data. Silakan periksa koneksi internet Anda dan coba lagi.",
+      );
       setIsSubmitting(false);
     }
   };
@@ -667,7 +669,9 @@ const OrderForm = () => {
                           className="w-full pl-4 pr-4 py-3 rounded-xl border border-slate-300 focus:border-[#2c4f40] outline-none"
                         >
                           <option value="">Pilih Status Dalam KK</option>
-                          <option value="Kepala Keluarga">Kepala Keluarga</option>
+                          <option value="Kepala Keluarga">
+                            Kepala Keluarga
+                          </option>
                           <option value="Istri">Istri</option>
                           <option value="Anak">Anak</option>
                           <option value="Lainnya">Lainnya</option>
@@ -1039,7 +1043,8 @@ const OrderForm = () => {
                         />
                         {previews.fotoAkta ? (
                           <div className="relative w-full h-40">
-                            {fileObjects.fotoAkta?.type === "application/pdf" ? (
+                            {fileObjects.fotoAkta?.type ===
+                            "application/pdf" ? (
                               <iframe
                                 src={previews.fotoAkta}
                                 className="w-full h-full rounded-lg"
