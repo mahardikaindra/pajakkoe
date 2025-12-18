@@ -14,7 +14,7 @@ export const firebaseConfig = {
   storageBucket: "pajak-koe.firebasestorage.app",
   messagingSenderId: "767990011162",
   appId: "1:767990011162:web:e599f37e18928a5b9608a3",
-  measurementId: "G-HYNZNHTZ8P"
+  measurementId: "G-HYNZNHTZ8P",
 };
 
 // Initialize Firebase

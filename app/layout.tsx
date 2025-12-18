@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Pajak!Koe - Aplikasi Pengelolaan Pajak Online, Pembuatan NPWP",
-  description: "Kelola pajak Anda dengan mudah menggunakan Pajak!Koe. Daftar NPWP online, hitung pajak, dan laporkan SPT tahunan tanpa ribet.",
+  description:
+    "Kelola pajak Anda dengan mudah menggunakan Pajak!Koe. Daftar NPWP online, hitung pajak, dan laporkan SPT tahunan tanpa ribet.",
 };
 
 export default function RootLayout({
