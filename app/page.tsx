@@ -862,13 +862,13 @@ const App = () => {
             <h4 className="font-bold text-white mb-6 text-lg">Kontak</h4>
             <ul className="space-y-4 text-slate-400">
               <li className="flex items-center gap-3">
-                <WhatsAppIcon className="w-5 h-5" /> 0857-9794-6263
+                {/* <WhatsAppIcon className="w-5 h-5" /> */} 0857-9794-6263
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5" /> marketing@pajakkoe.co.id
+                {/* <Mail className="w-5 h-5" /> */} marketing@pajakkoe.co.id
               </li>
               <li className="flex items-center gap-3">
-                <Clock className="w-5 h-5" /> Senin - Sabtu, 09.00 - 17.00
+                {/* <Clock className="w-5 h-5" /> */} Senin - Jumat, 08.00 - 17.00
               </li>
             </ul>
           </div>
