@@ -117,7 +117,7 @@ const PengukuhanPKPPage: React.FC<PengukuhanPKPPageProps> = ({ children }) => {
       <Header
         scrolled={scrolled}
         onConsult={() => handlePesanWA("Umum")}
-        menu={["Keunggulan", "Kriteria", "Syarat", "Paket", "FAQ"]}
+        menu={["Kriteria", "Syarat", "Paket", "FAQ"]}
       />
       <Hero banner="/images/pkp-banner.png" type="pengukuhan-pkp" />
       {/* Mandatory Notification */}
@@ -236,7 +236,7 @@ const PengukuhanPKPPage: React.FC<PengukuhanPKPPageProps> = ({ children }) => {
       </section>
 
       {/* Documents Section */}
-      <section id="dokumen" className="py-24 px-4 bg-slate-50">
+      <section id="syarat" className="py-24 px-4 bg-slate-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2
