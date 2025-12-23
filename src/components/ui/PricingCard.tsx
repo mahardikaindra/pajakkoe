@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Check } from "lucide-react";
-import { PACKAGES } from "../../lib/constants";
 import WhatsAppIcon from "./WhatsAppIcon";
 
 const PricingCard = ({
   data,
   onSelect,
 }: {
-  data: (typeof PACKAGES)[number];
-  onSelect: (cta: string) => void;
+  data: any;
+  onSelect: (cta: any) => void;
 }) => (
   <div
     className={`bg-white rounded-2xl shadow-sm hover:shadow-2xl transition duration-300 overflow-hidden flex flex-col border relative ${data.borderColor} ${data.popular ? "border-2 md:-translate-y-4 border-yellow-500" : "border border-slate-100"}`}
@@ -27,8 +26,16 @@ const PricingCard = ({
         </span>
         <span className="text-slate-400 text-sm">{data.unit}</span>
       </div>
+      {data.price2 && (
+        <div className="my-4">
+          <span className="text-3xl font-bold text-slate-900">
+            Rp {data.price2}
+          </span>
+          <span className="text-slate-400 text-sm">{data.unit2}</span>
+        </div>
+      )}
       <ul className="space-y-4 text-slate-600 text-sm mb-8">
-        {data.features.map((feat: any, i: number) => (
+        {data.features.map((feat: string, i: number) => (
           <li key={i} className="flex items-start gap-3">
             <Check className="text-green-500 w-5 h-5 shrink-0" />
             <span>{feat}</span>
