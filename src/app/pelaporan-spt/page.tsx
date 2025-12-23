@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // src/app/page.tsx
 "use client";
 
@@ -28,9 +29,8 @@ const LaporSPTPage: React.FC<LaporSPTPageProps> = ({ children }) => {
   return (
     <div className="font-sans text-slate-700 selection:bg-brand-blue selection:text-white">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Gainst:wght@300;400;600;700&display=swap');
-        
-        body { font-family: 'Gainst', sans-serif; }
+                @font-face { font-family: 'Digitale'; src: url('/fonts/Digitale-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; } @font-face { font-family: 'Digitale'; src: url('/fonts/Digitale-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+        body { font-family: 'Digitale', sans-serif; }
         
         .animate-float {
           animation: float 6s ease-in-out infinite;

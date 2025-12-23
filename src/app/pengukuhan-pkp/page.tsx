@@ -4,7 +4,6 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../../components/layout/Footer";
 import Header from "../../components/layout/Header";
-import Features from "../../components/sections/Features";
 import Hero from "../../components/sections/Hero";
 import WhatsAppIcon from "../../components/ui/WhatsAppIcon";
 import { handlePesanWA } from "../../lib/utils";
@@ -90,9 +89,8 @@ const PengukuhanPKPPage: React.FC<PengukuhanPKPPageProps> = ({ children }) => {
   return (
     <div className="font-sans text-slate-700 selection:bg-brand-blue selection:text-white">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Gainst:wght@300;400;600;700&display=swap');
-        
-        body { font-family: 'Gainst', sans-serif; }
+        @font-face { font-family: 'Digitale'; src: url('/fonts/Digitale-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; } @font-face { font-family: 'Digitale'; src: url('/fonts/Digitale-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+        body { font-family: 'Digitale', sans-serif; }
         
         .animate-float {
           animation: float 6s ease-in-out infinite;
