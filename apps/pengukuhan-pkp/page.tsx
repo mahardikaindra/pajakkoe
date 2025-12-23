@@ -29,64 +29,77 @@ import {
 
 const PACKAGES = [
   {
-    id: "karyawan",
-    name: "Paket Kilat",
-    target: "Cocok untuk Pelamar Kerja & Karyawan",
-    price: "50.000",
-    unit: "/npwp",
+    id: "pkp",
+    name: "Jasa Pengukuhan PKP",
+    target: "Omzet > 4.8M / Tender",
+    price: "1.500.000",
+    unit: "/pkp",
     features: [
-      "30 Menit Jadi (Prioritas)",
-      "Termasuk Email Resmi",
-      "Termasuk Aktivasi Akun",
-      "Termasuk Kartu Digital",
-      "Bayar Setelah Dokumen Jadi",
+      "Terbit Faktur Pajak",
+      "Kredit PPN Masukan",
+      "Sertifikat Elektronik",
+      "Legalitas Tender",
+      "Pendampingan",
     ],
-    cta: "Paket Kilat 50rb",
-    popular: true,
-    borderColor: "border-brand-blue",
-    buttonStyle:
-      "bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-[#2c4f40]",
-    iconColor: "text-brand-blue",
-  },
-  // {
-  //   id: 'freelancer',
-  //   name: 'Paket Freelancer',
-  //   target: 'Content Creator, Dokter, Notaris, dll',
-  //   price: '75.000',
-  //   unit: '/npwp',
-  //   features: [
-  //     'Semua fitur Paket Kilat',
-  //     'Konsultasi KLU (Lapangan Usaha)',
-  //     'Tips Pajak Freelancer',
-  //     'Aktivasi EFIN (Opsional)',
-  //     'Bayar Setelah Dokumen Jadi'
-  //   ],
-  //   cta: 'Paket Freelancer',
-  //   popular: false,
-  //   borderColor: 'border-slate-100',
-  //   buttonStyle: 'bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-[#2c4f40]',
-  //   iconColor: 'text-brand-blue'
-  // },
-  {
-    id: "badan",
-    name: "Paket UMKM / Badan",
-    target: "Untuk CV, PT, atau PT Perorangan",
-    price: "75.000",
-    unit: "/badan",
-    features: [
-      "Pembuatan NPWP Badan",
-      "SKT (Surat Keterangan Terdaftar)",
-      "Aktivasi EFIN Badan",
-      "Syarat Pengajuan Kredit/Tender",
-      "Konsultasi Gratis",
-    ],
-    cta: "Paket UMKM Badan",
     popular: false,
     borderColor: "border-slate-100",
     buttonStyle:
       "bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-[#2c4f40]",
     iconColor: "text-slate-800",
+    cta: "Jasa Pengukuhan PKP",
   },
+  //   {
+  //     id: 'spt_pribadi_tahunan',
+  //     name: 'SPT Pribadi Tahunan',
+  //     target: 'Wajib Pajak Orang Pribadi',
+  //     price: '100.000',
+  //     unit: '/tahun',
+  //     features: ['Lapor SPT 1770/1770S/SS', 'Bukti Lapor Resmi', 'Hitung Akurat', 'Konsultasi'],
+  //     popular: false,
+  //     borderColor: 'border-slate-100',
+  //     buttonStyle: "bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-[#2c4f40]",
+  //     iconColor: 'text-slate-800',
+  //     cta: 'SPT Pribadi Tahunan',
+  //   },
+  //   {
+  //     id: 'spt_pribadi_bulanan',
+  //     name: 'SPT Pribadi Bulanan',
+  //     target: 'Wajib Pajak Orang Pribadi',
+  //     price: '75.000',
+  //     unit: '/bulan',
+  //     features: ['Lapor PPh 21/25', 'Hitung Setoran', 'Bukti Lapor Resmi', 'Reminder Jadwal'],
+  //     popular: false,
+  //     borderColor: 'border-slate-100',
+  //     buttonStyle: "bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-[#2c4f40]",
+  //     iconColor: 'text-slate-800',
+  //     cta: 'SPT Pribadi Bulanan',
+  //   },
+  //   {
+  //     id: 'spt_badan_tahunan',
+  //     name: 'SPT Badan Tahunan',
+  //     target: 'CV, PT, Yayasan',
+  //     price: '250.000',
+  //     unit: '/tahun',
+  //     features: ['Lapor SPT 1771', 'Lampiran Lap. Keuangan', 'Bukti Lapor Resmi', 'Analisa Fiskal'],
+  //     popular: false,
+  //     borderColor: 'border-slate-100',
+  //     buttonStyle: "bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-[#2c4f40]",
+  //     iconColor: 'text-slate-800',
+  //     cta: 'SPT Badan Tahunan',
+  //   },
+  //   {
+  //     id: 'spt_badan_bulanan',
+  //     name: 'SPT Badan Bulanan',
+  //     target: 'CV, PT, Yayasan',
+  //     price: '150.000',
+  //     unit: '/bulan',
+  //     features: ['Lapor PPh 21/25/23/Final', 'Lapor PPN (Jika PKP)', 'Bukti Lapor Resmi', 'Rekapitulasi'],
+  //     popular: false,
+  //     borderColor: 'border-slate-100',
+  //     buttonStyle: "bg-white border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-[#2c4f40]",
+  //     iconColor: 'text-slate-800',
+  //     cta: 'SPT Badan Bulanan',
+  //   }
 ];
 
 const TESTIMONIALS = [
@@ -354,9 +367,9 @@ const WhatsAppMockup = () => (
   </div>
 );
 
-// --- Main App Component ---
+// --- Main PengukuhanPKP Component ---
 
-const App = () => {
+const PengukuhanPKP = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -738,7 +751,7 @@ const App = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-8 items-start">
             {PACKAGES.map((pkg) => (
               <PricingCard key={pkg.id} data={pkg} onSelect={handlePesanWA} />
             ))}
@@ -841,18 +854,23 @@ const App = () => {
             <h4 className="font-bold text-white mb-6 text-lg">Layanan</h4>
             <ul className="space-y-4 text-slate-400">
               <li>
-                <a href="#" className="hover:text-brand-blue transition">
+                <a href="#paket" className="hover:text-brand-blue transition">
                   Paket Kilat (30 Menit)
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-brand-blue transition">
+                <a href="#paket" className="hover:text-brand-blue transition">
                   NPWP Badan
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-brand-blue transition">
                   Lapor SPT Tahunan
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-brand-blue transition">
+                  Pengukuhan PKP
                 </a>
               </li>
             </ul>
@@ -868,7 +886,8 @@ const App = () => {
                 {/* <Mail className="w-5 h-5" /> */} marketing@pajakkoe.co.id
               </li>
               <li className="flex items-center gap-3">
-                {/* <Clock className="w-5 h-5" /> */} Senin - Jumat, 08.00 - 17.00
+                {/* <Clock className="w-5 h-5" /> */} Senin - Jumat, 08.00 -
+                17.00
               </li>
             </ul>
           </div>
@@ -1024,4 +1043,4 @@ const themeConfig = {
   },
 };
 
-export default App;
+export default PengukuhanPKP;
