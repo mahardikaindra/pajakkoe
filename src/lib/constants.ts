@@ -15,7 +15,7 @@ export const PACKAGES = [
       "Termasuk Kartu Digital",
       "Bayar Setelah Dokumen Jadi",
     ],
-    cta: "Paket Kilat 50rb",
+    cta: "Paket Kilat 100K",
     popular: true,
     borderColor: "border-brand-blue",
     buttonStyle:

@@ -53,7 +53,7 @@ const WhatsAppMockup = () => (
         />
         <ChatBubble
           sender="user"
-          text="Wih cepet banget! Oke aku transfer 50rb nya ya."
+          text="Wih cepet banget! Oke aku transfer 100K nya ya."
           time="09:32"
           image={undefined}
         />

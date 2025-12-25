@@ -126,7 +126,7 @@ const Hero: React.FC<HeroProps> = ({ banner, type, ctaText, ctaLink }) => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <button
-                  onClick={() => handlePesanWA("Paket Kilat 50rb")}
+                  onClick={() => handlePesanWA("Paket Kilat 100K")}
                   className="bg-green-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2 border border-green-400"
                 >
                   Lihat Paket Harga
@@ -212,10 +212,10 @@ const Hero: React.FC<HeroProps> = ({ banner, type, ctaText, ctaLink }) => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <button
-                  onClick={() => handlePesanWA("Paket Kilat 50rb")}
+                  onClick={() => handlePesanWA("Paket Kilat 100K")}
                   className="bg-green-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2 border border-green-400"
                 >
-                  <WhatsAppIcon className="w-5 h-5" /> Pesan Sekarang (50rb)
+                  <WhatsAppIcon className="w-5 h-5" /> Pesan Sekarang (100K)
                 </button>
                 <button
                   onClick={() =>

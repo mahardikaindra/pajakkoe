@@ -99,7 +99,7 @@ const OrderForm = () => {
         let namaPaket = "";
         if (paketParam === "kilat") {
           kategoriOtomatis = "pribadi";
-          namaPaket = "Paket Kilat (50rb)";
+          namaPaket = "Paket Kilat (100K)";
         } else if (paketParam === "badan") {
           kategoriOtomatis = "badan";
           namaPaket = "NPWP Badan Usaha (75rb)";
@@ -450,7 +450,7 @@ const OrderForm = () => {
                   required
                 >
                   <option value="">-- Pilih Paket --</option>
-                  <option value="Paket Kilat (50rb)">Paket Kilat (50rb)</option>
+                  <option value="Paket Kilat (100K)">Paket Kilat (100K)</option>
                   <option value="NPWP Badan Usaha (75rb)">
                     NPWP Badan Usaha (75rb)
                   </option>
@@ -882,7 +882,7 @@ const OrderForm = () => {
                   required
                 >
                   <option value="">-- Pilih Paket --</option>
-                  <option value="Paket Kilat (50rb)">Paket Kilat (50rb)</option>
+                  <option value="Paket Kilat (100K)">Paket Kilat (100K)</option>
                   <option value="NPWP Badan Usaha (75rb)">
                     NPWP Badan Usaha (75rb)
                   </option>
