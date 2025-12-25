@@ -205,7 +205,7 @@ const Hero: React.FC<HeroProps> = ({ banner, type, ctaText, ctaLink }) => {
                 </span>
               </h1>
               <p className="text-lg text-slate-200 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0 drop-shadow-md">
-                Hanya <strong>Rp 50.000</strong> sudah termasuk email resmi,
+                Hanya <strong>Rp 100.000</strong> sudah termasuk email resmi,
                 aktivasi akun, dan kartu digital. Data aman tanpa perlu kirim
                 foto dokumen utuh.
               </p>

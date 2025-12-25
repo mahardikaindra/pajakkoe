@@ -854,7 +854,7 @@ const OrderForm = () => {
                     "Mengirim..."
                   ) : (
                     <>
-                      <Send size={20} /> Terbitkan NPWP Rp 50.000
+                      <Send size={20} /> Terbitkan NPWP Rp 100.000
                     </>
                   )}
                 </button>
@@ -1140,7 +1140,7 @@ const OrderForm = () => {
                     "Mengirim..."
                   ) : (
                     <>
-                      <Send size={20} /> Terbitkan NPWP Rp 75.000
+                      <Send size={20} /> Terbitkan NPWP Rp 150.000
                     </>
                   )}
                 </button>
