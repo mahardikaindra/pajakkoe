@@ -2,123 +2,100 @@
 // src/components/layout/Footer.tsx
 import React from "react";
 import Image from "next/image";
+import WhatsAppIcon from "../ui/WhatsAppIcon";
 import { Instagram, Twitter, Facebook, MapPin } from "lucide-react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-900 text-slate-300 py-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12">
+    <footer className="bg-slate-950 text-slate-300 py-32 text-left">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-20">
         <div className="col-span-1 md:col-span-2">
-          <div className="flex items-center gap-2 mb-6">
-            <Image
-              src={"/images/logo-white.png"}
-              alt="Pajak!Koe Logo"
-              width={100}
-              height={100}
-              className="w-8 h-8"
-              onError={(e: any) => {
-                e.target.style.display = "none";
-              }}
-            />
-            <span className="font-bold text-2xl text-white">PAJAK!KOE</span>
+          <div className="flex items-center gap-4 mb-10">
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-white">
+              <Image
+                src="/images/logo-white.png"
+                alt="Pajak!Koe Logo"
+                width={50}
+                height={50}
+              />
+            </div>
+            <span className="font-black text-3xl text-white tracking-tighter">
+              PAJAK!KOE
+            </span>
           </div>
-          <p className="text-slate-400 mb-8 max-w-sm leading-relaxed">
-            Part of PT Koe Group Indonesia
-            <br />
-            SK AHU No: AHU-069446.AH.01.30.Tahun 2025
-            <br />
-            Solusi NPWP instan 30 menit. Bayar setelah jadi, privasi aman.
+          <p className="text-slate-400 mb-12 max-w-sm leading-relaxed font-medium">
+            Part of PT Koe Group Indonesia. <br /> SK AHU No:
+            AHU-069446.AH.01.30.Tahun 2025. <br />
+            Konsultasi Pajak Terpercaya di Indonesia.
           </p>
-          {/* Location */}
-          <div className="flex items-start mb-6 gap-3">
-            <MapPin className="w-5 h-5 text-slate-400" />
-            <p className="text-slate-400 mb-8 max-w-sm leading-relaxed">
-              HQuarters Lantai 20 Jl Asia Afrika No 158, Kota Bandung
-            </p>
-          </div>
-          <div>
-            <h4 className="font-bold text-white mb-4 text-lg">Ikuti Kami</h4>
-          </div>
           <div className="flex space-x-6">
             {[Instagram, Twitter, Facebook].map((Icon, i) => (
               <a
                 key={i}
                 href="https://www.instagram.com/pajakkoe_id"
-                className="hover:text-white transition-colors"
+                className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-green-500 transition-all border border-white/5"
               >
-                <Icon size={24} />
+                <Icon size={20} />
               </a>
             ))}
           </div>
         </div>
 
         <div>
-          <h4 className="font-bold text-white mb-6 text-lg">Layanan</h4>
-          <ul className="space-y-4 text-slate-400">
+          <h4 className="font-black text-white mb-10 text-lg tracking-tight">
+            Navigasi
+          </h4>
+          <ul className="space-y-5 text-slate-400 text-sm font-medium">
             <li>
-              <a href="#paket" className="hover:text-brand-blue transition">
-                Paket Kilat (30 Menit)
+              <a href="#layanan" className="hover:text-green-500">
+                Layanan
               </a>
             </li>
             <li>
-              <a href="#paket" className="hover:text-brand-blue transition">
-                NPWP Badan
+              <a href="#paket" className="hover:text-green-500">
+                Daftar Harga
               </a>
             </li>
             <li>
-              <a
-                href="/pelaporan-spt"
-                className="hover:text-brand-blue transition"
-              >
-                Lapor SPT Tahunan
+              <a href="#artikel" className="hover:text-green-500">
+                Blog Pajak
               </a>
             </li>
             <li>
-              <a
-                href="/pengukuhan-pkp"
-                className="hover:text-brand-blue transition"
-              >
-                Pengukuhan PKP
+              <a href="#faq" className="hover:text-green-500">
+                FAQ
               </a>
             </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-bold text-white mb-6 text-lg">Kontak</h4>
-          <ul className="space-y-4 text-slate-400">
+          <h4 className="font-black text-white mb-10 text-lg tracking-tight">
+            Hubungi Kami
+          </h4>
+          <ul className="space-y-5 text-slate-400 text-sm font-medium">
             <li className="flex items-center gap-3">
-              {/* <WhatsAppIcon className="w-5 h-5" /> */} 0857-9794-6263
+              <WhatsAppIcon className="w-5 h-5 text-green-500" /> 0857-9794-6263
             </li>
             <li className="flex items-center gap-3">
-              {/* <Mail className="w-5 h-5" /> */} marketing@pajakkoe.co.id
-            </li>
-            <li className="flex items-center gap-3">
-              {/* <Clock className="w-5 h-5" /> */} Senin - Jumat, 08.00 - 17.00
+              <MapPin className="w-5 h-5 text-green-500" /> Bandung, Jawa Barat
             </li>
           </ul>
         </div>
       </div>
-      {/* Copyright & Legal Links */}
-      <div className="max-w-6xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-sm text-slate-500 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p>&copy; {new Date().getFullYear()} Pajak!Koe All rights reserved.</p>
-        <div className="flex gap-6 text-white">
-          <a
-            href="/terms-conditions"
-            target="_top"
-            rel="noopener noreferrer"
-            className="hover:text-brand-blue transition"
-          >
-            Syarat & Ketentuan
-          </a>
-          <a
-            href="/privacy-police"
-            target="_top"
-            rel="noopener noreferrer"
-            className="hover:text-brand-blue transition"
-          >
-            Kebijakan Privasi
-          </a>
+      <div className="max-w-6xl mx-auto px-4 mt-20 pt-10 border-t border-white/5 text-[10px] uppercase font-black tracking-widest text-slate-600 flex justify-between">
+        <p>&copy; {new Date().getFullYear()} KOE GROUP INDONESIA</p>
+        <div className="flex gap-10">
+          <span>
+            <a href="/terms-conditions" className="hover:text-green-500">
+              Terms
+            </a>
+          </span>
+          <span>
+            <a href="/privacy-police" className="hover:text-green-500">
+              Privacy
+            </a>
+          </span>
         </div>
       </div>
     </footer>
