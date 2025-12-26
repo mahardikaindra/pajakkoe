@@ -502,7 +502,7 @@ const PricingSection = () => (
             </p>
             <div className="mb-10">
               <span className="text-5xl font-black text-white tracking-tighter">
-                Rp 345.000
+                Rp 145.000
               </span>
               <span className="text-white/40 text-sm font-bold uppercase ml-2 tracking-widest">
                 / Berkas
