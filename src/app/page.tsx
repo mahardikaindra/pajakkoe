@@ -388,7 +388,7 @@ const NotarisBanner = () => (
           DISKON 15%
         </span>
         <p className="text-black font-bold uppercase text-xs mt-2">
-          *Berlaku untuk seluruh pengurusan jasa Notaris
+          *Berlaku untuk semua notaris yang menjadi rekanan Koe Legali Indonesia
         </p>
       </div>
       <button
@@ -598,12 +598,12 @@ const NIBBanner = () => (
           <Building2 size={40} />
         </div>
         <div className="text-left">
-          <h3 className="text-4xl font-black tracking-tighter leading-none mb-2">
-            Butuh NIB Badan?
-          </h3>
           <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">
             Layanan NIB OSS RBA - 1 Hari Beres
           </p>
+          <h3 className="text-4xl font-black tracking-tighter leading-none mb-2">
+            Butuh NIB Badan?
+          </h3>
         </div>
       </div>
       <button
