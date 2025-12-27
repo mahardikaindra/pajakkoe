@@ -452,10 +452,10 @@ const PricingSection = () => (
         <Reveal animation="fade-up" delay={200}>
           <div className="bg-white p-12 rounded-[3rem] shadow-sm border border-slate-100 text-left hover:shadow-2xl transition-all group">
             <h3 className="text-2xl font-black text-slate-900 tracking-tighter mb-2">
-              Paket Kilat NPWP
+               Penerbitan NPWP Pribadi
             </h3>
             <p className="text-slate-400 text-xs font-bold uppercase mb-8 tracking-widest">
-              30 Menit Langsung Jadi
+              Via Coretax
             </p>
             <div className="mb-10">
               <span className="text-5xl font-black text-slate-900 tracking-tighter">
@@ -467,10 +467,11 @@ const PricingSection = () => (
             </div>
             <ul className="space-y-4 mb-10">
               {[
-                "NPWP Digital Aktif",
-                "Aktivasi E-Reg",
-                "Panduan Lengkap",
-                "Support 24/7",
+                "Kartu Digital Coretax",
+                "Surat Keterangan Terdaftar",
+                "Aktivasi Aplikasi Coretax",
+                "Email Gratis (Opsi)",
+                "Passphrase Setting",
               ].map((f, i) => (
                 <li
                   key={i}
@@ -495,10 +496,10 @@ const PricingSection = () => (
               Terpopuler
             </div>
             <h3 className="text-2xl font-black text-white tracking-tighter mb-2">
-              Paket Badan / PKP
+              Penerbitan NPWP Badan Usaha
             </h3>
             <p className="text-white/40 text-xs font-bold uppercase mb-8 tracking-widest">
-              Pengurusan Legalitas PT/CV
+              Via Coretax
             </p>
             <div className="mb-10">
               <span className="text-5xl font-black text-white tracking-tighter">
@@ -510,10 +511,11 @@ const PricingSection = () => (
             </div>
             <ul className="space-y-4 mb-10">
               {[
-                "NPWP Badan Usaha",
-                "Aktivasi Akun PKP",
-                "Sertifikat Elektronik",
-                "Konsultasi Coretax",
+                "Kartu Digital Coretax",
+                "Surat Keterangan Terdaftar",
+                "Aktivasi Aplikasi Coretax",
+                "Email Gratis (Opsi)",
+                "Passphrase Setting",
               ].map((f, i) => (
                 <li
                   key={i}
