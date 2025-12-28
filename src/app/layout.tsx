@@ -28,6 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <meta name="google-site-verification" content="K4Ik57HKqzHs_0WWClwx1CvFKr9XqdVuPM5D9Ntufjo" />
       <body
         className={`${digitaleRegular.variable} ${digitaleBold.variable} antialiased`}
       >
