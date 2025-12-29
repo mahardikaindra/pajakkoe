@@ -19,6 +19,7 @@ const BLOG_DATA = [
   {
     id: "pillar-1",
     title: "10 Kendala Daftar NPWP di Coretax System dan Solusinya",
+    slug: "10-kendala-daftar-npwp-di-coretax-system-dan-solusinya",
     summary:
       "Transisi ke Coretax System memang menantang. Pelajari 10 hambatan utama mulai dari validasi NIK hingga masalah teknis sistem terbaru yang sering dihadapi wajib pajak.",
     category: "Kesulitan Pendaftaran",
@@ -34,6 +35,7 @@ const BLOG_DATA = [
   {
     id: "cluster-1",
     title: "NIK Gagal Validasi Saat Daftar NPWP? Ini Langkah Perbaikannya",
+    slug: "nik-gagal-validasi-saat-daftar-npwp-ini-langkah-perbaikannya",
     summary:
       "Masalah sinkronisasi data Dukcapil dan DJP adalah kendala paling umum. Ketahui cara melakukan validasi mandiri sebelum mendaftar di Coretax.",
     category: "Kesulitan Pendaftaran",
@@ -48,6 +50,7 @@ const BLOG_DATA = [
   {
     id: "cluster-2",
     title: "OTP Tidak Masuk ke Email/WhatsApp? Cek Pengaturan Ini",
+    slug: "otp-tidak-masuk-ke-email-whatsapp-cek-pengaturan-ini",
     summary:
       "Masalah teknis pengiriman kode OTP seringkali menghambat proses registrasi. Pastikan konfigurasi provider dan email Anda sudah benar.",
     category: "Kesulitan Pendaftaran",
@@ -62,6 +65,7 @@ const BLOG_DATA = [
   {
     id: "pillar-2",
     title: "5 Manfaat Coretax System: Revolusi Administrasi Pajak Indonesia",
+    slug:"5-manfaat-coretax-system-revolusi-administrasi-pajak-indonesia",
     summary:
       "Coretax bukan sekadar sistem baru, tapi evolusi layanan digital. Dari integrasi data hingga kemudahan pelaporan dalam satu dasbor terpadu.",
     category: "Fitur Coretax",
@@ -76,6 +80,7 @@ const BLOG_DATA = [
   {
     id: "cluster-5",
     title: "Mengenal Fitur Tax Deposit: Dompet Digital Khusus Pajak",
+    slug:"mengenal-fitur-tax-deposit-dompet-digital-khusus-pajak",
     summary:
       "Bayar pajak kini semudah top-up saldo e-wallet. Fitur Tax Deposit memungkinkan Anda menyimpan dana pajak untuk pembayaran otomatis.",
     category: "Fitur Coretax",
@@ -90,6 +95,7 @@ const BLOG_DATA = [
   {
     id: "cluster-8",
     title: "Dampak Fatal Jika Tidak Melakukan Update Data Coretax",
+    slug:"dampak-fatal-jika-tidak-melakukan-update-data-coretax",
     summary:
       "Ketahui risiko sanksi administratif dan hambatan transaksi bisnis jika Anda mengabaikan pembaruan profil di sistem Coretax terbaru.",
     category: "Dampak Perubahan",
@@ -186,10 +192,12 @@ const ArtikelPage = () => {
           <section className="mb-20">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-emerald-50/30 rounded-[3rem] p-8 lg:p-12 border border-emerald-100/50">
               <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl">
-                <img
+                <Image
                   src={featuredPost.image}
                   alt={featuredPost.title}
                   className="w-full h-full object-cover"
+                  width={600}
+                    height={450}
                 />
                 <div className="absolute top-6 left-6 bg-emerald-900 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2">
                   <Zap size={14} /> Terpopuler
@@ -205,7 +213,7 @@ const ArtikelPage = () => {
                     {featuredPost.date}
                   </span>
                 </div>
-                <h2 className="text-4xl lg:text-5xl font-black leading-tight text-emerald-950 digitale-heading italic">
+                <h2 className="text-4xl lg:text-5xl font-black leading-tight text-emerald-950 digitale-heading italic" onClick={() => (window.location.href = `/artikel/${featuredPost.slug}`)}>
                   {featuredPost.title}
                 </h2>
                 <p className="text-lg text-gray-600 leading-relaxed medium-serif italic">
@@ -225,7 +233,7 @@ const ArtikelPage = () => {
                       </p>
                     </div>
                   </div>
-                  <button className="flex items-center gap-2 bg-emerald-950 text-white px-8 py-4 rounded-2xl font-bold hover:bg-emerald-800 transition-all shadow-xl active:scale-95">
+                  <button className="flex items-center gap-2 bg-emerald-950 text-white px-8 py-4 rounded-2xl font-bold hover:bg-emerald-800 transition-all shadow-xl active:scale-95" onClick={() => (window.location.href = `/artikel/${featuredPost.slug}`)}>
                     Baca Sekarang <ArrowRight size={18} />
                   </button>
                 </div>
@@ -274,7 +282,7 @@ const ArtikelPage = () => {
                         </div>
                       </div>
 
-                      <h3 className="text-2xl font-black leading-tight text-emerald-950 group-hover:text-emerald-800 transition-colors digitale-heading">
+                      <h3 className="text-2xl font-black leading-tight text-emerald-950 group-hover:text-emerald-800 transition-colors digitale-heading" onClick={() => (window.location.href = `/artikel/${post.slug}`)}>
                         {post.title}
                       </h3>
 
@@ -304,10 +312,12 @@ const ArtikelPage = () => {
                     </div>
 
                     <div className="w-full sm:w-48 h-40 flex-shrink-0 overflow-hidden rounded-2xl relative">
-                      <img
+                      <Image
                         src={post.image}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                        width={192}
+                        height={160}
                       />
                       <div className="absolute inset-0 ring-1 ring-inset ring-black/5 rounded-2xl" />
                     </div>
@@ -367,7 +377,7 @@ const ArtikelPage = () => {
                           0{i + 1}
                         </span>
                         <div className="space-y-1">
-                          <h5 className="text-sm font-black leading-snug group-hover:text-emerald-900">
+                          <h5 className="text-sm font-black leading-snug group-hover:text-emerald-900" onClick={() => (window.location.href = `/artikel/${p.slug}`)}>
                             {p.title}
                           </h5>
                           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">

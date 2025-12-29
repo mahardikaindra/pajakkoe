@@ -114,6 +114,7 @@ const ARTICLES_DATA = [
   {
     id: 1,
     title: "10 Kendala Daftar NPWP di Coretax System dan Solusinya",
+    slug: "10-kendala-daftar-npwp-di-coretax-system-dan-solusinya",
     date: "29 Des 2025",
     category: "Kesulitan Pendaftaran",
     image:
@@ -124,6 +125,7 @@ const ARTICLES_DATA = [
   {
     id: 2,
     title: "5 Manfaat Coretax System: Revolusi Administrasi Pajak Indonesia",
+    slug: "5-manfaat-coretax-system-revolusi-administrasi-pajak-indonesia",
     date: "27 Des 2025",
     category: "Edukasi",
     image:
@@ -134,6 +136,7 @@ const ARTICLES_DATA = [
   {
     id: 3,
     title: "Dampak Fatal Jika Tidak Melakukan Update Data Coretax",
+    slug: "dampak-fatal-jika-tidak-melakukan-update-data-coretax",
     date: "25 Des 2025",
     category: "Edukasi",
     image:
@@ -594,7 +597,7 @@ const ArticleSection = () => (
               </p>
               <span
                 className="font-black text-[10px] uppercase tracking-[0.2em] border-b-2 border-green-500 pb-1"
-                onClick={() => (window.location.href = `/artikel/${art.id}`)}
+                onClick={() => (window.location.href = `/artikel/${art.slug}`)}
               >
                 Baca Selengkapnya
               </span>

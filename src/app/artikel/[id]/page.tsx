@@ -10,7 +10,7 @@ import {
   Bookmark,
   ThumbsUp,
   MessageCircle,
-} from "lucide-react";
+} from 'lucide-react';
 import { useRouter, useParams } from "next/navigation";
 import { auth } from "@/src/lib/firebase";
 
@@ -18,6 +18,7 @@ const ARTICLES_DATA = [
   {
     id: 1,
     title: "10 Kendala Daftar NPWP di Coretax System dan Solusinya",
+    slug: "10-kendala-daftar-npwp-di-coretax-system-dan-solusinya",
     date: "29 Des 2025",
     category: "Kesulitan Pendaftaran",
     image:
@@ -31,6 +32,7 @@ const ARTICLES_DATA = [
   {
     id: 2,
     title: "5 Manfaat Coretax System: Revolusi Administrasi Pajak Indonesia",
+    slug: "5-manfaat-coretax-system-revolusi-administrasi-pajak-indonesia",
     date: "27 Des 2025",
     category: "Edukasi",
     image:
@@ -44,6 +46,7 @@ const ARTICLES_DATA = [
   {
     id: 3,
     title: "Dampak Fatal Jika Tidak Melakukan Update Data Coretax",
+    slug: "dampak-fatal-jika-tidak-melakukan-update-data-coretax",
     date: "25 Des 2025",
     category: "Edukasi",
     tags: ["Coretax", "Update Data", "Sanksi Pajak"],
@@ -54,6 +57,62 @@ const ARTICLES_DATA = [
     content:
       "Ketahui risiko sanksi administratif dan hambatan transaksi bisnis jika Anda mengabaikan pembaruan profil di sistem Coretax terbaru.",
   },
+  {
+    id: 4,
+    title: "Mengenal Fitur Tax Deposit: Dompet Digital Khusus Pajak",
+    slug: "mengenal-fitur-tax-deposit-dompet-digital-khusus-pajak",
+    date: "23 Des 2025",
+    category: "Fitur Coretax",
+    tags: ["Coretax", "Tax Deposit", "Dompet Digital"],
+    image:
+      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=400&h=250&fit=crop",
+    author: "Admin Pajak!Koe",
+    readTime: "5 menit",
+    content:
+      "Bayar pajak kini semudah top-up saldo e-wallet. Fitur Tax Deposit memungkinkan Anda menyimpan dana pajak untuk pembayaran otomatis.",
+  },
+  {
+    id: 5,
+    title: "Panduan Lengkap Update Profil di Coretax System 2025",
+    slug: "panduan-lengkap-update-profil-di-coretax-system-2025",
+    date: "20 Des 2025",
+    category: "Panduan",
+    tags: ["Coretax", "Update Profil", "Panduan"],
+    image:
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=400&h=250&fit=crop",
+    author: "Admin Pajak!Koe",
+    readTime: "7 menit",
+    content:
+      "Ikuti langkah demi langkah mudah memperbarui data pribadi dan bisnis Anda di Coretax System untuk memastikan kepatuhan pajak yang lancar.",
+  },
+  {
+    id: 6,
+    title: "Strategi Efektif Menghadapi Transisi ke Coretax System",
+    slug: "strategi-efektif-menghadapi-transisi-ke-coretax-system",
+    date: "18 Des 2025",
+    category: "Strategi",
+    tags: ["Coretax", "Transisi", "Strategi Pajak"],
+    image:
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=400&h=250&fit=crop",
+    author: "Admin Pajak!Koe",
+    readTime: "6 menit",
+    content:
+      "Persiapkan diri Anda dengan strategi jitu untuk beradaptasi dengan Coretax System. Dari pelatihan hingga pemanfaatan fitur baru, jadikan transisi ini peluang untuk efisiensi pajak.",
+  },
+  {
+    id: 7,
+    title: "OTP Tidak Masuk ke Email/WhatsApp? Cek Pengaturan Ini",
+    slug: "otp-tidak-masuk-ke-email-whatsapp-cek-pengaturan-ini",
+    date: "15 Des 2025",
+    category: "Edukasi",
+    tags: ["Coretax", "OTP", "Email", "WhatsApp"],
+    image:
+      "https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=400&h=250&fit=crop",
+    author: "Admin Pajak!Koe",
+    readTime: "5 menit",
+    content:
+      "Masalah teknis pengiriman kode OTP seringkali menghambat proses registrasi. Pastikan konfigurasi provider dan email Anda sudah benar.",
+  },
 ];
 // Mock blog data for demonstration purposes
 const BlogDetail = () => {
@@ -61,15 +120,15 @@ const BlogDetail = () => {
   const params = useParams();
 
   const [claps, setClaps] = useState(100); // Initial claps
-  const handlePostClick = (post: any) => {
+  const handlePostClick = (post: { slug: string }) => {
     // setSelectedPost(post);
     setClaps(Math.floor(100) + 50); // Mock claps
     // setCurrentView('detail');
   };
 
-  const postId = parseInt(params.id as string, 10);
-  const postData = ARTICLES_DATA.find((p) => p.id === postId);
+  console.log("Params:", params);
 
+    const postData = ARTICLES_DATA.find((p) => p.slug === params.id);
   useEffect(() => {
     if (!postData) {
       // If post not found, navigate back or show 404
