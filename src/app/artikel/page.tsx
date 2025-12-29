@@ -21,14 +21,22 @@ const BLOG_DATA = [
     title: "10 Kendala Daftar NPWP di Coretax System dan Solusinya",
     slug: "10-kendala-daftar-npwp-di-coretax-system-dan-solusinya",
     summary:
-      "Transisi ke Coretax System memang menantang. Pelajari 10 hambatan utama mulai dari validasi NIK hingga masalah teknis sistem terbaru yang sering dihadapi wajib pajak.",
+      "Baru mau mulai rapihin administrasi pajak tapi sudah kena mental duluan gara-gara sistem baru? Transisi ke Coretax System memang lagi jadi topik hangat karena banyak calon wajib pajak yang merasa alurnya jauh lebih tricky, mulai dari NIK gagal validasi sampai OTP yang tak kunjung masuk.",
+    content: `
+      <p>Transisi ke Coretax System memang menantang. Pelajari 10 hambatan utama mulai dari validasi NIK hingga masalah teknis sistem terbaru yang sering dihadapi wajib pajak.</p>
+      <h3>1. Sinkronisasi Data NIK</h3>
+      <p>Banyak wajib pajak mengeluhkan NIK mereka tidak tervalidasi. Hal ini biasanya terjadi karena perbedaan data di sistem Dukcapil dan DJP. Pastikan Anda melakukan pemadanan NIK secara mandiri sebelum memulai proses registrasi.</p>
+      <blockquote>
+        "Integrasi data adalah kunci dari efisiensi perpajakan masa depan, namun tantangan teknis di masa transisi adalah hal yang lumrah terjadi."
+      </blockquote>
+    `,
     category: "Kesulitan Pendaftaran",
     tags: ["Pillar", "Tutorial"],
     author: "Tim Pajakkoe",
+    authorRole: "Konsultan Utama @ Pajakkoe",
     date: "29 Des 2025",
     readTime: "12 mnt",
-    image:
-      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200&h=800&fit=crop",
     ctaLink: "https://pajakkoe.co.id/layanan-pajak",
     featured: true,
   },
@@ -37,14 +45,14 @@ const BLOG_DATA = [
     title: "NIK Gagal Validasi Saat Daftar NPWP? Ini Langkah Perbaikannya",
     slug: "nik-gagal-validasi-saat-daftar-npwp-ini-langkah-perbaikannya",
     summary:
-      "Masalah sinkronisasi data Dukcapil dan DJP adalah kendala paling umum. Ketahui cara melakukan validasi mandiri sebelum mendaftar di Coretax.",
+      "Pernah nggak sih lagi semangat mau rapihin administrasi pajak, eh tiba-tiba sistem Coretax bilang NIK kamu nggak valid? Masalah ini adalah penyakit paling umum karena sistem mengandalkan integrasi real-time. Satu ketidaksesuaian kecil saja bisa bikin proses pendaftaran terhenti di tahap awal.",
     category: "Kesulitan Pendaftaran",
     tags: ["Cluster", "Validasi"],
     author: "Admin Pajak",
+    authorRole: "Editor Konten Pajak",
     date: "28 Des 2025",
     readTime: "7 mnt",
-    image:
-      "https://images.unsplash.com/photo-1554224154-26032ffc0d07?q=80&w=400&h=250&fit=crop",
+    image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?q=80&w=1200&h=800&fit=crop",
     ctaLink: "https://pajakkoe.co.id/cek-nik",
   },
   {
@@ -52,59 +60,55 @@ const BLOG_DATA = [
     title: "OTP Tidak Masuk ke Email/WhatsApp? Cek Pengaturan Ini",
     slug: "otp-tidak-masuk-ke-email-whatsapp-cek-pengaturan-ini",
     summary:
-      "Masalah teknis pengiriman kode OTP seringkali menghambat proses registrasi. Pastikan konfigurasi provider dan email Anda sudah benar.",
+      "Nungguin kode OTP masuk itu rasanya bikin geregetan! Masalah klasik di sistem Coretax ini biasanya terjadi karena server overload atau email masuk ke folder Spam. Jangan klik berkali-kali karena sistem bisa menganggap Anda bot dan akhirnya akun malah kena suspend sementara.",
     category: "Kesulitan Pendaftaran",
     tags: ["Cluster", "Teknis"],
     author: "Support Pajakkoe",
     date: "28 Des 2025",
     readTime: "5 mnt",
-    image:
-      "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=400&h=250&fit=crop",
+    image: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=1200&h=800&fit=crop",
     ctaLink: "https://pajakkoe.co.id/bantuan-otp",
   },
   {
     id: "pillar-2",
     title: "5 Manfaat Coretax System: Revolusi Administrasi Pajak Indonesia",
-    slug:"5-manfaat-coretax-system-revolusi-administrasi-pajak-indonesia",
+    slug: "5-manfaat-coretax-system-revolusi-administrasi-pajak-indonesia",
     summary:
-      "Coretax bukan sekadar sistem baru, tapi evolusi layanan digital. Dari integrasi data hingga kemudahan pelaporan dalam satu dasbor terpadu.",
+      "Transisi ke Coretax System itu ibarat kita baru pindah dari HP jadul ke smartphone terbaru; butuh waktu adaptasi tapi fiturnya jauh lebih canggih. Sistem ini menawarkan efisiensi waktu di mana semua data perpajakan sudah saling terhubung secara otomatis dan transparan bagi pengusaha.",
     category: "Fitur Coretax",
     tags: ["Pillar", "Edukasi"],
     author: "Konsultan Utama",
     date: "27 Des 2025",
     readTime: "10 mnt",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400&h=250&fit=crop",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&h=800&fit=crop",
     ctaLink: "https://pajakkoe.co.id/manfaat-coretax",
   },
   {
     id: "cluster-5",
     title: "Mengenal Fitur Tax Deposit: Dompet Digital Khusus Pajak",
-    slug:"mengenal-fitur-tax-deposit-dompet-digital-khusus-pajak",
+    slug: "mengenal-fitur-tax-deposit-dompet-digital-khusus-pajak",
     summary:
-      "Bayar pajak kini semudah top-up saldo e-wallet. Fitur Tax Deposit memungkinkan Anda menyimpan dana pajak untuk pembayaran otomatis.",
+      "Dulu, tiap kali mau bayar pajak itu rasanya kayak harus ngelewatin ritual yang panjang dan melelahkan. Sekarang ada fitur Tax Deposit yang fungsinya mirip banget sama saldo e-wallet. Anda tinggal isi saldo dan nantinya bisa digunakan melunasi pajak tanpa harus bolak-balik bikin kode billing baru.",
     category: "Fitur Coretax",
     tags: ["Cluster", "Fintech"],
     author: "Tim Keuangan",
     date: "26 Des 2025",
     readTime: "5 mnt",
-    image:
-      "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=400&h=250&fit=crop",
+    image: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=1200&h=800&fit=crop",
     ctaLink: "https://pajakkoe.co.id/tax-deposit",
   },
   {
     id: "cluster-8",
     title: "Dampak Fatal Jika Tidak Melakukan Update Data Coretax",
-    slug:"dampak-fatal-jika-tidak-melakukan-update-data-coretax",
+    slug: "dampak-fatal-jika-tidak-melakukan-update-data-coretax",
     summary:
-      "Ketahui risiko sanksi administratif dan hambatan transaksi bisnis jika Anda mengabaikan pembaruan profil di sistem Coretax terbaru.",
+      "Salah satu aturan main paling penting di Coretax adalah kewajiban aktivasi profil secara mandiri. Kalau Anda menunda-nunda migrasi data, risiko akun pajak 'beku' atau terkunci itu nyata banget. Jika terkunci, Anda tidak bisa akses fitur penting seperti bikin faktur atau lapor SPT.",
     category: "Dampak Perubahan",
     tags: ["Cluster", "Urgent"],
     author: "Legal Pajak",
     date: "25 Des 2025",
     readTime: "8 mnt",
-    image:
-      "https://images.unsplash.com/photo-1574607383476-f517f220d356?q=80&w=400&h=250&fit=crop",
+    image: "https://images.unsplash.com/photo-1574607383476-f517f220d356?q=80&w=1200&h=800&fit=crop",
     ctaLink: "https://pajakkoe.co.id/update-data",
   },
 ];
