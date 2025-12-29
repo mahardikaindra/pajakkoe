@@ -113,27 +113,33 @@ const FAQS_DATA = [
 const ARTICLES_DATA = [
   {
     id: 1,
-    title: "Panduan Lengkap Aktivasi Coretax 2025",
-    date: "24 Des 2025",
-    category: "Tutorial",
+    title: "10 Kendala Daftar NPWP di Coretax System dan Solusinya",
+    date: "29 Des 2025",
+    category: "Kesulitan Pendaftaran",
+    image:
+      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=600&h=400&fit=crop",
     excerpt:
-      "Segala hal yang perlu Anda ketahui tentang sistem perpajakan terbaru di Indonesia.",
+      "Transisi ke Coretax System memang menantang. Pelajari 10 hambatan utama mulai dari validasi NIK hingga masalah teknis sistem terbaru yang sering dihadapi wajib pajak.",
   },
   {
     id: 2,
-    title: "Risiko Tidak Lapor SPT Tahunan",
-    date: "20 Des 2025",
+    title: "5 Manfaat Coretax System: Revolusi Administrasi Pajak Indonesia",
+    date: "27 Des 2025",
     category: "Edukasi",
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400&h=250&fit=crop",
     excerpt:
-      "Pahami sanksi administrasi hingga pemblokiran akses perbankan jika Anda lalai.",
+      "Coretax bukan sekadar sistem baru, tapi evolusi layanan digital. Dari integrasi data hingga kemudahan pelaporan dalam satu dasbor terpadu.",
   },
   {
     id: 3,
-    title: "Cara Mudah Daftar PKP untuk UMKM",
-    date: "15 Des 2025",
-    category: "Bisnis",
+    title: "Dampak Fatal Jika Tidak Melakukan Update Data Coretax",
+    date: "25 Des 2025",
+    category: "Edukasi",
+    image:
+      "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=400&h=250&fit=crop",
     excerpt:
-      "Tingkatkan kredibilitas bisnis Anda dengan status Pengusaha Kena Pajak.",
+      "Ketahui risiko sanksi administratif dan hambatan transaksi bisnis jika Anda mengabaikan pembaruan profil di sistem Coretax terbaru.",
   },
 ];
 
@@ -311,7 +317,7 @@ const SiteHero = () => {
           >
             <div className="relative animate-float">
               <WhatsAppMockup />
-              <div className="absolute z-10 -right-12 bottom-20 bg-white/95 backdrop-blur-2xl p-6 rounded-[2rem] shadow-2xl border border-white/50 flex items-center gap-4 animate-bounce hidden lg:flex">
+              <div className="absolute z-10 -right-12 bottom-20 bg-white/95 backdrop-blur-2xl p-6 rounded-4xl shadow-2xl border border-white/50 flex items-center gap-4 animate-bounce hidden lg:flex">
                 <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-green-600">
                   <CheckCircle size={24} strokeWidth={3} />
                 </div>
@@ -452,7 +458,7 @@ const PricingSection = () => (
         <Reveal animation="fade-up" delay={200}>
           <div className="bg-white p-12 rounded-[3rem] shadow-sm border border-slate-100 text-left hover:shadow-2xl transition-all group">
             <h3 className="text-2xl font-black text-slate-900 tracking-tighter mb-2">
-               Penerbitan NPWP Pribadi
+              Penerbitan NPWP Pribadi
             </h3>
             <p className="text-slate-400 text-xs font-bold uppercase mb-8 tracking-widest">
               Via Coretax
@@ -551,9 +557,12 @@ const ArticleSection = () => (
               Berita & Artikel <br /> Terbaru.
             </h2>
           </div>
-          {/* <button className="flex items-center gap-3 font-black uppercase tracking-widest text-xs text-[#2c4f40] hover:translate-x-2 transition-all">
+          <button
+            className="flex items-center gap-3 font-black uppercase tracking-widest text-xs text-[#2c4f40] hover:translate-x-2 transition-all"
+            onClick={() => (window.location.href = "/artikel")}
+          >
             Lihat Seluruh Blog <ArrowRight size={18} />
-          </button> */}
+          </button>
         </div>
       </Reveal>
 
@@ -561,12 +570,14 @@ const ArticleSection = () => (
         {ARTICLES_DATA.map((art, i) => (
           <Reveal key={art.id} animation="fade-up" delay={i * 200}>
             <div className="group cursor-pointer">
-              <div className="h-64 bg-slate-100 rounded-[2rem] mb-8 overflow-hidden relative">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                <img
-                  src={`https://picsum.photos/seed/${art.id}/600/400`}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 opacity-80"
+              <div className="h-64 bg-slate-100 rounded-4xl mb-8 overflow-hidden relative">
+                <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
+                <Image
+                  src={art.image}
+                  className="w-full h-full object-fill group-hover:scale-110 transition-all duration-700 opacity-100"
                   alt={art.title}
+                  width={300}
+                  height={300}
                 />
                 <span className="absolute bottom-6 left-6 bg-white text-black font-black text-[8px] uppercase tracking-widest px-4 py-2 rounded-full">
                   {art.category}
@@ -581,7 +592,10 @@ const ArticleSection = () => (
               <p className="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-2">
                 {art.excerpt}
               </p>
-              <span className="font-black text-[10px] uppercase tracking-[0.2em] border-b-2 border-green-500 pb-1">
+              <span
+                className="font-black text-[10px] uppercase tracking-[0.2em] border-b-2 border-green-500 pb-1"
+                onClick={() => (window.location.href = `/artikel/${art.id}`)}
+              >
                 Baca Selengkapnya
               </span>
             </div>
@@ -596,7 +610,7 @@ const NIBBanner = () => (
   <section className="py-20 bg-slate-900 text-white">
     <div className="max-w-6xl mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-10">
       <div className="flex items-center gap-8">
-        <div className="w-20 h-20 bg-white/5 rounded-[2rem] flex items-center justify-center text-green-400">
+        <div className="w-20 h-20 bg-white/5 rounded-4xl flex items-center justify-center text-green-400">
           <Building2 size={40} />
         </div>
         <div className="text-left">
@@ -681,7 +695,7 @@ const FAQItem = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+    <div className="bg-white rounded-4xl shadow-sm border border-slate-100 overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full p-8 text-left flex justify-between items-center focus:outline-none"

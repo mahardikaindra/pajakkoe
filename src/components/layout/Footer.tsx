@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li>
-              <a href="#artikel" className="hover:text-green-500">
+              <a href="/artikel" className="hover:text-green-500">
                 Blog Pajak
               </a>
             </li>
