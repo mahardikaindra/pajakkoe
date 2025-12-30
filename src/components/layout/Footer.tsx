@@ -2,6 +2,7 @@
 // src/components/layout/Footer.tsx
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import WhatsAppIcon from "../ui/WhatsAppIcon";
 import { Instagram, Twitter, Facebook, MapPin } from "lucide-react";
 
@@ -24,7 +25,7 @@ const Footer: React.FC = () => {
             </span>
           </div>
           <p className="text-slate-400 mb-12 max-w-sm leading-relaxed font-medium">
-            Part of PT Koe Group Indonesia. <br /> SK AHU No:
+            Part of PT Koe Legali Indonesia. <br /> SK AHU No:
             AHU-069446.AH.01.30.Tahun 2025. <br />
             Konsultasi Pajak Terpercaya di Indonesia.
           </p>
@@ -47,6 +48,11 @@ const Footer: React.FC = () => {
           </h4>
           <ul className="space-y-5 text-slate-400 text-sm font-medium">
             <li>
+              <a href="/about-us" className="hover:text-green-500">
+                Tentang Kami
+              </a>
+            </li>
+            <li>
               <a href="#layanan" className="hover:text-green-500">
                 Layanan
               </a>
@@ -57,9 +63,9 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li>
-              <a href="/artikel" className="hover:text-green-500">
+              <Link href="/artikel" className="hover:text-green-500">
                 Blog Pajak
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#faq" className="hover:text-green-500">
@@ -83,8 +89,15 @@ const Footer: React.FC = () => {
           </ul>
         </div>
       </div>
-      <div className="max-w-6xl mx-auto px-4 mt-20 pt-10 border-t border-white/5 text-[10px] uppercase font-black tracking-widest text-slate-600 flex justify-between">
-        <p>&copy; {new Date().getFullYear()} KOE GROUP INDONESIA</p>
+
+    <div className="max-w-6xl mx-auto px-4 pt-10 border-t border-white/5">
+      <p className="text-[10px] text-slate-500 leading-relaxed max-w-4xl italic">
+        Disclaimer: Pajakkoe adalah penyedia jasa konsultasi pajak independen dan bukan merupakan bagian dari Direktorat Jenderal Pajak (DJP) atau instansi pemerintah mana pun.
+      </p>
+    </div>
+
+      <div className="max-w-6xl mx-auto px-4 mt-10 pt-10 border-t border-white/5 text-[10px] uppercase font-black tracking-widest text-slate-600 flex justify-between">
+        <p>&copy; {new Date().getFullYear()} KOE LEGALI INDONESIA</p>
         <div className="flex gap-10">
           <span>
             <a href="/terms-conditions" className="hover:text-green-500">

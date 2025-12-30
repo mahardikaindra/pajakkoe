@@ -28,7 +28,7 @@ const TermCondition = () => {
 
           <p>
             Selamat datang di Pajak!Koe, sebuah layanan yang dioperasikan oleh
-            PT Koe Group Indonesia (&quot;Kami&quot;). Harap membaca Syarat dan
+            PT Koe Legali Indonesia (&quot;Kami&quot;). Harap membaca Syarat dan
             Ketentuan ini dengan saksama sebelum menggunakan layanan Kami.
             Dengan mengakses atau menggunakan layanan Kami (melalui website,
             WhatsApp, atau formulir pemesanan), Anda (&quot;Pengguna&quot; atau
@@ -70,7 +70,7 @@ const TermCondition = () => {
               identitas, pencucian uang, atau tindakan melanggar hukum lainnya.
             </p>
             <p>
-              <strong>2.3.</strong> Tanggung Jawab Hukum: PT Koe Group Indonesia
+              <strong>2.3.</strong> Tanggung Jawab Hukum: PT Koe Legali Indonesia
               tidak bertanggung jawab atas segala konsekuensi hukum yang timbul
               akibat ketidakbenaran data yang diberikan oleh Pengguna. Segala
               sanksi perpajakan di kemudian hari akibat kelalaian pelaporan
