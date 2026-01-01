@@ -89,12 +89,12 @@ const Footer: React.FC = () => {
           </ul>
         </div>
       </div>
-
+{/* 
     <div className="max-w-6xl mx-auto px-4 pt-10 border-t border-white/5">
       <p className="text-[10px] text-slate-500 leading-relaxed max-w-4xl italic">
         Disclaimer: Pajakkoe adalah penyedia jasa konsultasi pajak independen dan bukan merupakan bagian dari Direktorat Jenderal Pajak (DJP) atau instansi pemerintah mana pun.
       </p>
-    </div>
+    </div> */}
 
       <div className="max-w-6xl mx-auto px-4 mt-10 pt-10 border-t border-white/5 text-[10px] uppercase font-black tracking-widest text-slate-600 flex justify-between">
         <p>&copy; {new Date().getFullYear()} KOE LEGALI INDONESIA</p>

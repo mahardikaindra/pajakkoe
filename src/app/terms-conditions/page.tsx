@@ -157,7 +157,7 @@ const TermCondition = () => {
             </p>
             <ul className="list-disc list-inside space-y-1 mt-2">
               <li>WhatsApp: 0857-9794-6263</li>
-              <li>Email: marketing@pajakkoe.co.id</li>
+              <li>Email: info@koegroupindonesia.id</li>
               <li>
                 Alamat Kantor: HQuarters Lantai 20 Jl Asia Afrika No 158, Kota
                 Bandung
