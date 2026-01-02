@@ -4,11 +4,11 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import WhatsAppIcon from "../ui/WhatsAppIcon";
-import { Instagram, Twitter, Facebook, MapPin } from "lucide-react";
+import { Instagram, Twitter, Facebook, MapPin, Mail } from "lucide-react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-950 text-slate-300 py-32 text-left">
+    <footer className="bg-slate-950 text-slate-300 py-16 text-left">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-20">
         <div className="col-span-1 md:col-span-2">
           <div className="flex items-center gap-4 mb-10">
@@ -76,7 +76,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div>
-          <h4 className="font-black text-white mb-10 text-lg tracking-tight">
+          <h4 className="font-black text-white text-lg tracking-tight gap-3 mb-10">
             Hubungi Kami
           </h4>
           <ul className="space-y-5 text-slate-400 text-sm font-medium">
@@ -86,15 +86,12 @@ const Footer: React.FC = () => {
             <li className="flex items-center gap-3">
               <MapPin className="w-5 h-5 text-green-500" /> Bandung, Jawa Barat
             </li>
+            <li className="flex items-center gap-3">
+              <Mail className="w-5 h-5 text-green-500" /> info@koegroupindonesia.id
+            </li>
           </ul>
         </div>
       </div>
-{/* 
-    <div className="max-w-6xl mx-auto px-4 pt-10 border-t border-white/5">
-      <p className="text-[10px] text-slate-500 leading-relaxed max-w-4xl italic">
-        Disclaimer: Pajakkoe adalah penyedia jasa konsultasi pajak independen dan bukan merupakan bagian dari Direktorat Jenderal Pajak (DJP) atau instansi pemerintah mana pun.
-      </p>
-    </div> */}
 
       <div className="max-w-6xl mx-auto px-4 mt-10 pt-10 border-t border-white/5 text-[10px] uppercase font-black tracking-widest text-slate-600 flex justify-between">
         <p>&copy; {new Date().getFullYear()} KOE LEGALI INDONESIA</p>
