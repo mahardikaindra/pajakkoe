@@ -284,8 +284,8 @@ const SiteHero = () => {
             </Reveal>
 
             <Reveal animation="fade-up" delay={500}>
-              <p className="text-lg text-slate-300 mb-12 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
-                NPWP TERDAFTAR, CORETAX AKTIF, SPT TERLAPOR & PKP DISETUJUI!
+              <p className="text-xl text-slate-300 mb-12 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
+                NPWP TERDAFTAR, CORETAX AKTIF, SPT TERLAPOR & PKP DISETUJUI!<br className="hidden md:block" /> 
                 {/* oleh tim ahli kami. <br className="hidden md:block" /> */}
                 <span className="text-white font-bold">
                   Bayar hanya setelah dokumen Anda terbit!
@@ -472,7 +472,7 @@ const PricingSection = () => (
             </p>
             <div className="mb-10">
               <span className="text-5xl font-black text-slate-900 tracking-tighter">
-                Rp 95.000
+                Rp 100.000
               </span>
               <span className="text-slate-400 text-sm font-bold uppercase ml-2 tracking-widest">
                 / Dokumen

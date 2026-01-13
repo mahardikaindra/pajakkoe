@@ -164,7 +164,6 @@ const ArtikelPage = () => {
             },
           },
         );
-        console.log("✅ Fetch articles success:", res.data);
         setBlogs(res.data);
       } catch (err) {
         console.error("❌ Fetch articles error:", err);
