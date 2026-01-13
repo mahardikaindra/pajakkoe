@@ -1,6 +1,7 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { FirebaseProvider } from "../components/layout/FirebaseProvider";
 import "./globals.css";
 
 const digitaleRegular = localFont({
@@ -33,9 +34,10 @@ export default function RootLayout({
         content="K4Ik57HKqzHs_0WWClwx1CvFKr9XqdVuPM5D9Ntufjo"
       />
       <body
+        suppressHydrationWarning={true}
         className={`${digitaleRegular.variable} ${digitaleBold.variable} antialiased`}
       >
-        {children}
+        <FirebaseProvider>{children}</FirebaseProvider>
       </body>
     </html>
   );

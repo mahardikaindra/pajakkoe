@@ -129,8 +129,7 @@ const ARTICLES_DATA = [
     category: "Edukasi",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400&h=250&fit=crop",
-    excerpt:
-      `Transisi ke Coretax System itu ibarat kita baru pindah dari HP jadul ke smartphone terbaru; butuh waktu adaptasi tapi fiturnya jauh lebih canggih. Di satu sisi, sistem ini menawarkan segudang manfaat yang bikin hidup pengusaha jadi lebih simpel, seperti urusan bayar dan lapor pajak yang jadi satu pintu. Tapi di sisi lain, ada konsekuensi serius kalau kita sampai abai atau telat beradaptasi dengan aturan main yang baru ini. Manfaat paling berasa adalah efisiensi waktu, di mana semua data perpajakan kamu sudah saling terhubung secara otomatis. Nggak ada lagi drama input data berulang kali karena sistem baru ini didesain biar semua serba otomatis dan transparan. Buat kamu yang lagi fokus scaling up bisnis, kemudahan administrasi ini tentu jadi angin segar karena kamu nggak perlu lagi pusing sama tumpukan berkas fisik yang bikin meja kerja berantakan. Namun, dibalik segala kemudahannya, ada konsekuensi yang nggak bisa dianggap remeh kalau kita main-main sama sistem ini. Coretax menuntut akurasi data yang sangat tinggi, jadi kalau ada salah input sedikit saja, risikonya bisa merembet ke denda atau sanksi administrasi yang lumayan menguras kantong. Ketidaktahuan soal cara migrasi data atau telat melakukan validasi profil bisa bikin status perpajakan kamu jadi "bermasalah" di mata hukum. Intinya, memahami manfaat dan konsekuensi Coretax adalah kunci biar bisnis kamu tetap aman di era digital ini. Daripada gambling dan nunggu sampai ada masalah baru gerak, mending pahami rinciannya sekarang juga. Kalau merasa nggak punya waktu buat ngurusin teknisnya, tim profesional kami siap bantu pastikan kamu cuma dapet manfaatnya tanpa perlu ngerasain konsekuensi buruknya. Cek artikel detailnya di bawah ini, ya!`  
+    excerpt: `Transisi ke Coretax System itu ibarat kita baru pindah dari HP jadul ke smartphone terbaru; butuh waktu adaptasi tapi fiturnya jauh lebih canggih. Di satu sisi, sistem ini menawarkan segudang manfaat yang bikin hidup pengusaha jadi lebih simpel, seperti urusan bayar dan lapor pajak yang jadi satu pintu. Tapi di sisi lain, ada konsekuensi serius kalau kita sampai abai atau telat beradaptasi dengan aturan main yang baru ini. Manfaat paling berasa adalah efisiensi waktu, di mana semua data perpajakan kamu sudah saling terhubung secara otomatis. Nggak ada lagi drama input data berulang kali karena sistem baru ini didesain biar semua serba otomatis dan transparan. Buat kamu yang lagi fokus scaling up bisnis, kemudahan administrasi ini tentu jadi angin segar karena kamu nggak perlu lagi pusing sama tumpukan berkas fisik yang bikin meja kerja berantakan. Namun, dibalik segala kemudahannya, ada konsekuensi yang nggak bisa dianggap remeh kalau kita main-main sama sistem ini. Coretax menuntut akurasi data yang sangat tinggi, jadi kalau ada salah input sedikit saja, risikonya bisa merembet ke denda atau sanksi administrasi yang lumayan menguras kantong. Ketidaktahuan soal cara migrasi data atau telat melakukan validasi profil bisa bikin status perpajakan kamu jadi "bermasalah" di mata hukum. Intinya, memahami manfaat dan konsekuensi Coretax adalah kunci biar bisnis kamu tetap aman di era digital ini. Daripada gambling dan nunggu sampai ada masalah baru gerak, mending pahami rinciannya sekarang juga. Kalau merasa nggak punya waktu buat ngurusin teknisnya, tim profesional kami siap bantu pastikan kamu cuma dapet manfaatnya tanpa perlu ngerasain konsekuensi buruknya. Cek artikel detailnya di bawah ini, ya!`,
   },
   {
     id: 3,
@@ -214,7 +213,13 @@ const SiteHeader = ({
             {menu.map((item) => (
               <button
                 key={item}
-                onClick={() => scrollTo(item.toLowerCase())}
+                onClick={() => {
+                  if (item === "Artikel") {
+                    window.location.href = "/artikel";
+                  } else {
+                    scrollTo(item.toLowerCase());
+                  }
+                }}
                 className={`${scrolled ? "text-slate-600 hover:text-green-700" : "text-slate-200 hover:text-white"} transition-all duration-300 font-bold text-sm tracking-tight`}
               >
                 {item}
@@ -271,17 +276,17 @@ const SiteHero = () => {
 
             <Reveal animation="fade-up" delay={300}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1] mb-8 tracking-tighter">
-                SOLUSI PAJAK <br />
+                SOLUSI ANDALAN URUS <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-200">
-                  MODERN & CEPAT.
+                  NPWP & CORETAX
                 </span>
               </h1>
             </Reveal>
 
             <Reveal animation="fade-up" delay={500}>
               <p className="text-lg text-slate-300 mb-12 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
-                Pendaftaran NPWP, PKP, hingga Laporan SPT. Semua diproses instan
-                oleh tim ahli kami. <br className="hidden md:block" />
+                NPWP TERDAFTAR, CORETAX AKTIF, SPT TERLAPOR & PKP DISETUJUI!
+                {/* oleh tim ahli kami. <br className="hidden md:block" /> */}
                 <span className="text-white font-bold">
                   Bayar hanya setelah dokumen Anda terbit!
                 </span>
@@ -769,7 +774,7 @@ const App = () => {
         </section>
 
         <PricingSection />
-        <ArticleSection />
+        {/* <ArticleSection /> */}
         <FAQSection />
         <NIBBanner />
         <FinalCTA />

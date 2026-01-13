@@ -10,7 +10,7 @@ import {
   Bookmark,
   ThumbsUp,
   MessageCircle,
-} from 'lucide-react';
+} from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 
 const ARTICLES_DATA = [
@@ -38,8 +38,7 @@ const ARTICLES_DATA = [
     author: "Admin Pajak!Koe",
     readTime: "4 menit",
     tags: ["Coretax", "Sistem Pajak", "Inovasi"],
-    content:
-      `Transisi ke Coretax System itu ibarat kita baru pindah dari HP jadul ke smartphone terbaru; butuh waktu adaptasi tapi fiturnya jauh lebih canggih. Di satu sisi, sistem ini menawarkan segudang manfaat yang bikin hidup pengusaha jadi lebih simpel, seperti urusan bayar dan lapor pajak yang jadi satu pintu. Tapi di sisi lain, ada konsekuensi serius kalau kita sampai abai atau telat beradaptasi dengan aturan main yang baru ini. Manfaat paling berasa adalah efisiensi waktu, di mana semua data perpajakan kamu sudah saling terhubung secara otomatis. Nggak ada lagi drama input data berulang kali karena sistem baru ini didesain biar semua serba otomatis dan transparan. Buat kamu yang lagi fokus scaling up bisnis, kemudahan administrasi ini tentu jadi angin segar karena kamu nggak perlu lagi pusing sama tumpukan berkas fisik yang bikin meja kerja berantakan. Namun, dibalik segala kemudahannya, ada konsekuensi yang nggak bisa dianggap remeh kalau kita main-main sama sistem ini. Coretax menuntut akurasi data yang sangat tinggi, jadi kalau ada salah input sedikit saja, risikonya bisa merembet ke denda atau sanksi administrasi yang lumayan menguras kantong. Ketidaktahuan soal cara migrasi data atau telat melakukan validasi profil bisa bikin status perpajakan kamu jadi "bermasalah" di mata hukum. Intinya, memahami manfaat dan konsekuensi Coretax adalah kunci biar bisnis kamu tetap aman di era digital ini. Daripada gambling dan nunggu sampai ada masalah baru gerak, mending pahami rinciannya sekarang juga. Kalau merasa nggak punya waktu buat ngurusin teknisnya, tim profesional kami siap bantu pastikan kamu cuma dapet manfaatnya tanpa perlu ngerasain konsekuensi buruknya. Cek artikel detailnya di bawah ini, ya!`
+    content: `Transisi ke Coretax System itu ibarat kita baru pindah dari HP jadul ke smartphone terbaru; butuh waktu adaptasi tapi fiturnya jauh lebih canggih. Di satu sisi, sistem ini menawarkan segudang manfaat yang bikin hidup pengusaha jadi lebih simpel, seperti urusan bayar dan lapor pajak yang jadi satu pintu. Tapi di sisi lain, ada konsekuensi serius kalau kita sampai abai atau telat beradaptasi dengan aturan main yang baru ini. Manfaat paling berasa adalah efisiensi waktu, di mana semua data perpajakan kamu sudah saling terhubung secara otomatis. Nggak ada lagi drama input data berulang kali karena sistem baru ini didesain biar semua serba otomatis dan transparan. Buat kamu yang lagi fokus scaling up bisnis, kemudahan administrasi ini tentu jadi angin segar karena kamu nggak perlu lagi pusing sama tumpukan berkas fisik yang bikin meja kerja berantakan. Namun, dibalik segala kemudahannya, ada konsekuensi yang nggak bisa dianggap remeh kalau kita main-main sama sistem ini. Coretax menuntut akurasi data yang sangat tinggi, jadi kalau ada salah input sedikit saja, risikonya bisa merembet ke denda atau sanksi administrasi yang lumayan menguras kantong. Ketidaktahuan soal cara migrasi data atau telat melakukan validasi profil bisa bikin status perpajakan kamu jadi "bermasalah" di mata hukum. Intinya, memahami manfaat dan konsekuensi Coretax adalah kunci biar bisnis kamu tetap aman di era digital ini. Daripada gambling dan nunggu sampai ada masalah baru gerak, mending pahami rinciannya sekarang juga. Kalau merasa nggak punya waktu buat ngurusin teknisnya, tim profesional kami siap bantu pastikan kamu cuma dapet manfaatnya tanpa perlu ngerasain konsekuensi buruknya. Cek artikel detailnya di bawah ini, ya!`,
   },
   {
     id: 3,
@@ -126,7 +125,7 @@ const BlogDetail = () => {
 
   console.log("Params:", params);
 
-    const postData = ARTICLES_DATA.find((p) => p.slug === params.id);
+  const postData = ARTICLES_DATA.find((p) => p.slug === params.id);
   useEffect(() => {
     if (!postData) {
       // If post not found, navigate back or show 404

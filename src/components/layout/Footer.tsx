@@ -87,7 +87,8 @@ const Footer: React.FC = () => {
               <MapPin className="w-5 h-5 text-green-500" /> Bandung, Jawa Barat
             </li>
             <li className="flex items-center gap-3">
-              <Mail className="w-5 h-5 text-green-500" /> info@koegroupindonesia.id
+              <Mail className="w-5 h-5 text-green-500" />{" "}
+              info@koegroupindonesia.id
             </li>
           </ul>
         </div>

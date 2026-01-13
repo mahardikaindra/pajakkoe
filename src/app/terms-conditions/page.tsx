@@ -70,11 +70,11 @@ const TermCondition = () => {
               identitas, pencucian uang, atau tindakan melanggar hukum lainnya.
             </p>
             <p>
-              <strong>2.3.</strong> Tanggung Jawab Hukum: PT Koe Legali Indonesia
-              tidak bertanggung jawab atas segala konsekuensi hukum yang timbul
-              akibat ketidakbenaran data yang diberikan oleh Pengguna. Segala
-              sanksi perpajakan di kemudian hari akibat kelalaian pelaporan
-              pajak adalah tanggung jawab penuh Pengguna.
+              <strong>2.3.</strong> Tanggung Jawab Hukum: PT Koe Legali
+              Indonesia tidak bertanggung jawab atas segala konsekuensi hukum
+              yang timbul akibat ketidakbenaran data yang diberikan oleh
+              Pengguna. Segala sanksi perpajakan di kemudian hari akibat
+              kelalaian pelaporan pajak adalah tanggung jawab penuh Pengguna.
             </p>
           </section>
 

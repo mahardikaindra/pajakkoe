@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Search,
   Bookmark,
@@ -13,6 +14,7 @@ import {
 import Image from "next/image";
 import Footer from "@/src/components/layout/Footer";
 import { handlePesanWA } from "@/src/lib/utils";
+import axios from "axios";
 
 // Data Lengkap Hasil Mapping dari Content Plan - Coretax Implementation Series
 const BLOG_DATA = [
@@ -36,7 +38,8 @@ const BLOG_DATA = [
     authorRole: "Konsultan Utama @ Pajakkoe",
     date: "29 Des 2025",
     readTime: "12 mnt",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200&h=800&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200&h=800&fit=crop",
     ctaLink: "https://pajakkoe.co.id/layanan-pajak",
     featured: true,
   },
@@ -52,7 +55,8 @@ const BLOG_DATA = [
     authorRole: "Editor Konten Pajak",
     date: "28 Des 2025",
     readTime: "7 mnt",
-    image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?q=80&w=1200&h=800&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1554224154-26032ffc0d07?q=80&w=1200&h=800&fit=crop",
     ctaLink: "https://pajakkoe.co.id/cek-nik",
   },
   {
@@ -66,7 +70,8 @@ const BLOG_DATA = [
     author: "Support Pajakkoe",
     date: "28 Des 2025",
     readTime: "5 mnt",
-    image: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=1200&h=800&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=1200&h=800&fit=crop",
     ctaLink: "https://pajakkoe.co.id/bantuan-otp",
   },
   {
@@ -80,7 +85,8 @@ const BLOG_DATA = [
     author: "Konsultan Utama",
     date: "27 Des 2025",
     readTime: "10 mnt",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&h=800&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&h=800&fit=crop",
     ctaLink: "https://pajakkoe.co.id/manfaat-coretax",
   },
   {
@@ -94,7 +100,8 @@ const BLOG_DATA = [
     author: "Tim Keuangan",
     date: "26 Des 2025",
     readTime: "5 mnt",
-    image: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=1200&h=800&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=1200&h=800&fit=crop",
     ctaLink: "https://pajakkoe.co.id/tax-deposit",
   },
   {
@@ -108,7 +115,8 @@ const BLOG_DATA = [
     author: "Legal Pajak",
     date: "25 Des 2025",
     readTime: "8 mnt",
-    image: "https://images.unsplash.com/photo-1574607383476-f517f220d356?q=80&w=1200&h=800&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1574607383476-f517f220d356?q=80&w=1200&h=800&fit=crop",
     ctaLink: "https://pajakkoe.co.id/update-data",
   },
 ];
@@ -120,9 +128,54 @@ const CATEGORIES = [
   "Dampak Perubahan",
 ];
 
+interface ArtikelPageProps {
+  authorId: string;
+  backlinkUrl: string;
+  backlinkText: string;
+  category: string;
+  content: string;
+  seoScore: number;
+  slug: string;
+  title: string;
+  updateAt: string;
+  isFeatured: boolean;
+  likes: number;
+  metaDescription: string;
+  imageUrl: string;
+  focusedKeyword: string;
+  createdAt: string;
+}
+
 const ArtikelPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("Semua");
   const [searchQuery, setSearchQuery] = useState("");
+  const [blogs, setBlogs] = useState<ArtikelPageProps[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const res = await axios.get(
+          "https://www.koegroupindonesia.id/api/articles",
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          },
+        );
+        console.log("✅ Fetch articles success:", res.data);
+        setBlogs(res.data);
+      } catch (err) {
+        console.error("❌ Fetch articles error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
 
   const filteredPosts = useMemo(() => {
     return BLOG_DATA.filter((post) => {
@@ -201,7 +254,7 @@ const ArtikelPage = () => {
                   alt={featuredPost.title}
                   className="w-full h-full object-cover"
                   width={600}
-                    height={450}
+                  height={450}
                 />
                 <div className="absolute top-6 left-6 bg-emerald-900 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2">
                   <Zap size={14} /> Terpopuler
@@ -217,7 +270,12 @@ const ArtikelPage = () => {
                     {featuredPost.date}
                   </span>
                 </div>
-                <h2 className="text-4xl lg:text-5xl font-black leading-tight text-emerald-950 digitale-heading italic" onClick={() => (window.location.href = `/artikel/${featuredPost.slug}`)}>
+                <h2
+                  className="text-4xl lg:text-5xl font-black leading-tight text-emerald-950 digitale-heading italic"
+                  onClick={() =>
+                    (window.location.href = `/artikel/${featuredPost.slug}`)
+                  }
+                >
                   {featuredPost.title}
                 </h2>
                 <p className="text-lg text-gray-600 leading-relaxed medium-serif italic">
@@ -237,7 +295,12 @@ const ArtikelPage = () => {
                       </p>
                     </div>
                   </div>
-                  <button className="flex items-center gap-2 bg-emerald-950 text-white px-8 py-4 rounded-2xl font-bold hover:bg-emerald-800 transition-all shadow-xl active:scale-95" onClick={() => (window.location.href = `/artikel/${featuredPost.slug}`)}>
+                  <button
+                    className="flex items-center gap-2 bg-emerald-950 text-white px-8 py-4 rounded-2xl font-bold hover:bg-emerald-800 transition-all shadow-xl active:scale-95"
+                    onClick={() =>
+                      (window.location.href = `/artikel/${featuredPost.slug}`)
+                    }
+                  >
                     Baca Sekarang <ArrowRight size={18} />
                   </button>
                 </div>
@@ -286,7 +349,12 @@ const ArtikelPage = () => {
                         </div>
                       </div>
 
-                      <h3 className="text-2xl font-black leading-tight text-emerald-950 group-hover:text-emerald-800 transition-colors digitale-heading" onClick={() => (window.location.href = `/artikel/${post.slug}`)}>
+                      <h3
+                        className="text-2xl font-black leading-tight text-emerald-950 group-hover:text-emerald-800 transition-colors digitale-heading"
+                        onClick={() =>
+                          (window.location.href = `/artikel/${post.slug}`)
+                        }
+                      >
                         {post.title}
                       </h3>
 
@@ -381,7 +449,12 @@ const ArtikelPage = () => {
                           0{i + 1}
                         </span>
                         <div className="space-y-1">
-                          <h5 className="text-sm font-black leading-snug group-hover:text-emerald-900" onClick={() => (window.location.href = `/artikel/${p.slug}`)}>
+                          <h5
+                            className="text-sm font-black leading-snug group-hover:text-emerald-900"
+                            onClick={() =>
+                              (window.location.href = `/artikel/${p.slug}`)
+                            }
+                          >
                             {p.title}
                           </h5>
                           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">
