@@ -188,7 +188,7 @@ const ArtikelPage = () => {
   }, [selectedCategory, searchQuery]);
 
   // Konten Featured (Biasanya yang bertanda Pillar)
-  const featuredPost = useMemo(() => BLOG_DATA.find((p) => p.featured), []);
+  const featuredPost = useMemo(() => blogs.find((p) => p.isFeatured), [blogs]);
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-emerald-900 selection:text-white">
@@ -247,17 +247,17 @@ const ArtikelPage = () => {
         {selectedCategory === "Semua" && !searchQuery && featuredPost && (
           <section className="mb-20">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-emerald-50/30 rounded-[3rem] p-8 lg:p-12 border border-emerald-100/50">
-              <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl">
+              <div className="relative aspect-9/5 rounded-lg overflow-hidden shadow-2xl">
                 <Image
-                  src={featuredPost.image}
+                  src={featuredPost.imageUrl || ""}
                   alt={featuredPost.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-fill hover:scale-110 transition-transform duration-1000"
                   width={600}
-                  height={450}
+                  height={400}
                 />
-                <div className="absolute top-6 left-6 bg-emerald-900 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2">
+                {/* <div className="absolute top-6 left-6 bg-emerald-900 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2">
                   <Zap size={14} /> Terpopuler
-                </div>
+                </div> */}
               </div>
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
@@ -266,7 +266,11 @@ const ArtikelPage = () => {
                   </span>
                   <span className="text-gray-300">•</span>
                   <span className="text-xs text-gray-500 font-bold uppercase">
-                    {featuredPost.date}
+                    {new Date(featuredPost.createdAt).toLocaleDateString("id-ID", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
                   </span>
                 </div>
                 <h2
@@ -275,10 +279,10 @@ const ArtikelPage = () => {
                     (window.location.href = `/artikel/${featuredPost.slug}`)
                   }
                 >
-                  {featuredPost.title}
+                  {featuredPost.title.slice(0, 100)}
                 </h2>
                 <p className="text-lg text-gray-600 leading-relaxed medium-serif italic">
-                  {featuredPost.summary}
+                  {featuredPost.content.replace(/<[^>]+>/g, "").slice(0, 200)}...
                 </p>
                 <div className="pt-4 flex items-center gap-8">
                   <div className="flex items-center gap-3">
@@ -287,7 +291,7 @@ const ArtikelPage = () => {
                     </div>
                     <div>
                       <p className="text-sm font-bold text-gray-900">
-                        {featuredPost.author}
+                        {'Admin Pajak!Koe'}
                       </p>
                       <p className="text-[10px] text-gray-400 font-bold uppercase">
                         Verifikasi Ahli
@@ -295,7 +299,7 @@ const ArtikelPage = () => {
                     </div>
                   </div>
                   <button
-                    className="flex items-center gap-2 bg-emerald-950 text-white px-8 py-4 rounded-2xl font-bold hover:bg-emerald-800 transition-all shadow-xl active:scale-95"
+                    className="flex items-center gap-2 bg-emerald-950 text-white px-8 py-4 rounded-lg font-bold hover:bg-emerald-800 transition-all shadow-xl active:scale-95"
                     onClick={() =>
                       (window.location.href = `/artikel/${featuredPost.slug}`)
                     }
@@ -332,20 +336,20 @@ const ArtikelPage = () => {
 
             {/* List Artikel */}
             <div className="space-y-20">
-              {filteredPosts.map((post) => (
-                <article key={post.id} className="group cursor-pointer">
+              {blogs.map((post) => post.imageUrl && (
+                <article key={post.slug} className="group cursor-pointer">
                   <div className="flex flex-col-reverse sm:flex-row gap-10 items-start">
                     <div className="flex-1 space-y-4">
                       <div className="flex items-center gap-3">
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-900 bg-emerald-50 px-3 py-1.5 rounded-lg">
                           {post.category}
                         </span>
-                        <div className="flex items-center gap-1.5 text-gray-400">
+                        {/* <div className="flex items-center gap-1.5 text-gray-400">
                           <Clock size={12} />
                           <span className="text-[10px] font-bold uppercase">
                             {post.readTime}
                           </span>
-                        </div>
+                        </div> */}
                       </div>
 
                       <h3
@@ -358,11 +362,11 @@ const ArtikelPage = () => {
                       </h3>
 
                       <p className="text-gray-600 text-base leading-relaxed line-clamp-2 medium-serif">
-                        {post.summary}
+                        {post.content.replace(/<[^>]+>/g, "").slice(0, 150)}...
                       </p>
 
                       <div className="flex items-center justify-between pt-4">
-                        <div className="flex items-center gap-2">
+                        {/* <div className="flex items-center gap-2">
                           {post.tags.map((tag) => (
                             <span
                               key={tag}
@@ -371,7 +375,7 @@ const ArtikelPage = () => {
                               #{tag}
                             </span>
                           ))}
-                        </div>
+                        </div> */}
                         <div className="flex items-center gap-4 text-gray-300">
                           <Bookmark
                             size={18}
@@ -382,22 +386,22 @@ const ArtikelPage = () => {
                       </div>
                     </div>
 
-                    <div className="w-full sm:w-48 h-40 flex-shrink-0 overflow-hidden rounded-2xl relative">
+                    <div className="w-full sm:w-48 h-40 flex-shrink-0 overflow-hidden rounded-lg relative">
                       <Image
-                        src={post.image}
+                        src={post.imageUrl}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
                         width={192}
                         height={160}
                       />
-                      <div className="absolute inset-0 ring-1 ring-inset ring-black/5 rounded-2xl" />
+                      <div className="absolute inset-0 ring-1 ring-inset ring-black/5 rounded-lg" />
                     </div>
                   </div>
                 </article>
               ))}
 
               {filteredPosts.length === 0 && (
-                <div className="py-20 text-center bg-gray-50 rounded-[2rem] border-2 border-dashed border-gray-100">
+                <div className="py-20 text-center bg-gray-50 rounded-lg border-2 border-dashed border-gray-100">
                   <AlertTriangle
                     className="mx-auto text-emerald-900/20 mb-4"
                     size={48}
@@ -424,7 +428,7 @@ const ArtikelPage = () => {
                   System secara resmi dan cepat.
                 </p>
                 <button
-                  className="w-full bg-white text-emerald-950 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-400 transition-all shadow-xl active:scale-95"
+                  className="w-full bg-white text-emerald-950 py-4 rounded-lg font-black text-xs uppercase tracking-widest hover:bg-emerald-400 transition-all shadow-xl active:scale-95"
                   onClick={() => handlePesanWA("Konsultasi Umum")}
                 >
                   Konsultasi Gratis
@@ -437,11 +441,11 @@ const ArtikelPage = () => {
                   Topik Terhangat
                 </h4>
                 <div className="space-y-8">
-                  {BLOG_DATA.filter((p) => !p.featured)
+                  {blogs.filter((p) => !p.isFeatured)
                     .slice(0, 3)
                     .map((p, i) => (
                       <div
-                        key={p.id}
+                        key={p.slug}
                         className="flex gap-6 group cursor-pointer"
                       >
                         <span className="text-4xl font-black text-emerald-50/50 group-hover:text-emerald-100 transition-colors">
@@ -457,7 +461,7 @@ const ArtikelPage = () => {
                             {p.title}
                           </h5>
                           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">
-                            {p.author}
+                            {'Admin Pajak!Koe'}
                           </p>
                         </div>
                       </div>

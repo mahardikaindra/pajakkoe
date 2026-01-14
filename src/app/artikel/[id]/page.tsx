@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import {
   ChevronLeft,
@@ -11,7 +11,27 @@ import {
   ThumbsUp,
   MessageCircle,
 } from "lucide-react";
+import axios from "axios";
 import { useRouter, useParams } from "next/navigation";
+
+interface ArtikelPageProps {
+  id: string;
+  authorId: string;
+  backlinkUrl: string;
+  backlinkText: string;
+  category: string;
+  content: string;
+  seoScore: number;
+  slug: string;
+  title: string;
+  updateAt: string;
+  isFeatured: boolean;
+  likes: number;
+  metaDescription: string;
+  imageUrl: string;
+  focusedKeyword: string;
+  createdAt: string;
+}
 
 const ARTICLES_DATA = [
   {
@@ -123,9 +143,39 @@ const BlogDetail = () => {
     // setCurrentView('detail');
   };
 
+  const [blogs, setBlogs] = useState<ArtikelPageProps[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const res = await axios.get(
+          `https://www.koegroupindonesia.id/api/articles/${params.slug}`,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          },
+        );
+        setBlogs(res.data);
+      } catch (err) {
+        console.error("❌ Fetch articles error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
   console.log("Params:", params);
 
-  const postData = ARTICLES_DATA.find((p) => p.slug === params.id);
+  // const postData = blogs.find((p) => p.slug === params.id);
+  const postData = useMemo(() => {
+    return blogs.find((p) => p.slug === params.slug);
+  }, [blogs, params.slug]);
+
   useEffect(() => {
     if (!postData) {
       // If post not found, navigate back or show 404
@@ -164,15 +214,21 @@ const BlogDetail = () => {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h4 className="font-bold text-gray-900">{postData.author}</h4>
+                <h4 className="font-bold text-gray-900">{'Admin Pajak!Koe'}</h4>
                 <span className="text-emerald-600 font-bold text-xs hover:underline cursor-pointer">
                   Ikuti
                 </span>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-500">
-                <span>{postData.readTime} baca</span>
-                <span>•</span>
-                <span>{postData.date}</span>
+                {/* <span>{postData.readTime} baca</span> */}
+                {/* <span>•</span> */}
+                <span>
+                  {new Date(postData.createdAt).toLocaleDateString("id-ID", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                </span>
               </div>
             </div>
           </div>
@@ -203,7 +259,7 @@ const BlogDetail = () => {
       {/* Hero Image */}
       <figure className="max-w-5xl mx-auto mb-16 px-6 lg:px-0">
         <Image
-          src={postData.image}
+          src={postData.imageUrl}
           alt={postData.title}
           className="w-full h-auto rounded-3xl shadow-xl"
           width={800}
@@ -222,7 +278,7 @@ const BlogDetail = () => {
         />
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2 mt-16 pb-12 border-b border-gray-100">
+        {/* <div className="flex flex-wrap gap-2 mt-16 pb-12 border-b border-gray-100">
           {postData.tags.map((tag: any) => (
             <span
               key={tag}
@@ -231,7 +287,7 @@ const BlogDetail = () => {
               {tag}
             </span>
           ))}
-        </div>
+        </div> */}
 
         {/* Interaction Bar (Bottom) */}
         <div className="flex items-center justify-between py-12">
@@ -268,7 +324,7 @@ const BlogDetail = () => {
             Baca Juga
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {ARTICLES_DATA.filter((p) => p.id !== postData.id)
+            {blogs.filter((p) => p.id !== postData.id)
               .slice(0, 3)
               .map((rec) => (
                 <div
@@ -278,7 +334,7 @@ const BlogDetail = () => {
                 >
                   <div className="aspect-video rounded-2xl overflow-hidden mb-4">
                     <Image
-                      src={rec.image}
+                      src={rec.imageUrl}
                       alt={rec.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       width={400}
@@ -288,9 +344,9 @@ const BlogDetail = () => {
                   <h4 className="font-black text-emerald-950 group-hover:text-emerald-700 leading-tight mb-2">
                     {rec.title}
                   </h4>
-                  <p className="text-xs text-gray-500 font-bold uppercase">
+                  {/* <p className="text-xs text-gray-500 font-bold uppercase">
                     {rec.date}
-                  </p>
+                  </p> */}
                 </div>
               ))}
           </div>
