@@ -175,7 +175,6 @@ const ArtikelPage = () => {
     fetchArticles();
   }, []);
 
-
   const filteredPosts = useMemo(() => {
     return BLOG_DATA.filter((post) => {
       const matchesCategory =
@@ -266,11 +265,14 @@ const ArtikelPage = () => {
                   </span>
                   <span className="text-gray-300">•</span>
                   <span className="text-xs text-gray-500 font-bold uppercase">
-                    {new Date(featuredPost.createdAt).toLocaleDateString("id-ID", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    })}
+                    {new Date(featuredPost.createdAt).toLocaleDateString(
+                      "id-ID",
+                      {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      },
+                    )}
                   </span>
                 </div>
                 <h2
@@ -282,7 +284,8 @@ const ArtikelPage = () => {
                   {featuredPost.title.slice(0, 100)}
                 </h2>
                 <p className="text-lg text-gray-600 leading-relaxed medium-serif italic">
-                  {featuredPost.content.replace(/<[^>]+>/g, "").slice(0, 200)}...
+                  {featuredPost.content.replace(/<[^>]+>/g, "").slice(0, 200)}
+                  ...
                 </p>
                 <div className="pt-4 flex items-center gap-8">
                   <div className="flex items-center gap-3">
@@ -291,7 +294,7 @@ const ArtikelPage = () => {
                     </div>
                     <div>
                       <p className="text-sm font-bold text-gray-900">
-                        {'Admin Pajak!Koe'}
+                        {"Admin Pajak!Koe"}
                       </p>
                       <p className="text-[10px] text-gray-400 font-bold uppercase">
                         Verifikasi Ahli
@@ -336,37 +339,40 @@ const ArtikelPage = () => {
 
             {/* List Artikel */}
             <div className="space-y-20">
-              {blogs.map((post) => post.imageUrl && (
-                <article key={post.slug} className="group cursor-pointer">
-                  <div className="flex flex-col-reverse sm:flex-row gap-10 items-start">
-                    <div className="flex-1 space-y-4">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-900 bg-emerald-50 px-3 py-1.5 rounded-lg">
-                          {post.category}
-                        </span>
-                        {/* <div className="flex items-center gap-1.5 text-gray-400">
+              {blogs.map(
+                (post) =>
+                  post.imageUrl && (
+                    <article key={post.slug} className="group cursor-pointer">
+                      <div className="flex flex-col-reverse sm:flex-row gap-10 items-start">
+                        <div className="flex-1 space-y-4">
+                          <div className="flex items-center gap-3">
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-900 bg-emerald-50 px-3 py-1.5 rounded-lg">
+                              {post.category}
+                            </span>
+                            {/* <div className="flex items-center gap-1.5 text-gray-400">
                           <Clock size={12} />
                           <span className="text-[10px] font-bold uppercase">
                             {post.readTime}
                           </span>
                         </div> */}
-                      </div>
+                          </div>
 
-                      <h3
-                        className="text-2xl font-black leading-tight text-emerald-950 group-hover:text-emerald-800 transition-colors digitale-heading"
-                        onClick={() =>
-                          (window.location.href = `/artikel/${post.slug}`)
-                        }
-                      >
-                        {post.title}
-                      </h3>
+                          <h3
+                            className="text-2xl font-black leading-tight text-emerald-950 group-hover:text-emerald-800 transition-colors digitale-heading"
+                            onClick={() =>
+                              (window.location.href = `/artikel/${post.slug}`)
+                            }
+                          >
+                            {post.title}
+                          </h3>
 
-                      <p className="text-gray-600 text-base leading-relaxed line-clamp-2 medium-serif">
-                        {post.content.replace(/<[^>]+>/g, "").slice(0, 150)}...
-                      </p>
+                          <p className="text-gray-600 text-base leading-relaxed line-clamp-2 medium-serif">
+                            {post.content.replace(/<[^>]+>/g, "").slice(0, 150)}
+                            ...
+                          </p>
 
-                      <div className="flex items-center justify-between pt-4">
-                        {/* <div className="flex items-center gap-2">
+                          <div className="flex items-center justify-between pt-4">
+                            {/* <div className="flex items-center gap-2">
                           {post.tags.map((tag) => (
                             <span
                               key={tag}
@@ -376,29 +382,30 @@ const ArtikelPage = () => {
                             </span>
                           ))}
                         </div> */}
-                        <div className="flex items-center gap-4 text-gray-300">
-                          <Bookmark
-                            size={18}
-                            className="hover:text-emerald-900"
+                            <div className="flex items-center gap-4 text-gray-300">
+                              <Bookmark
+                                size={18}
+                                className="hover:text-emerald-900"
+                              />
+                              <MoreHorizontal size={18} />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="w-full sm:w-48 h-40 flex-shrink-0 overflow-hidden rounded-lg relative">
+                          <Image
+                            src={post.imageUrl}
+                            alt={post.title}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                            width={192}
+                            height={160}
                           />
-                          <MoreHorizontal size={18} />
+                          <div className="absolute inset-0 ring-1 ring-inset ring-black/5 rounded-lg" />
                         </div>
                       </div>
-                    </div>
-
-                    <div className="w-full sm:w-48 h-40 flex-shrink-0 overflow-hidden rounded-lg relative">
-                      <Image
-                        src={post.imageUrl}
-                        alt={post.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                        width={192}
-                        height={160}
-                      />
-                      <div className="absolute inset-0 ring-1 ring-inset ring-black/5 rounded-lg" />
-                    </div>
-                  </div>
-                </article>
-              ))}
+                    </article>
+                  ),
+              )}
 
               {filteredPosts.length === 0 && (
                 <div className="py-20 text-center bg-gray-50 rounded-lg border-2 border-dashed border-gray-100">
@@ -441,7 +448,8 @@ const ArtikelPage = () => {
                   Topik Terhangat
                 </h4>
                 <div className="space-y-8">
-                  {blogs.filter((p) => !p.isFeatured)
+                  {blogs
+                    .filter((p) => !p.isFeatured)
                     .slice(0, 3)
                     .map((p, i) => (
                       <div
@@ -461,7 +469,7 @@ const ArtikelPage = () => {
                             {p.title}
                           </h5>
                           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">
-                            {'Admin Pajak!Koe'}
+                            {"Admin Pajak!Koe"}
                           </p>
                         </div>
                       </div>

@@ -1,28 +1,27 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { FirebaseProvider } from "../components/layout/FirebaseProvider";
-import "./globals.css";
+import "../globals.css";
 
 const digitaleRegular = localFont({
-  src: "../fonts/Digitale-Regular.otf",
+  src: "../../fonts/Digitale-Regular.otf",
   variable: "--font-digitale-regular",
   display: "swap",
 });
 
 const digitaleBold = localFont({
-  src: "../fonts/Digitale-Bold.otf",
+  src: "../../fonts/Digitale-Bold.otf",
   variable: "--font-digitale-bold",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Pajak!Koe - Layanan Pajak Online Mudah dan Cepat",
+  title: "Tentang Kami - Pajak!Koe",
   description:
-    "Kelola pajak Anda dengan mudah menggunakan Pajak!Koe. Daftar NPWP online, hitung pajak, dan laporkan SPT tahunan tanpa ribet.",
+    "Pajak!Koe adalah layanan pajak online yang memudahkan Anda dalam mengelola administrasi pajak Anda.",
 };
 
-export default function RootLayout({
+export default function AboutUsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -37,7 +36,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={`${digitaleRegular.variable} ${digitaleBold.variable} antialiased`}
       >
-        <FirebaseProvider>{children}</FirebaseProvider>
+        {children}
       </body>
     </html>
   );

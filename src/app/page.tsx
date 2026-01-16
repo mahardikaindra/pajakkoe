@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   Menu,
@@ -16,7 +16,12 @@ import {
   Building2,
   ArrowRight,
   MessageSquare,
+  Zap,
+  Handshake,
+  BarChart3,
+  Headphones,
 } from "lucide-react";
+import { motion, cubicBezier } from "framer-motion";
 
 // --- ANIMATION HOOK ---
 const useIntersectionObserver = (
@@ -46,6 +51,26 @@ const useIntersectionObserver = (
 
 // --- REUSABLE REVEAL COMPONENT ---
 import { ReactNode } from "react";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: cubicBezier(0.22, 1, 0.36, 1) },
+  },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    },
+  },
+};
 
 const Reveal = ({
   children,
@@ -141,6 +166,29 @@ const ARTICLES_DATA = [
       "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=400&h=250&fit=crop",
     excerpt:
       "Ketahui risiko sanksi administratif dan hambatan transaksi bisnis jika Anda mengabaikan pembaruan profil di sistem Coretax terbaru.",
+  },
+];
+
+const partnerAdvantages = [
+  {
+    title: "Jalur Prioritas",
+    desc: "Antrian khusus untuk semua berkas dari mitra. Selesai lebih cepat dari layanan reguler.",
+    icon: <Zap className="text-[#ffcd0c]" />,
+  },
+  {
+    title: "Harga Khusus Notaris",
+    desc: "Harga khusus yang kompetitif memungkinkan Anda memiliki margin keuntungan lebih besar.",
+    icon: <Handshake className="text-[#ffcd0c]" />,
+  },
+  {
+    title: "Laporan Real-time",
+    desc: "Dashboard progres berkas yang transparan untuk memudahkan Anda update ke klien.",
+    icon: <BarChart3 className="text-[#ffcd0c]" />,
+  },
+  {
+    title: "Konsultasi Teknis",
+    desc: "Akses langsung ke tim ahli untuk bedah kasus OSS yang rumit secara gratis.",
+    icon: <Headphones className="text-[#ffcd0c]" />,
   },
 ];
 
@@ -276,7 +324,7 @@ const SiteHero = () => {
 
             <Reveal animation="fade-up" delay={300}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1] mb-8 tracking-tighter">
-                SOLUSI ANDALAN URUS <br />
+                SOLUSI ANDALAN URUSAN <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-200">
                   NPWP & CORETAX
                 </span>
@@ -285,7 +333,8 @@ const SiteHero = () => {
 
             <Reveal animation="fade-up" delay={500}>
               <p className="text-xl text-slate-300 mb-12 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
-                NPWP TERDAFTAR, CORETAX AKTIF, SPT TERLAPOR & PKP DISETUJUI!<br className="hidden md:block" /> 
+                NPWP TERDAFTAR, CORETAX AKTIF, SPT TERLAPOR & PKP DISETUJUI!
+                <br className="hidden md:block" />
                 {/* oleh tim ahli kami. <br className="hidden md:block" /> */}
                 <span className="text-white font-bold">
                   Bayar hanya setelah dokumen Anda terbit!
@@ -381,37 +430,86 @@ const ServiceSelector = () => {
 };
 
 const NotarisBanner = () => (
-  <section className="py-10 bg-yellow-400">
-    <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div className="flex items-center gap-5">
-        <div className="w-16 h-16 bg-black/10 rounded-2xl flex items-center justify-center text-black">
-          <Star size={32} />
+  <>
+    <section className="py-10 bg-yellow-400">
+      <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-5">
+          <div className="w-16 h-16 bg-black/10 rounded-2xl flex items-center justify-center text-black">
+            <Star size={32} />
+          </div>
+          <div>
+            <h3 className="text-2xl font-black text-black tracking-tighter uppercase">
+              Promo Spesial Notaris
+            </h3>
+            <p className="text-black/70 font-bold uppercase tracking-widest text-[10px]">
+              Dapatkan Potongan Langsung
+            </p>
+          </div>
         </div>
-        <div>
-          <h3 className="text-2xl font-black text-black tracking-tighter uppercase">
-            Promo Spesial Notaris
-          </h3>
-          <p className="text-black/70 font-bold uppercase tracking-widest text-[10px]">
-            Dapatkan Potongan Langsung
+        <div className="text-center md:text-right">
+          <span className="text-5xl font-black text-black block leading-none">
+            DISKON 15%
+          </span>
+          <p className="text-black font-bold uppercase text-xs mt-2">
+            *Berlaku untuk semua notaris yang menjadi rekanan Koe Legali
+            Indonesia
           </p>
         </div>
+        <button
+          onClick={() => handlePesanWA("Diskon Notaris 15%")}
+          className="bg-black text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-all"
+        >
+          Klaim Diskon
+        </button>
       </div>
-      <div className="text-center md:text-right">
-        <span className="text-5xl font-black text-black block leading-none">
-          DISKON 15%
-        </span>
-        <p className="text-black font-bold uppercase text-xs mt-2">
-          *Berlaku untuk semua notaris yang menjadi rekanan Koe Legali Indonesia
-        </p>
+    </section>
+    <section className="py-24 bg-white overflow-hidden relative">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
+        <motion.div
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-7xl font-black tracking-tighter text-[#2C4F40] uppercase hero-title leading-none">
+            MANFAAT NOTARIS <br />
+            <span className="text-white stroke-text-white bg-[#2C4F40]">
+              JADI MITRA PAJAK!KOE
+            </span>
+          </h2>
+          <p className="text-slate-400 font-black uppercase tracking-[0.3em] mt-4 text-[10px] md:text-xs">
+            Solusi Sinergis bagi Notaris
+          </p>
+        </motion.div>
+
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+        >
+          {partnerAdvantages.map((item, i) => (
+            <motion.div
+              key={i}
+              variants={fadeInUp}
+              whileHover={{ y: -5 }}
+              className="bg-[#2C4F40] p-8 rounded-[25px] border border-white/10 shadow-xl relative overflow-hidden flex flex-col items-center text-center group"
+            >
+              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                {React.cloneElement(item.icon, { size: 24 })}
+              </div>
+              <h4 className="text-base font-black text-[#ffcd0c] uppercase tracking-tight mb-3">
+                {item.title}
+              </h4>
+              <p className="text-white/70 text-[11px] font-medium leading-relaxed italic">
+                {item.desc}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-      <button
-        onClick={() => handlePesanWA("Diskon Notaris 15%")}
-        className="bg-black text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-all"
-      >
-        Klaim Diskon
-      </button>
-    </div>
-  </section>
+    </section>
+  </>
 );
 
 const StatsSection = () => {
@@ -756,7 +854,7 @@ const App = () => {
         <SiteHero />
         <ServiceSelector />
         <NotarisBanner />
-        <StatsSection />
+        {/* <StatsSection /> */}
 
         {/* Konsultasi Banner (Sticky Style CTA) */}
         <section className="bg-[#2c4f40] py-12">

@@ -214,7 +214,7 @@ const BlogDetail = () => {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h4 className="font-bold text-gray-900">{'Admin Pajak!Koe'}</h4>
+                <h4 className="font-bold text-gray-900">{"Admin Pajak!Koe"}</h4>
                 <span className="text-emerald-600 font-bold text-xs hover:underline cursor-pointer">
                   Ikuti
                 </span>
@@ -224,10 +224,10 @@ const BlogDetail = () => {
                 {/* <span>•</span> */}
                 <span>
                   {new Date(postData.createdAt).toLocaleDateString("id-ID", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    })}
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}
                 </span>
               </div>
             </div>
@@ -324,7 +324,8 @@ const BlogDetail = () => {
             Baca Juga
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {blogs.filter((p) => p.id !== postData.id)
+            {blogs
+              .filter((p) => p.id !== postData.id)
               .slice(0, 3)
               .map((rec) => (
                 <div

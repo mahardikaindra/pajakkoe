@@ -94,6 +94,13 @@ const SiteHeader = ({
 const SiteAbout = () => {
   return (
     <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.02em; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-30px); } }
+        .animate-float { animation: float 8s ease-in-out infinite; }
+        .bg-grid { background-size: 40px 40px; background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px); }
+      `}</style>
       <SiteHeader
         scrolled={true}
         onConsult={() => {}}
@@ -177,7 +184,7 @@ const SiteAbout = () => {
                 <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                   <Shield size={32} />
                 </div>
-                <h4 className="font-black text-xl mb-4">Integritas</h4>
+                <h4 className="text-black text-xl mb-4">Integritas</h4>
                 <p className="text-slate-500 text-sm font-medium">
                   Kami bekerja dengan kejujuran penuh dan kepatuhan terhadap
                   hukum yang berlaku.
@@ -187,7 +194,7 @@ const SiteAbout = () => {
                 <div className="w-16 h-16 bg-yellow-100 text-yellow-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                   <Clock size={32} />
                 </div>
-                <h4 className="font-black text-xl mb-4">Kecepatan</h4>
+                <h4 className="text-black text-xl mb-4">Kecepatan</h4>
                 <p className="text-slate-500 text-sm font-medium">
                   Waktu Anda berharga. Kami berkomitmen memberikan layanan
                   tercepat di kelasnya.
@@ -197,7 +204,7 @@ const SiteAbout = () => {
                 <div className="w-16 h-16 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                   <Award size={32} />
                 </div>
-                <h4 className="font-black text-xl mb-4">Kepuasan Klien</h4>
+                <h4 className="text-black text-xl mb-4">Kepuasan Klien</h4>
                 <p className="text-slate-500 text-sm font-medium">
                   Setiap klien adalah prioritas. Kami memastikan pengalaman
                   terbaik dari awal hingga akhir.
