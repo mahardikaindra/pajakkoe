@@ -20,8 +20,30 @@ import {
   Handshake,
   BarChart3,
   Headphones,
+  BookOpen,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
-import { motion, cubicBezier } from "framer-motion";
+import { motion, cubicBezier, AnimatePresence } from "framer-motion";
+
+interface ArtikelPageProps {
+  id: string;
+  authorId: string;
+  backlinkUrl: string;
+  backlinkText: string;
+  category: string;
+  content: string;
+  seoScore: number;
+  slug: string;
+  title: string;
+  updateAt: string;
+  isFeatured: boolean;
+  likes: number;
+  metaDescription: string;
+  imageUrl: string;
+  focusedKeyword: string;
+  createdAt: string;
+}
 
 // --- ANIMATION HOOK ---
 const useIntersectionObserver = (
@@ -144,7 +166,8 @@ const ARTICLES_DATA = [
     category: "Kesulitan Pendaftaran",
     image:
       "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=600&h=400&fit=crop",
-    excerpt: `Baru mau mulai rapihin administrasi pajak tapi sudah kena mental duluan gara-gara sistem baru? Transisi ke Coretax System memang lagi jadi topik hangat karena banyak calon wajib pajak yang merasa alurnya jauh lebih tricky. Masalahnya nggak main-main, mulai dari NIK yang gagal validasi karena data belum sinkron, kode OTP yang nggak kunjung masuk ke email, sampai tampilan navigasi menu baru yang bikin bingung tujuh keliling. Hal-hal teknis ini sering banget jadi batu sandungan buat kamu yang pengen urus NPWP atau PKP dengan cepat. Nggak cuma soal login, kendala saat proses pengisian data juga sering bikin emosi. Banyak pengguna curhat soal dokumen yang terus ditolak karena masalah format, salah pilih lokasi KPP gara-gara beda domisili, hingga server yang sering down di jam kerja. Belum lagi drama status pendaftaran yang "Pending" lama banget tanpa kejelasan, atau urusan EFIN yang hilang pas mau aktivasi akun. Kalau kamu pengusaha, masalah sinkronisasi data usaha (NIB) dan ancaman link penipuan juga wajib banget diwaspadai agar bisnis tetap aman. Sebenarnya, teknologi baru ini dibuat biar semua urusan pajak kita makin transparan dan serba digital. Tapi buat kamu yang lagi sibuk scale up bisnis, menghabiskan waktu berjam-jam cuma buat cari tahu kenapa pendaftaran gagal tentu nggak efisien banget. Memahami 10 poin kendala di atas adalah langkah awal, tapi tahu cara bypass hambatannya dengan bantuan profesional adalah jalan ninja terbaik. Jangan sampai urusan birokrasi yang ribet malah menghambat produktivitas dan bikin rencana besar bisnismu jadi tertunda. Gak mau pusing dan pengen beres terima jadi tanpa perlu drama salah input data? Daripada coba-coba sendiri tapi malah stuck di tengah jalan dan data jadi berantakan, mending serahkan urusan pendaftaran NPWP atau pengajuan PKP kamu ke tim yang sudah khatam luar-dalam soal aturan Coretax terbaru. Kami siap bantu urusin semua prosesnya dari nol sampai beres, aman, dan pastinya legal. Cek layanan lengkap kita sekarang dan biarkan kami yang urus peningnya, kamu tinggal fokus cari cuan! Klik di sini buat konsultasi gratis: [https://www.pajakkoe.co.id/]'`,
+    excerpt:
+      "Transisi ke Coretax System memang lagi jadi topik hangat karena banyak calon wajib pajak yang merasa alurnya jauh lebih tricky.",
   },
   {
     id: 2,
@@ -153,8 +176,9 @@ const ARTICLES_DATA = [
     date: "27 Des 2025",
     category: "Edukasi",
     image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400&h=250&fit=crop",
-    excerpt: `Transisi ke Coretax System itu ibarat kita baru pindah dari HP jadul ke smartphone terbaru; butuh waktu adaptasi tapi fiturnya jauh lebih canggih. Di satu sisi, sistem ini menawarkan segudang manfaat yang bikin hidup pengusaha jadi lebih simpel, seperti urusan bayar dan lapor pajak yang jadi satu pintu. Tapi di sisi lain, ada konsekuensi serius kalau kita sampai abai atau telat beradaptasi dengan aturan main yang baru ini. Manfaat paling berasa adalah efisiensi waktu, di mana semua data perpajakan kamu sudah saling terhubung secara otomatis. Nggak ada lagi drama input data berulang kali karena sistem baru ini didesain biar semua serba otomatis dan transparan. Buat kamu yang lagi fokus scaling up bisnis, kemudahan administrasi ini tentu jadi angin segar karena kamu nggak perlu lagi pusing sama tumpukan berkas fisik yang bikin meja kerja berantakan. Namun, dibalik segala kemudahannya, ada konsekuensi yang nggak bisa dianggap remeh kalau kita main-main sama sistem ini. Coretax menuntut akurasi data yang sangat tinggi, jadi kalau ada salah input sedikit saja, risikonya bisa merembet ke denda atau sanksi administrasi yang lumayan menguras kantong. Ketidaktahuan soal cara migrasi data atau telat melakukan validasi profil bisa bikin status perpajakan kamu jadi "bermasalah" di mata hukum. Intinya, memahami manfaat dan konsekuensi Coretax adalah kunci biar bisnis kamu tetap aman di era digital ini. Daripada gambling dan nunggu sampai ada masalah baru gerak, mending pahami rinciannya sekarang juga. Kalau merasa nggak punya waktu buat ngurusin teknisnya, tim profesional kami siap bantu pastikan kamu cuma dapet manfaatnya tanpa perlu ngerasain konsekuensi buruknya. Cek artikel detailnya di bawah ini, ya!`,
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&h=400&fit=crop",
+    excerpt:
+      "Memahami manfaat dan konsekuensi Coretax adalah kunci biar bisnis kamu tetap aman di era digital ini.",
   },
   {
     id: 3,
@@ -163,9 +187,64 @@ const ARTICLES_DATA = [
     date: "25 Des 2025",
     category: "Edukasi",
     image:
-      "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=400&h=250&fit=crop",
+      "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=600&h=400&fit=crop",
     excerpt:
-      "Ketahui risiko sanksi administratif dan hambatan transaksi bisnis jika Anda mengabaikan pembaruan profil di sistem Coretax terbaru.",
+      "Ketahui risiko sanksi administratif dan hambatan transaksi bisnis jika Anda mengabaikan pembaruan profil.",
+  },
+  {
+    id: 4,
+    title: "Strategi Optimasi Pajak UMKM di Era Digital 2026",
+    slug: "strategi-optimasi-pajak-umkm-2026",
+    date: "15 Jan 2026",
+    category: "Bisnis",
+    image:
+      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=600&h=400&fit=crop",
+    excerpt:
+      "Bagaimana pelaku UMKM dapat memanfaatkan insentif pajak terbaru untuk mempercepat pertumbuhan usaha mereka.",
+  },
+  {
+    id: 5,
+    title: "Mengenal Pengukuhan PKP Sukarela bagi Perusahaan Startup",
+    slug: "mengenal-pkp-sukarela-startup",
+    date: "10 Jan 2026",
+    category: "Legalitas",
+    image:
+      "https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=600&h=400&fit=crop",
+    excerpt:
+      "Panduan bagi perusahaan rintisan yang ingin mengajukan PKP secara sukarela untuk meningkatkan kredibilitas di mata investor.",
+  },
+];
+
+const CAROUSEL_ITEMS = [
+  {
+    id: "npwp",
+    title: "Mengenai NPWP",
+    subtitle: "Pendaftaran Pribadi & Badan",
+    desc: "Panduan lengkap dan jasa pendaftaran NPWP secara instan melalui sistem Coretax terbaru. 30 menit langsung aktif.",
+    image:
+      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=800",
+    icon: <FileText size={40} className="text-green-500" />,
+    cta: "Pelajari NPWP",
+  },
+  {
+    id: "artikel",
+    title: "Baca Artikel Pajak",
+    subtitle: "Wawasan & Regulasi 2025",
+    desc: "Update informasi harian mengenai kebijakan fiskal, cara pemulihan akun pajak, dan tips mengelola pajak bisnis.",
+    image:
+      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800",
+    icon: <BookOpen size={40} className="text-green-500" />,
+    cta: "Buka Artikel",
+  },
+  {
+    id: "spt-pkp",
+    title: "Pelaporan SPT & PKP",
+    subtitle: "Kepatuhan & Legalitas",
+    desc: "Layanan penyusunan laporan SPT Tahunan dan pengurusan Pengukuhan Pengusaha Kena Pajak (PKP) tanpa ribet.",
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800",
+    icon: <ShieldCheck size={40} className="text-green-500" />,
+    cta: "Urus Sekarang",
   },
 ];
 
@@ -790,6 +869,8 @@ const FinalCTA = () => (
 );
 
 import Footer from "../components/layout/Footer";
+import axios from "axios";
+import { i } from "framer-motion/client";
 
 const FAQItem = ({
   question,
@@ -823,15 +904,282 @@ const FAQItem = ({
   );
 };
 
+const InteractiveCarousel = () => {
+  const [index, setIndex] = useState(0);
+
+  const next = () => setIndex((prev) => (prev + 1) % CAROUSEL_ITEMS.length);
+  const prev = () =>
+    setIndex(
+      (prev) => (prev - 1 + CAROUSEL_ITEMS.length) % CAROUSEL_ITEMS.length,
+    );
+
+  return (
+    <section
+      id="layanan-utama"
+      className="py-32 bg-white overflow-hidden antialiased"
+    >
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <Reveal className="text-left">
+            <span className="text-green-600 font-black tracking-[0.3em] uppercase text-[10px] mb-4 block">
+              Pusat Informasi
+            </span>
+            <h2 className="text-5xl font-black tracking-tighter text-slate-900 leading-tight">
+              Layanan Prioritas <br /> Pajak!Koe.
+            </h2>
+          </Reveal>
+          <div className="flex gap-4 mb-2">
+            <button
+              onClick={prev}
+              className="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center hover:bg-[#2c4f40] hover:text-white transition-all shadow-sm"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              onClick={next}
+              className="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center hover:bg-[#2c4f40] hover:text-white transition-all shadow-sm"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </div>
+        </div>
+
+        <div className="relative min-h-[500px] md:min-h-[450px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-slate-50 rounded-[4rem] p-10 md:p-16 border border-slate-100"
+            >
+              <div className="order-2 lg:order-1 text-left">
+                <div className="mb-8">{CAROUSEL_ITEMS[index].icon}</div>
+                <h4 className="text-sm font-black text-green-600 uppercase tracking-widest mb-4">
+                  {CAROUSEL_ITEMS[index].subtitle}
+                </h4>
+                <h3 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tighter leading-tight">
+                  {CAROUSEL_ITEMS[index].title}
+                </h3>
+                <p className="text-slate-500 text-lg leading-relaxed mb-10 font-medium max-w-md">
+                  {CAROUSEL_ITEMS[index].desc}
+                </p>
+                <button
+                  onClick={() => {
+                    if (CAROUSEL_ITEMS[index].id === "artikel") return;
+                    else handlePesanWA(CAROUSEL_ITEMS[index].title);
+                  }}
+                  className="bg-[#2c4f40] text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all flex items-center gap-3 shadow-xl"
+                >
+                  {CAROUSEL_ITEMS[index].cta} <ArrowRight size={16} />
+                </button>
+              </div>
+
+              <div className="order-1 lg:order-2 h-72 lg:h-[400px] rounded-[3rem] overflow-hidden shadow-2xl">
+                <Image
+                  src={CAROUSEL_ITEMS[index].image}
+                  alt={CAROUSEL_ITEMS[index].title}
+                  width={600}
+                  height={400}
+                  className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-1000"
+                />
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Indicator */}
+        <div className="flex justify-center gap-3 mt-12">
+          {CAROUSEL_ITEMS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              className={`h-2 rounded-full transition-all duration-500 ${index === i ? "w-12 bg-green-500" : "w-3 bg-slate-200"}`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const LandingArticlesSection = ({
+  blogs,
+  loading,
+}: {
+  blogs: ArtikelPageProps[];
+  loading: boolean;
+}) => {
+  if (loading) {
+    return (
+      <section id="artikel" className="py-40 bg-white">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+            <div className="text-left">
+              <span className="text-green-600 font-black tracking-[0.3em] uppercase text-[10px] mb-6 block">
+                Wawasan & Blog
+              </span>
+              <h2 className="text-5xl font-black text-slate-900 tracking-tighter leading-tight">
+                Edukasi Perpajakan <br /> Untuk Anda.
+              </h2>
+            </div>
+            <div className="h-6 w-48 bg-slate-200 rounded-full animate-pulse"></div>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div className="lg:col-span-7">
+              <div className="h-[600px] bg-slate-200 rounded-[3.5rem] animate-pulse"></div>
+            </div>
+            <div className="lg:col-span-5 grid grid-cols-1 md:grid-cols-2 gap-8">
+              {[1, 2, 3, 4].map((_, i) => (
+                <div key={i} className="flex flex-col">
+                  <div className="h-48 bg-slate-200 rounded-[2.5rem] mb-6 animate-pulse"></div>
+                  <div className="h-6 w-32 bg-slate-200 rounded-full mb-3 animate-pulse"></div>
+                  <div className="h-8 bg-slate-200 rounded-full animate-pulse"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+  return (
+    <section id="artikel" className="py-40 bg-white">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+          <Reveal className="text-left">
+            <span className="text-green-600 font-black tracking-[0.3em] uppercase text-[10px] mb-6 block">
+              Wawasan & Blog
+            </span>
+            <h2 className="text-5xl font-black text-slate-900 tracking-tighter leading-tight">
+              Edukasi Perpajakan <br /> Untuk Anda.
+            </h2>
+          </Reveal>
+          <button
+            onClick={() => (window.location.href = "/artikel")}
+            className="flex items-center gap-3 font-black uppercase tracking-widest text-xs text-green-600 hover:translate-x-2 transition-all"
+          >
+            Lihat Seluruh Artikel <ArrowRight size={18} />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          {/* Featured Article (1 large item) */}
+          <div className="lg:col-span-7">
+            <Reveal animation="fade-up">
+              <div
+                className="group cursor-pointer relative h-[600px] rounded-[3.5rem] overflow-hidden shadow-2xl"
+                onClick={() => {}}
+              >
+                <Image
+                  src={blogs[0].imageUrl}
+                  width={800}
+                  height={600}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-all duration-1000"
+                  alt="Featured"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent p-12 flex flex-col justify-end text-left">
+                  <span className="bg-green-500 text-white font-black text-[10px] uppercase tracking-widest px-5 py-2 rounded-full w-fit mb-6">
+                    {blogs[0].category}
+                  </span>
+                  <h3 className="text-3xl md:text-4xl font-black text-white mb-6 tracking-tighter leading-tight">
+                    {blogs[0].title}
+                  </h3>
+                  <p className="text-slate-300 font-medium mb-8 max-w-lg line-clamp-2">
+                    {blogs[0].content.replace(/<[^>]+>/g, "").slice(0, 200)}...
+                  </p>
+                  <div className="flex items-center gap-4 text-white font-black text-xs uppercase tracking-widest">
+                    Baca Artikel <ArrowRight size={18} />
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Grid Articles (4 small items) */}
+          <div className="lg:col-span-5 grid grid-cols-1 md:grid-cols-2 gap-8">
+            {blogs.slice(1, 5).map((art, i) => (
+              <Reveal key={art.id} animation="fade-up" delay={i * 150}>
+                <div
+                  className="group cursor-pointer flex flex-col text-left"
+                  onClick={() => {}}
+                >
+                  <div className="h-48 bg-slate-100 rounded-[2.5rem] mb-6 overflow-hidden shadow-md">
+                    <Image
+                      src={art.imageUrl}
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                      alt={art.title}
+                    />
+                  </div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-green-600 font-black text-[9px] uppercase tracking-widest">
+                      {art.category}
+                    </span>
+                    <span className="text-slate-300 font-bold text-[9px]">
+                      {new Date(art.createdAt).toLocaleDateString("id-ID", {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </span>
+                  </div>
+                  <h4 className="text-lg font-black text-slate-900 tracking-tight leading-snug group-hover:text-green-600 transition-colors line-clamp-2">
+                    {art.title}
+                  </h4>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // --- APP COMPONENT ---
 
 const App = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [blogs, setBlogs] = useState<ArtikelPageProps[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const res = await axios.get(
+          "https://www.koegroupindonesia.id/api/articles",
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          },
+        );
+        // filter only isPublished true articles and sort by createdAt desc
+        const publishedArticles = res.data
+          .filter((article: ArtikelPageProps) => article.isFeatured)
+          .sort(
+            (a: ArtikelPageProps, b: ArtikelPageProps) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+          );
+        setBlogs(publishedArticles);
+      } catch (err) {
+        console.error("❌ Fetch articles error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
   }, []);
 
   return (
@@ -872,7 +1220,10 @@ const App = () => {
         </section>
 
         <PricingSection />
-        {/* <ArticleSection /> */}
+        <InteractiveCarousel />
+
+        {/* SECTION ARTIKEL UTAMA (5 ITEMS) */}
+        <LandingArticlesSection blogs={blogs} loading={loading} />
         <FAQSection />
         <NIBBanner />
         <FinalCTA />
