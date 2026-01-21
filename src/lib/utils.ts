@@ -1,5 +1,7 @@
 // src/lib/utils.ts
 
+import { WA_PHONE_NUMBER } from "./constants";
+
 // format currency
 const formatCurrency = (amount: number, currency: string = "USD"): string => {
   return new Intl.NumberFormat("en-US", {
@@ -18,7 +20,7 @@ const safeJsonParse = <T>(jsonString: string, defaultValue: T): T => {
 };
 
 const handlePesanWA = (paket: string) => {
-  const nomorWA = "6285797946263";
+  const nomorWA = WA_PHONE_NUMBER;
   let pesan = "";
 
   if (paket === "Tanya-tanya" || paket === "Umum") {

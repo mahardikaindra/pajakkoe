@@ -89,28 +89,11 @@ const PengukuhanPKPPage: React.FC<PengukuhanPKPPageProps> = ({ children }) => {
   return (
     <div className="font-sans text-slate-700 selection:bg-brand-blue selection:text-white">
       <style>{`
-        @font-face { font-family: 'Digitale'; src: url('/fonts/Digitale-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; } @font-face { font-family: 'Digitale'; src: url('/fonts/Digitale-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
-        body { font-family: 'Digitale', sans-serif; }
-        
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-          100% { transform: translateY(0px); }
-        }
-        
-        .pulse-ring {
-          animation: pulse-ring 2s infinite;
-        }
-        
-        @keyframes pulse-ring {
-          0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-          70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
-          100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.02em; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-30px); } }
+        .animate-float { animation: float 8s ease-in-out infinite; }
+        .bg-grid { background-size: 40px 40px; background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px); }
       `}</style>
       <Header
         scrolled={scrolled}
@@ -319,9 +302,9 @@ const PengukuhanPKPPage: React.FC<PengukuhanPKPPageProps> = ({ children }) => {
           </div>
         </div>
       </section>
-      <Pricing type="pkp" />
-      <CTA />
-      <FAQ type="pkp" />
+      <Pricing id="paket" type="pkp" />
+      <CTA id="cta" />
+      <FAQ id="faq" type="pkp" />
       <Footer />
       <button
         onClick={() => handlePesanWA("Tanya-tanya")}

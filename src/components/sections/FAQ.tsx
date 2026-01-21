@@ -11,16 +11,17 @@ interface FAQItem {
 }
 
 interface FAQProps {
+  id: string;
   title?: string;
   subtitle?: string;
   items?: FAQItem[];
   type?: "npwp" | "pkp" | "spt";
 }
 
-const FAQ: React.FC<FAQProps> = ({ title, subtitle, items, type }) => {
+const FAQ: React.FC<FAQProps> = ({ id, title, subtitle, items, type }) => {
   const faqs = type === "pkp" ? FAQS_PKP : FAQS;
   return (
-    <section id="faq" className="py-24 bg-white">
+    <section id={id} className="py-24 bg-white">
       <div className="max-w-3xl mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-12">
           Pertanyaan Sering Diajukan

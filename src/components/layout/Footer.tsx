@@ -4,7 +4,15 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import WhatsAppIcon from "../ui/WhatsAppIcon";
-import { Instagram, Twitter, Facebook, MapPin, Mail } from "lucide-react";
+import {
+  Instagram,
+  Twitter,
+  Facebook,
+  MapPin,
+  Mail,
+  Clock,
+} from "lucide-react";
+import { handlePesanWA } from "../../lib/utils";
 
 const Footer: React.FC = () => {
   return (
@@ -29,6 +37,16 @@ const Footer: React.FC = () => {
             AHU-069446.AH.01.30.Tahun 2025. <br />
             Konsultasi Pajak Terpercaya di Indonesia.
           </p>
+          <div className="flex items-start mb-10 gap-5">
+            <div className="p-3 bg-white/5 rounded-xl text-green-500 shrink-0">
+              <MapPin size={22} />
+            </div>
+            <p className="text-slate-400 leading-relaxed text-sm font-medium">
+              HQuarters Lantai 20
+              <br />
+              Jl Asia Afrika No 158, Kota Bandung
+            </p>
+          </div>
           <div className="flex space-x-6">
             {[Instagram, Twitter, Facebook].map((Icon, i) => (
               <a
@@ -43,34 +61,38 @@ const Footer: React.FC = () => {
         </div>
 
         <div>
-          <h4 className="font-black text-white mb-10 text-lg tracking-tight">
-            Navigasi
+          <h4 className="font-black text-white mb-10 text-lg tracking-tight uppercase tracking-widest text-xs opacity-50">
+            Layanan Kami
           </h4>
           <ul className="space-y-5 text-slate-400 text-sm font-medium">
             <li>
-              <a href="/about-us" className="hover:text-green-500">
-                Tentang Kami
-              </a>
-            </li>
-            <li>
-              <a href="#layanan" className="hover:text-green-500">
-                Layanan
-              </a>
-            </li>
-            <li>
-              <a href="#paket" className="hover:text-green-500">
-                Daftar Harga
-              </a>
-            </li>
-            <li>
-              <Link href="/artikel" className="hover:text-green-500">
-                Blog Pajak
+              <Link href="/" className="hover:text-green-500 transition-colors">
+                Pendaftaran NPWP
               </Link>
             </li>
             <li>
-              <a href="#faq" className="hover:text-green-500">
-                FAQ
+              <a
+                href="/pengukuhan-pkp"
+                className="hover:text-green-500 transition-colors"
+              >
+                Pengukuhan PKP
               </a>
+            </li>
+            <li>
+              <a
+                href="/pelaporan-spt"
+                className="hover:text-green-500 transition-colors"
+              >
+                Lapor SPT Tahunan
+              </a>
+            </li>
+            <li>
+              <button
+                onClick={() => handlePesanWA("NIB Badan")}
+                className="hover:text-green-500 transition-colors text-left"
+              >
+                Pengurusan NIB Badan
+              </button>
             </li>
           </ul>
         </div>
@@ -84,7 +106,8 @@ const Footer: React.FC = () => {
               <WhatsAppIcon className="w-5 h-5 text-green-500" /> 0857-9794-6263
             </li>
             <li className="flex items-center gap-3">
-              <MapPin className="w-5 h-5 text-green-500" /> Bandung, Jawa Barat
+              <Clock className="w-5 h-5 text-green-500" />
+              Senin - Jumat, 08.00 - 17.00
             </li>
             <li className="flex items-center gap-3">
               <Mail className="w-5 h-5 text-green-500" />{" "}

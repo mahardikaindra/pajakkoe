@@ -239,7 +239,7 @@ const Educations = ({ type = "npwp" }: EducationsProps) => {
                         Bebas Denda Administrasi
                       </p>
                       <p className="text-sm text-slate-400">
-                        Hemat hingga Rp 1.000.000 dengan melapor tepat waktu
+                        Hemat hingga Rp 100.000 dengan melapor tepat waktu
                         sebelum tenggat.
                       </p>
                     </div>

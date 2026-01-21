@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   Menu,
@@ -8,10 +8,7 @@ import {
   Check,
   ShieldCheck,
   Star,
-  ChevronDown,
-  ChevronUp,
   CheckCircle,
-  Phone,
   Lock,
   Building2,
   ArrowRight,
@@ -45,34 +42,7 @@ interface ArtikelPageProps {
   createdAt: string;
 }
 
-// --- ANIMATION HOOK ---
-const useIntersectionObserver = (
-  options = {},
-): [React.RefObject<HTMLDivElement | null>, boolean] => {
-  const [isIntersecting, setIsIntersecting] = useState(false);
-  const elementRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsIntersecting(true); // Cast options to a more specific type if triggerOnce is always expected
-        if (options && (options as { triggerOnce?: boolean }).triggerOnce)
-          observer.unobserve(entry.target);
-      }
-    }, options as IntersectionObserverInit);
-
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [options]);
-
-  return [elementRef, isIntersecting];
-};
-
-// --- REUSABLE REVEAL COMPONENT ---
-import { ReactNode } from "react";
+import Reveal from "../components/ui/Reveal";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -93,127 +63,6 @@ const staggerContainer = {
     },
   },
 };
-
-const Reveal = ({
-  children,
-  animation = "fade-up",
-  delay = 0,
-  className = "",
-}: {
-  children: ReactNode;
-  animation?: string;
-  delay?: number;
-  className?: string;
-}) => {
-  const [ref, isVisible] = useIntersectionObserver({
-    threshold: 0.1,
-    triggerOnce: true,
-  });
-
-  const animations = {
-    "fade-up": "translate-y-12 opacity-0",
-    "fade-in": "opacity-0",
-    "slide-left": "-translate-x-12 opacity-0",
-    "slide-right": "translate-x-12 opacity-0",
-    "scale-up": "scale-95 opacity-0",
-  };
-
-  const activeClasses = isVisible
-    ? "translate-y-0 translate-x-0 opacity-100 scale-100"
-    : animations[animation as keyof typeof animations];
-
-  return (
-    <div
-      ref={ref}
-      style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] ${activeClasses} ${className}`}
-    >
-      {children}
-    </div>
-  );
-};
-
-// --- DATA ---
-const FAQS_DATA = [
-  {
-    question: "Apakah benar tanpa DP?",
-    answer:
-      "Ya, benar. Kami memproses dokumen Anda terlebih dahulu. Setelah dokumen terbit dan Anda cek validitasnya, baru Anda melakukan pembayaran.",
-  },
-  {
-    question: "Apa itu Pemulihan Akun Coretax?",
-    answer:
-      "Layanan untuk memulihkan akses akun pajak Anda di sistem Coretax terbaru agar bisa kembali melakukan pelaporan rutin.",
-  },
-  {
-    question: "Berapa lama proses NPWP?",
-    answer:
-      "Rata-rata selesai dalam 15-30 menit setelah data kami terima dengan lengkap.",
-  },
-  {
-    question: "Apakah melayani seluruh Indonesia?",
-    answer:
-      "Ya, layanan kami berbasis online dan mencakup seluruh wilayah kerja DJP di Indonesia.",
-  },
-];
-
-const ARTICLES_DATA = [
-  {
-    id: 1,
-    title: "10 Kendala Daftar NPWP di Coretax System dan Solusinya",
-    slug: "10-kendala-daftar-npwp-di-coretax-system-dan-solusinya",
-    date: "29 Des 2025",
-    category: "Kesulitan Pendaftaran",
-    image:
-      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=600&h=400&fit=crop",
-    excerpt:
-      "Transisi ke Coretax System memang lagi jadi topik hangat karena banyak calon wajib pajak yang merasa alurnya jauh lebih tricky.",
-  },
-  {
-    id: 2,
-    title: "5 Manfaat Coretax System: Revolusi Administrasi Pajak Indonesia",
-    slug: "5-manfaat-coretax-system-revolusi-administrasi-pajak-indonesia",
-    date: "27 Des 2025",
-    category: "Edukasi",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&h=400&fit=crop",
-    excerpt:
-      "Memahami manfaat dan konsekuensi Coretax adalah kunci biar bisnis kamu tetap aman di era digital ini.",
-  },
-  {
-    id: 3,
-    title: "Dampak Fatal Jika Tidak Melakukan Update Data Coretax",
-    slug: "dampak-fatal-jika-tidak-melakukan-update-data-coretax",
-    date: "25 Des 2025",
-    category: "Edukasi",
-    image:
-      "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=600&h=400&fit=crop",
-    excerpt:
-      "Ketahui risiko sanksi administratif dan hambatan transaksi bisnis jika Anda mengabaikan pembaruan profil.",
-  },
-  {
-    id: 4,
-    title: "Strategi Optimasi Pajak UMKM di Era Digital 2026",
-    slug: "strategi-optimasi-pajak-umkm-2026",
-    date: "15 Jan 2026",
-    category: "Bisnis",
-    image:
-      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=600&h=400&fit=crop",
-    excerpt:
-      "Bagaimana pelaku UMKM dapat memanfaatkan insentif pajak terbaru untuk mempercepat pertumbuhan usaha mereka.",
-  },
-  {
-    id: 5,
-    title: "Mengenal Pengukuhan PKP Sukarela bagi Perusahaan Startup",
-    slug: "mengenal-pkp-sukarela-startup",
-    date: "10 Jan 2026",
-    category: "Legalitas",
-    image:
-      "https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=600&h=400&fit=crop",
-    excerpt:
-      "Panduan bagi perusahaan rintisan yang ingin mengajukan PKP secara sukarela untuk meningkatkan kredibilitas di mata investor.",
-  },
-];
 
 const CAROUSEL_ITEMS = [
   {
@@ -271,21 +120,8 @@ const partnerAdvantages = [
   },
 ];
 
-const handlePesanWA = (type: string) => {
-  const message = `Halo CS Pajak!Koe, saya tertarik dengan layanan ${type}. Bagaimana prosedurnya?`;
-  window.open(
-    `https://wa.me/6285797946263?text=${encodeURIComponent(message)}`,
-    "_blank",
-  );
-};
-
-// --- UI COMPONENTS ---
-
-const WhatsAppIcon = ({ className }: { className: string }) => (
-  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.63 1.438h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-  </svg>
-);
+import { handlePesanWA } from "../lib/utils";
+import WhatsAppIcon from "../components/ui/WhatsAppIcon";
 
 // --- SECTIONS ---
 
@@ -312,27 +148,34 @@ const SiteHeader = ({
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div
-            className="shrink-0 flex items-center cursor-pointer"
+            className="flex flex-col cursor-pointer group shrink-0 items-center"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
-            <div
-              className={`w-10 h-10 rounded-xl flex items-center justify-center text-white mr-3 transition-all duration-300 ${scrolled ? "bg-[#2c4f40]" : "bg-transparent backdrop-blur"}`}
-            >
-              <Image
-                src={"/images/logo-white.png"}
-                alt="Pajak!Koe Logo"
-                width={100}
-                height={100}
-                className="w-8 h-8"
-                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                  (e.target as HTMLImageElement).style.display = "none";
-                }}
-              />
+            <div className="flex items-center gap-3">
+              <div
+                className={`w-12 h-12 p-2 rounded-xl flex items-center justify-center text-white mr-3 transition-all duration-300 ${scrolled ? "bg-[#2c4f40]" : "bg-transparent backdrop-blur"}`}
+              >
+                <Image
+                  src={"/images/logo-white.png"}
+                  alt="Pajak!Koe Logo"
+                  width={120}
+                  height={120}
+                  onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                    (e.target as HTMLImageElement).style.display = "none";
+                  }}
+                />
+              </div>
+              <span
+                className={`font-black text-2xl tracking-tighter ${scrolled ? "text-[#2c4f40]" : "text-white"}`}
+              >
+                PAJAK!KOE
+              </span>
             </div>
+
             <span
-              className={`font-black text-2xl tracking-tighter ${scrolled ? "text-[#2c4f40]" : "text-white"}`}
+              className={`text-[8px] font-black ${scrolled ? "text-[#2c4f40]" : "text-white"} uppercase tracking-widest ml-28 -mt-2 group-hover:text-[#2c4f40] transition-colors`}
             >
-              PAJAK!KOE
+              Part of PT Koe Group Indonesia
             </span>
           </div>
 
@@ -591,36 +434,6 @@ const NotarisBanner = () => (
   </>
 );
 
-const StatsSection = () => {
-  const stats = [
-    { value: "15,000+", label: "NPWP Terbit", sub: "Seluruh Indonesia" },
-    { value: "1.300+", label: "SPT Terlapor", sub: "Individu & Badan" },
-    { value: "880", label: "PKP Disetujui", sub: "Aktivasi Lancar" },
-  ];
-
-  return (
-    <section className="py-24 bg-white">
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12">
-        {stats.map((s, i) => (
-          <Reveal key={i} animation="scale-up" delay={i * 200}>
-            <div className="text-center p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100 hover:shadow-xl transition-all">
-              <div className="text-5xl font-black text-[#2c4f40] mb-3 tracking-tighter">
-                {s.value}
-              </div>
-              <div className="font-black text-slate-900 uppercase tracking-widest text-xs mb-1">
-                {s.label}
-              </div>
-              <p className="text-slate-400 text-xs font-medium uppercase tracking-widest">
-                {s.sub}
-              </p>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-};
-
 const PricingSection = () => (
   <section id="paket" className="py-40 bg-slate-50">
     <div className="max-w-6xl mx-auto px-4">
@@ -728,181 +541,12 @@ const PricingSection = () => (
   </section>
 );
 
-const ArticleSection = () => (
-  <section id="artikel" className="py-40 bg-white">
-    <div className="max-w-6xl mx-auto px-4">
-      <Reveal animation="fade-up">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-          <div className="text-left">
-            <span className="text-green-600 font-black tracking-[0.3em] uppercase text-[10px] mb-6 block">
-              Wawasan & Blog
-            </span>
-            <h2 className="text-5xl font-black text-slate-900 tracking-tighter leading-tight">
-              Berita & Artikel <br /> Terbaru.
-            </h2>
-          </div>
-          <button
-            className="flex items-center gap-3 font-black uppercase tracking-widest text-xs text-[#2c4f40] hover:translate-x-2 transition-all"
-            onClick={() => (window.location.href = "/artikel")}
-          >
-            Lihat Seluruh Blog <ArrowRight size={18} />
-          </button>
-        </div>
-      </Reveal>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-        {ARTICLES_DATA.map((art, i) => (
-          <Reveal key={art.id} animation="fade-up" delay={i * 200}>
-            <div className="group cursor-pointer">
-              <div className="h-64 bg-slate-100 rounded-4xl mb-8 overflow-hidden relative">
-                <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
-                <Image
-                  src={art.image}
-                  className="w-full h-full object-fill group-hover:scale-110 transition-all duration-700 opacity-100"
-                  alt={art.title}
-                  width={300}
-                  height={300}
-                />
-                <span className="absolute bottom-6 left-6 bg-white text-black font-black text-[8px] uppercase tracking-widest px-4 py-2 rounded-full">
-                  {art.category}
-                </span>
-              </div>
-              <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-3">
-                {art.date}
-              </p>
-              <h4 className="text-xl font-black text-slate-900 mb-4 tracking-tight group-hover:text-green-600 transition-colors">
-                {art.title}
-              </h4>
-              <p className="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-2">
-                {art.excerpt}
-              </p>
-              <span
-                className="font-black text-[10px] uppercase tracking-[0.2em] border-b-2 border-green-500 pb-1"
-                onClick={() => (window.location.href = `/artikel/${art.slug}`)}
-              >
-                Baca Selengkapnya
-              </span>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-const NIBBanner = () => (
-  <section className="py-20 bg-slate-900 text-white">
-    <div className="max-w-6xl mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-10">
-      <div className="flex items-center gap-8">
-        <div className="w-20 h-20 bg-white/5 rounded-4xl flex items-center justify-center text-green-400">
-          <Building2 size={40} />
-        </div>
-        <div className="text-left">
-          <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">
-            Layanan NIB OSS RBA - 1 Hari Beres
-          </p>
-          <h3 className="text-4xl font-black tracking-tighter leading-none mb-2">
-            Butuh NIB Badan?
-          </h3>
-        </div>
-      </div>
-      <button
-        onClick={() => handlePesanWA("Pengurusan NIB Badan")}
-        className="bg-green-500 hover:bg-white hover:text-black text-white px-12 py-6 rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-2xl"
-      >
-        Klik Disini Juga
-      </button>
-    </div>
-  </section>
-);
-
-const FAQSection = () => (
-  <section id="faq" className="py-40 bg-slate-50">
-    <div className="max-w-3xl mx-auto px-4">
-      <div className="text-center mb-24">
-        <h2 className="text-5xl font-black text-slate-900 tracking-tighter">
-          Pertanyaan Populer.
-        </h2>
-        <p className="text-slate-500 mt-4 font-bold uppercase tracking-widest text-[10px]">
-          Cek sebelum Anda melakukan pemesanan
-        </p>
-      </div>
-      <div className="space-y-6">
-        {FAQS_DATA.map((faq, idx) => (
-          <FAQItem key={idx} question={faq.question} answer={faq.answer} />
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-const FinalCTA = () => (
-  <section className="py-40 bg-white relative overflow-hidden">
-    <div className="absolute inset-0 bg-grid opacity-20"></div>
-    <div className="max-w-6xl mx-auto px-4 relative z-10 text-center">
-      <Reveal animation="scale-up">
-        <div className="max-w-4xl mx-auto bg-[#2c4f40] p-20 rounded-[4rem] shadow-[0_50px_100px_rgba(44,79,64,0.3)]">
-          <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter mb-10 leading-tight">
-            Tunggu Apa Lagi? <br /> Pajak Jadi Mudah.
-          </h2>
-          <p className="text-green-200/60 font-black uppercase tracking-[0.3em] text-xs mb-12">
-            Tanpa DP • Cepat • Terjamin
-          </p>
-          <div className="flex flex-col md:flex-row justify-center gap-6">
-            <button
-              onClick={() => handlePesanWA("Urgent")}
-              className="bg-green-500 text-white px-12 py-6 rounded-3xl font-black text-xl hover:scale-105 active:scale-95 transition-all shadow-2xl"
-            >
-              Hubungi CS Kami
-            </button>
-            <div className="flex items-center justify-center gap-4 bg-white/5 px-8 py-6 rounded-3xl border border-white/10">
-              <Phone className="text-green-400" size={24} />
-              <span className="text-white font-black text-xl tracking-tighter">
-                0857-9794-6263
-              </span>
-            </div>
-          </div>
-        </div>
-      </Reveal>
-    </div>
-  </section>
-);
-
 import Footer from "../components/layout/Footer";
 import axios from "axios";
-import { i } from "framer-motion/client";
-
-const FAQItem = ({
-  question,
-  answer,
-}: {
-  question: string;
-  answer: string;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <div className="bg-white rounded-4xl shadow-sm border border-slate-100 overflow-hidden">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-8 text-left flex justify-between items-center focus:outline-none"
-      >
-        <span className="font-black text-lg text-slate-900 tracking-tight">
-          {question}
-        </span>
-        {isOpen ? (
-          <ChevronUp className="text-slate-400" />
-        ) : (
-          <ChevronDown className="text-slate-400" />
-        )}
-      </button>
-      {isOpen && (
-        <div className="px-8 pb-8 text-slate-600 leading-relaxed font-medium text-sm border-t border-slate-50 pt-6 animate-in fade-in slide-in-from-top-2 duration-300">
-          {answer}
-        </div>
-      )}
-    </div>
-  );
-};
+import CTA from "../components/sections/CTA";
+import FAQ from "../components/sections/FAQ";
+import NIBBanner from "../components/sections/NIBBanner";
+import { PHONE_NUMBER } from "../lib/constants";
 
 const InteractiveCarousel = () => {
   const [index, setIndex] = useState(0);
@@ -1224,9 +868,9 @@ const App = () => {
 
         {/* SECTION ARTIKEL UTAMA (5 ITEMS) */}
         <LandingArticlesSection blogs={blogs} loading={loading} />
-        <FAQSection />
+        <FAQ id="faq" />
         <NIBBanner />
-        <FinalCTA />
+        <CTA id="cta" />
       </main>
 
       <Footer />
@@ -1234,7 +878,7 @@ const App = () => {
       {/* Floating Button with WhatsApp Number tooltips */}
       <div className="fixed bottom-10 right-10 z-50 group flex flex-col items-end gap-3">
         <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black text-white px-6 py-3 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl mb-2 translate-y-4 group-hover:translate-y-0">
-          WhatsApp: 0857-9794-6263
+          WhatsApp: {PHONE_NUMBER}
         </div>
         <button
           onClick={() => handlePesanWA("Tanya-tanya CS")}
