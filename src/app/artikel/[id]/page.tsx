@@ -150,7 +150,7 @@ const BlogDetail = () => {
     const fetchArticles = async () => {
       try {
         const res = await axios.get(
-          `https://www.koegroupindonesia.id/api/articles/${params.slug}`,
+          `https://www.koegroupindonesia.id/api/articles/${params.id}`,
           {
             headers: {
               Accept: "application/json",
@@ -158,6 +158,7 @@ const BlogDetail = () => {
             },
           },
         );
+        console.log("✅ Fetch articles success:", res.data);
         setBlogs(res.data);
       } catch (err) {
         console.error("❌ Fetch articles error:", err);
@@ -167,9 +168,9 @@ const BlogDetail = () => {
     };
 
     fetchArticles();
-  }, []);
+  }, [params.id]);
 
-  console.log("Params:", params);
+  console.log("Params:", params.id);
 
   // const postData = blogs.find((p) => p.slug === params.id);
   const postData = useMemo(() => {
