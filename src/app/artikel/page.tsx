@@ -247,13 +247,17 @@ const ArtikelPage = () => {
           <section className="mb-20">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-emerald-50/30 rounded-[3rem] p-8 lg:p-12 border border-emerald-100/50">
               <div className="relative aspect-9/5 rounded-lg overflow-hidden shadow-2xl">
-                <Image
-                  src={featuredPost.imageUrl || ""}
-                  alt={featuredPost.title}
-                  className="w-full h-full object-fill hover:scale-110 transition-transform duration-1000"
-                  width={600}
-                  height={400}
-                />
+                {featuredPost.imageUrl ? (
+                  <Image
+                    src={featuredPost.imageUrl}
+                    alt={featuredPost.title}
+                    className="w-full h-full object-fill hover:scale-110 transition-transform duration-1000"
+                    width={600}
+                    height={400}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-200" />
+                )}
                 {/* <div className="absolute top-6 left-6 bg-emerald-900 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2">
                   <Zap size={14} /> Terpopuler
                 </div> */}

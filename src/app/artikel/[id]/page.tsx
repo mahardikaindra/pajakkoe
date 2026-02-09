@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ChevronLeft,
   Twitter,
@@ -12,7 +12,6 @@ import {
   MessageCircle,
 } from "lucide-react";
 import axios from "axios";
-import { useRouter, useParams } from "next/navigation";
 
 interface ArtikelPageProps {
   id: string;
@@ -33,166 +32,48 @@ interface ArtikelPageProps {
   createdAt: string;
 }
 
-const ARTICLES_DATA = [
-  {
-    id: 1,
-    title: "10 Kendala Daftar NPWP di Coretax System dan Solusinya",
-    slug: "10-kendala-daftar-npwp-di-coretax-system-dan-solusinya",
-    date: "29 Des 2025",
-    category: "Kesulitan Pendaftaran",
-    image:
-      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=600&h=400&fit=crop",
-    author: "Admin Pajak!Koe",
-    readTime: "5 menit",
-    tags: ["Coretax", "NPWP", "Pendaftaran"],
-    content: `Baru mau mulai rapihin administrasi pajak tapi sudah kena mental duluan gara-gara sistem baru? Transisi ke Coretax System memang lagi jadi topik hangat karena banyak calon wajib pajak yang merasa alurnya jauh lebih tricky. Masalahnya nggak main-main, mulai dari NIK yang gagal validasi karena data belum sinkron, kode OTP yang nggak kunjung masuk ke email, sampai tampilan navigasi menu baru yang bikin bingung tujuh keliling. Hal-hal teknis ini sering banget jadi batu sandungan buat kamu yang pengen urus NPWP atau PKP dengan cepat. Nggak cuma soal login, kendala saat proses pengisian data juga sering bikin emosi. Banyak pengguna curhat soal dokumen yang terus ditolak karena masalah format, salah pilih lokasi KPP gara-gara beda domisili, hingga server yang sering down di jam kerja. Belum lagi drama status pendaftaran yang "Pending" lama banget tanpa kejelasan, atau urusan EFIN yang hilang pas mau aktivasi akun. Kalau kamu pengusaha, masalah sinkronisasi data usaha (NIB) dan ancaman link penipuan juga wajib banget diwaspadai agar bisnis tetap aman. Sebenarnya, teknologi baru ini dibuat biar semua urusan pajak kita makin transparan dan serba digital. Tapi buat kamu yang lagi sibuk scale up bisnis, menghabiskan waktu berjam-jam cuma buat cari tahu kenapa pendaftaran gagal tentu nggak efisien banget. Memahami 10 poin kendala di atas adalah langkah awal, tapi tahu cara bypass hambatannya dengan bantuan profesional adalah jalan ninja terbaik. Jangan sampai urusan birokrasi yang ribet malah menghambat produktivitas dan bikin rencana besar bisnismu jadi tertunda. Gak mau pusing dan pengen beres terima jadi tanpa perlu drama salah input data? Daripada coba-coba sendiri tapi malah stuck di tengah jalan dan data jadi berantakan, mending serahkan urusan pendaftaran NPWP atau pengajuan PKP kamu ke tim yang sudah khatam luar-dalam soal aturan Coretax terbaru. Kami siap bantu urusin semua prosesnya dari nol sampai beres, aman, dan pastinya legal. Cek layanan lengkap kita sekarang dan biarkan kami yang urus peningnya, kamu tinggal fokus cari cuan! Klik di sini buat konsultasi gratis: [https://www.pajakkoe.co.id/]'`,
-  },
-  {
-    id: 2,
-    title: "5 Manfaat Coretax System: Revolusi Administrasi Pajak Indonesia",
-    slug: "5-manfaat-coretax-system-revolusi-administrasi-pajak-indonesia",
-    date: "27 Des 2025",
-    category: "Edukasi",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400&h=250&fit=crop",
-    author: "Admin Pajak!Koe",
-    readTime: "4 menit",
-    tags: ["Coretax", "Sistem Pajak", "Inovasi"],
-    content: `Transisi ke Coretax System itu ibarat kita baru pindah dari HP jadul ke smartphone terbaru; butuh waktu adaptasi tapi fiturnya jauh lebih canggih. Di satu sisi, sistem ini menawarkan segudang manfaat yang bikin hidup pengusaha jadi lebih simpel, seperti urusan bayar dan lapor pajak yang jadi satu pintu. Tapi di sisi lain, ada konsekuensi serius kalau kita sampai abai atau telat beradaptasi dengan aturan main yang baru ini. Manfaat paling berasa adalah efisiensi waktu, di mana semua data perpajakan kamu sudah saling terhubung secara otomatis. Nggak ada lagi drama input data berulang kali karena sistem baru ini didesain biar semua serba otomatis dan transparan. Buat kamu yang lagi fokus scaling up bisnis, kemudahan administrasi ini tentu jadi angin segar karena kamu nggak perlu lagi pusing sama tumpukan berkas fisik yang bikin meja kerja berantakan. Namun, dibalik segala kemudahannya, ada konsekuensi yang nggak bisa dianggap remeh kalau kita main-main sama sistem ini. Coretax menuntut akurasi data yang sangat tinggi, jadi kalau ada salah input sedikit saja, risikonya bisa merembet ke denda atau sanksi administrasi yang lumayan menguras kantong. Ketidaktahuan soal cara migrasi data atau telat melakukan validasi profil bisa bikin status perpajakan kamu jadi "bermasalah" di mata hukum. Intinya, memahami manfaat dan konsekuensi Coretax adalah kunci biar bisnis kamu tetap aman di era digital ini. Daripada gambling dan nunggu sampai ada masalah baru gerak, mending pahami rinciannya sekarang juga. Kalau merasa nggak punya waktu buat ngurusin teknisnya, tim profesional kami siap bantu pastikan kamu cuma dapet manfaatnya tanpa perlu ngerasain konsekuensi buruknya. Cek artikel detailnya di bawah ini, ya!`,
-  },
-  {
-    id: 3,
-    title: "Dampak Fatal Jika Tidak Melakukan Update Data Coretax",
-    slug: "dampak-fatal-jika-tidak-melakukan-update-data-coretax",
-    date: "25 Des 2025",
-    category: "Edukasi",
-    tags: ["Coretax", "Update Data", "Sanksi Pajak"],
-    image:
-      "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=400&h=250&fit=crop",
-    author: "Admin Pajak!Koe",
-    readTime: "6 menit",
-    content:
-      "Ketahui risiko sanksi administratif dan hambatan transaksi bisnis jika Anda mengabaikan pembaruan profil di sistem Coretax terbaru.",
-  },
-  {
-    id: 4,
-    title: "Mengenal Fitur Tax Deposit: Dompet Digital Khusus Pajak",
-    slug: "mengenal-fitur-tax-deposit-dompet-digital-khusus-pajak",
-    date: "23 Des 2025",
-    category: "Fitur Coretax",
-    tags: ["Coretax", "Tax Deposit", "Dompet Digital"],
-    image:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=400&h=250&fit=crop",
-    author: "Admin Pajak!Koe",
-    readTime: "5 menit",
-    content:
-      "Bayar pajak kini semudah top-up saldo e-wallet. Fitur Tax Deposit memungkinkan Anda menyimpan dana pajak untuk pembayaran otomatis.",
-  },
-  {
-    id: 5,
-    title: "Panduan Lengkap Update Profil di Coretax System 2025",
-    slug: "panduan-lengkap-update-profil-di-coretax-system-2025",
-    date: "20 Des 2025",
-    category: "Panduan",
-    tags: ["Coretax", "Update Profil", "Panduan"],
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=400&h=250&fit=crop",
-    author: "Admin Pajak!Koe",
-    readTime: "7 menit",
-    content:
-      "Ikuti langkah demi langkah mudah memperbarui data pribadi dan bisnis Anda di Coretax System untuk memastikan kepatuhan pajak yang lancar.",
-  },
-  {
-    id: 6,
-    title: "Strategi Efektif Menghadapi Transisi ke Coretax System",
-    slug: "strategi-efektif-menghadapi-transisi-ke-coretax-system",
-    date: "18 Des 2025",
-    category: "Strategi",
-    tags: ["Coretax", "Transisi", "Strategi Pajak"],
-    image:
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=400&h=250&fit=crop",
-    author: "Admin Pajak!Koe",
-    readTime: "6 menit",
-    content:
-      "Persiapkan diri Anda dengan strategi jitu untuk beradaptasi dengan Coretax System. Dari pelatihan hingga pemanfaatan fitur baru, jadikan transisi ini peluang untuk efisiensi pajak.",
-  },
-  {
-    id: 7,
-    title: "OTP Tidak Masuk ke Email/WhatsApp? Cek Pengaturan Ini",
-    slug: "otp-tidak-masuk-ke-email-whatsapp-cek-pengaturan-ini",
-    date: "15 Des 2025",
-    category: "Edukasi",
-    tags: ["Coretax", "OTP", "Email", "WhatsApp"],
-    image:
-      "https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=400&h=250&fit=crop",
-    author: "Admin Pajak!Koe",
-    readTime: "5 menit",
-    content:
-      "Masalah teknis pengiriman kode OTP seringkali menghambat proses registrasi. Pastikan konfigurasi provider dan email Anda sudah benar.",
-  },
-];
 // Mock blog data for demonstration purposes
-const BlogDetail = () => {
-  const router = useRouter();
-  const params = useParams();
+const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
+  const { id } = params;
+  let postData: ArtikelPageProps | null = null;
+  let blogs: ArtikelPageProps[] = [];
 
-  const [claps, setClaps] = useState(100); // Initial claps
-  const handlePostClick = (post: { slug: string }) => {
-    // setSelectedPost(post);
-    setClaps(Math.floor(100) + 50); // Mock claps
-    // setCurrentView('detail');
-  };
+  try {
+    const res = await axios.get(
+      `https://www.koegroupindonesia.id/api/articles/${id}`,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    postData = res.data.data;
+    console.log("✅ Fetched article data:", postData);
+    // Fetch related articles
+    const resBlogs = await axios.get(
+      "https://www.koegroupindonesia.id/api/articles",
+    );
+    blogs = resBlogs.data;
+  } catch (err) {
+    console.error(`❌ Fetch article error for ID: ${id}`, err);
+  }
 
-  const [blogs, setBlogs] = useState<ArtikelPageProps[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const res = await axios.get(
-          `https://www.koegroupindonesia.id/api/articles/${params.id}`,
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          },
-        );
-        console.log("✅ Fetch articles success:", res.data);
-        setBlogs(res.data);
-      } catch (err) {
-        console.error("❌ Fetch articles error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchArticles();
-  }, [params.id]);
-
-  console.log("Params:", params.id);
-
-  // const postData = blogs.find((p) => p.slug === params.id);
-  const postData = useMemo(() => {
-    return blogs.find((p) => p.slug === params.slug);
-  }, [blogs, params.slug]);
-
-  useEffect(() => {
-    if (!postData) {
-      // If post not found, navigate back or show 404
-      router.back();
-    }
-  }, [postData, router]);
   if (!postData) {
-    return null; // Or a loading state / 404 component
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <p className="text-gray-500">Artikel tidak ditemukan</p>
+      </div>
+    );
   }
   return (
     <div className="animate-in fade-in duration-700 bg-white">
       {/* Article Header */}
       <header className="max-w-3xl mx-auto px-6 pt-12">
         <div className="flex items-center gap-4 mb-8">
-          <button
-            onClick={() => window.history.back()}
+          <Link
+            href="/artikel"
             className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-emerald-900 transition-colors group"
           >
             <ChevronLeft
@@ -200,7 +81,7 @@ const BlogDetail = () => {
               className="group-hover:-translate-x-1 transition-transform"
             />{" "}
             Kembali
-          </button>
+          </Link>
         </div>
 
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-emerald-950 digitale-heading leading-[1.1] mb-8 italic">
@@ -258,24 +139,26 @@ const BlogDetail = () => {
       </header>
 
       {/* Hero Image */}
-      <figure className="max-w-5xl mx-auto mb-16 px-6 lg:px-0">
-        <Image
-          src={postData.imageUrl}
-          alt={postData.title}
-          className="w-full h-auto rounded-3xl shadow-xl"
-          width={800}
-          height={400}
-        />
-        <figcaption className="text-center text-sm text-gray-400 mt-4 italic font-medium">
-          Ilustrasi implementasi Coretax System - Dokumen Pajakkoe
-        </figcaption>
-      </figure>
+      {postData.imageUrl && (
+        <figure className="max-w-5xl mx-auto mb-16 px-6 lg:px-0">
+          <Image
+            src={postData.imageUrl}
+            alt={postData.title}
+            className="w-full h-auto rounded-3xl shadow-xl"
+            width={800}
+            height={400}
+          />
+          <figcaption className="text-center text-sm text-gray-400 mt-4 italic font-medium">
+            Ilustrasi implementasi Coretax System - Dokumen Pajakkoe
+          </figcaption>
+        </figure>
+      )}
 
       {/* Article Body */}
       <div className="max-w-3xl mx-auto px-6">
         <div
           className="medium-serif text-lg md:text-xl text-gray-800 leading-relaxed space-y-8 prose prose-emerald prose-lg"
-          dangerouslySetInnerHTML={{ __html: postData.content }}
+          dangerouslySetInnerHTML={{ __html: postData.content || "" }}
         />
 
         {/* Tags */}
@@ -293,19 +176,17 @@ const BlogDetail = () => {
         {/* Interaction Bar (Bottom) */}
         <div className="flex items-center justify-between py-12">
           <div className="flex items-center gap-8 text-gray-500">
-            <button
+            <div
               className="flex items-center gap-2 group hover:text-emerald-900 transition-colors"
-              onClick={() => setClaps(claps + 1)}
             >
               <ThumbsUp
                 size={24}
                 className="group-active:scale-125 transition-transform"
               />
-              <span className="font-bold text-sm">{claps}</span>
-            </button>
+              <span className="font-bold text-sm">{postData.likes || 0}</span>
+            </div>
             <button className="flex items-center gap-2 group hover:text-emerald-900 transition-colors">
               <MessageCircle size={24} />
-              <span className="font-bold text-sm">12</span>
             </button>
           </div>
           <div className="flex items-center gap-6 text-gray-400">
@@ -329,19 +210,21 @@ const BlogDetail = () => {
               .filter((p) => p.id !== postData.id)
               .slice(0, 3)
               .map((rec) => (
-                <div
+                <Link
+                  href={`/artikel/${rec.slug}`}
                   key={rec.id}
                   className="group cursor-pointer"
-                  onClick={() => handlePostClick(rec)}
                 >
-                  <div className="aspect-video rounded-2xl overflow-hidden mb-4">
-                    <Image
-                      src={rec.imageUrl}
-                      alt={rec.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      width={400}
-                      height={250}
-                    />
+                  <div className="aspect-video rounded-2xl overflow-hidden mb-4 bg-gray-100">
+                    {rec.imageUrl && (
+                      <Image
+                        src={rec.imageUrl}
+                        alt={rec.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        width={400}
+                        height={250}
+                      />
+                    )}
                   </div>
                   <h4 className="font-black text-emerald-950 group-hover:text-emerald-700 leading-tight mb-2">
                     {rec.title}
@@ -349,7 +232,7 @@ const BlogDetail = () => {
                   {/* <p className="text-xs text-gray-500 font-bold uppercase">
                     {rec.date}
                   </p> */}
-                </div>
+                </Link>
               ))}
           </div>
         </div>
