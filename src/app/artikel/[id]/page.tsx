@@ -176,9 +176,7 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
         {/* Interaction Bar (Bottom) */}
         <div className="flex items-center justify-between py-12">
           <div className="flex items-center gap-8 text-gray-500">
-            <div
-              className="flex items-center gap-2 group hover:text-emerald-900 transition-colors"
-            >
+            <div className="flex items-center gap-2 group hover:text-emerald-900 transition-colors">
               <ThumbsUp
                 size={24}
                 className="group-active:scale-125 transition-transform"

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
@@ -20,6 +21,11 @@ import {
   BookOpen,
   ChevronLeft,
   ChevronRight,
+  Search,
+  TrendingUp,
+  Clock,
+  Calendar,
+  Mail,
 } from "lucide-react";
 import { motion, cubicBezier, AnimatePresence } from "framer-motion";
 
@@ -245,9 +251,9 @@ const SiteHero = () => {
             </Reveal>
 
             <Reveal animation="fade-up" delay={300}>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1] mb-8 tracking-tighter">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-none mb-8 tracking-tighter">
                 SOLUSI ANDALAN URUSAN <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-200">
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 to-emerald-200">
                   NPWP & CORETAX
                 </span>
               </h1>
@@ -295,7 +301,7 @@ const SiteHero = () => {
           >
             <div className="relative animate-float">
               <WhatsAppMockup />
-              <div className="absolute z-10 -right-12 bottom-20 bg-white/95 backdrop-blur-2xl p-6 rounded-4xl shadow-2xl border border-white/50 flex items-center gap-4 animate-bounce hidden lg:flex">
+              <div className="absolute z-10 -right-12 bottom-20 bg-white/95 backdrop-blur-2xl p-6 rounded-4xl shadow-2xl border border-white/50 hidden lg:flex items-center gap-4 animate-bounce">
                 <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-green-600">
                   <CheckCircle size={24} strokeWidth={3} />
                 </div>
@@ -648,6 +654,268 @@ const InteractiveCarousel = () => {
   );
 };
 
+const ArticleSectionNew = ({
+  blogs,
+  loading,
+}: {
+  blogs: ArtikelPageProps[];
+  loading: boolean;
+}) => {
+  const [activeCategory, setActiveCategory] = useState("Semua");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const categories = ["Semua", "Regulasi", "PPh", "PPN", "UMKM", "Tutorial"];
+
+  if (loading) return null;
+
+  const filteredBlogs = blogs.filter((article) => {
+    const matchesCategory =
+      activeCategory === "Semua" || article.category === activeCategory;
+    const matchesSearch = article.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const showFeatured =
+    activeCategory === "Semua" && !searchTerm && filteredBlogs.length > 0;
+  const featuredArticle = showFeatured ? filteredBlogs[0] : null;
+  const regularArticles = showFeatured ? filteredBlogs.slice(1) : filteredBlogs;
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
+  return (
+    <>
+      <header className="bg-gradient-to-r from-[#14532D] to-[#166534] py-20 px-4 relative overflow-hidden">
+        {/* Abstract Background Shapes */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#F7941D] opacity-10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
+
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-900/50 border border-green-400/30 text-green-100 text-xs font-semibold mb-6 backdrop-blur-sm">
+            <TrendingUp size={14} className="text-[#F7941D]" />
+            <span>Wawasan Perpajakan Terkini</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-6">
+            Pusat Edukasi & Berita Pajak
+          </h1>
+          <p className="text-lg text-green-100 max-w-2xl mx-auto leading-relaxed">
+            Dapatkan update terbaru seputar regulasi, tips pelaporan, dan
+            strategi perpajakan yang dikemas secara profesional.
+          </p>
+        </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-10 relative z-20">
+        {/* Search & Filter Section */}
+        <div className="bg-white p-4 rounded-2xl shadow-lg border border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 mb-12">
+          {/* Categories */}
+          <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto no-scrollbar">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${
+                  activeCategory === cat
+                    ? "bg-[#14532D] text-white shadow-md"
+                    : "bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Search Bar */}
+          <div className="relative w-full md:w-80 group">
+            <input
+              type="text"
+              placeholder="Cari topik pajak..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#14532D] focus:border-transparent transition-all"
+            />
+            <Search
+              className="absolute left-3.5 top-3 text-slate-400"
+              size={18}
+            />
+          </div>
+        </div>
+
+        {/* Featured Article Layout */}
+        {featuredArticle && (
+          <div className="mb-16">
+            <div className="group relative rounded-3xl overflow-hidden bg-white shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100">
+              <div className="grid md:grid-cols-2 gap-0">
+                <div className="relative overflow-hidden h-72 md:h-auto">
+                  <div className="absolute inset-0 bg-[#14532D]/10 group-hover:bg-transparent transition-all z-10" />
+                  <Image
+                    src={featuredArticle.imageUrl}
+                    alt={featuredArticle.title}
+                    width={800}
+                    height={500}
+                    className="w-full h-full object-left transform group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className="px-3 py-1 bg-[#F7941D] text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1">
+                      <TrendingUp size={12} /> FEATURED
+                    </span>
+                  </div>
+                </div>
+                <div className="p-8 md:p-12 flex flex-col justify-center">
+                  <div className="flex items-center gap-3 text-sm text-slate-500 mb-4">
+                    <span className="font-bold text-[#14532D] uppercase tracking-wider bg-green-50 px-2 py-0.5 rounded">
+                      {featuredArticle.category}
+                    </span>
+                    <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
+                    {/* <div className="flex items-center gap-1">
+                      <Calendar size={14} className="text-[#F7941D]" />
+                      <span>{formatDate(featuredArticle.createdAt)}</span>
+                    </div> */}
+                  </div>
+                  <h2 className="text-3xl font-bold text-slate-900 mb-4 leading-tight group-hover:text-[#14532D] transition-colors">
+                    {featuredArticle.title}
+                  </h2>
+                  <p className="text-slate-600 mb-8 leading-relaxed line-clamp-3 text-base">
+                    {featuredArticle.metaDescription}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() =>
+                        (window.location.href = `/artikel/${featuredArticle.slug}`)
+                      }
+                      className="flex items-center gap-2 text-white bg-[#14532D] px-6 py-3 rounded-xl font-bold hover:bg-[#166534] transition-all shadow-lg shadow-green-900/10 group/btn"
+                    >
+                      Baca Selengkapnya
+                      <ArrowRight
+                        size={18}
+                        className="group-hover/btn:translate-x-1 transition-transform"
+                      />
+                    </button>
+                    <div className="flex items-center gap-1 text-slate-400 text-sm font-medium">
+                      <Clock size={16} />5 min baca
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Regular Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {regularArticles.length > 0 ? (
+            regularArticles.map((article) => (
+              <article
+                key={article.id}
+                className="group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full cursor-pointer"
+                onClick={() =>
+                  (window.location.href = `/artikel/${article.slug}`)
+                }
+              >
+                {/* Image Container */}
+                <div className="relative h-52 overflow-hidden">
+                  <Image
+                    src={article.imageUrl}
+                    alt={article.title}
+                    width={400}
+                    height={300}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="px-3 py-1 bg-white/95 backdrop-blur-sm text-[#14532D] text-xs font-bold rounded-lg shadow-sm border-l-4 border-[#F7941D]">
+                      {article.category}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 flex flex-col flex-grow">
+                  <div className="flex items-center gap-3 text-xs text-slate-500 mb-4 font-medium">
+                    <div className="flex items-center gap-1.5">
+                      <Calendar size={14} className="text-slate-400" />
+                      <span>{formatDate(article.createdAt)}</span>
+                    </div>
+                    <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
+                    <div className="flex items-center gap-1.5">
+                      <Clock size={14} className="text-slate-400" />
+                      <span>5 min baca</span>
+                    </div>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-[#14532D] transition-colors">
+                    {article.title}
+                  </h3>
+
+                  <p className="text-slate-600 text-sm mb-6 leading-relaxed line-clamp-2 flex-grow">
+                    {article.metaDescription}
+                  </p>
+
+                  <div className="pt-5 border-t border-slate-100 flex items-center justify-between">
+                    <span className="text-[#14532D] text-sm font-bold group-hover:underline decoration-[#F7941D] decoration-2 underline-offset-4">
+                      Baca Artikel
+                    </span>
+                    <div className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[#14532D] group-hover:bg-[#F7941D] group-hover:text-white transition-all">
+                      <ChevronRight size={18} />
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))
+          ) : (
+            <div className="col-span-full py-20 text-center text-slate-500 bg-white rounded-2xl border border-dashed border-slate-300">
+              <BookOpen size={48} className="mx-auto mb-4 text-slate-300" />
+              <p className="text-lg">
+                Tidak ada artikel ditemukan untuk pencarian ini.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Newsletter / CTA Section */}
+        <div className="mt-20 bg-[#14532D] rounded-3xl p-8 md:p-16 text-center relative overflow-hidden shadow-2xl shadow-green-900/20">
+          {/* Decorative circles */}
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#166534] rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 opacity-50"></div>
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#F7941D] rounded-full blur-3xl -translate-x-1/3 translate-y-1/3 opacity-20"></div>
+
+          <div className="relative z-10 max-w-2xl mx-auto">
+            <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 backdrop-blur-sm">
+              <Mail className="text-white" size={32} />
+            </div>
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Jangan Ketinggalan Info Pajak
+            </h2>
+            <p className="text-green-100 mb-8 text-lg">
+              Berlangganan newsletter mingguan kami. Dapatkan tips perpajakan
+              dan update regulasi langsung di inbox Anda.
+            </p>
+
+            <form className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                placeholder="Masukkan alamat email Anda"
+                className="flex-1 px-5 py-4 rounded-xl border-none focus:ring-2 focus:ring-[#F7941D] outline-none text-[#14532D] placeholder:text-slate-400 font-medium"
+              />
+              <button className="px-8 py-4 bg-[#F7941D] hover:bg-orange-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-orange-500/20 transform hover:-translate-y-1">
+                Berlangganan
+              </button>
+            </form>
+            <p className="mt-6 text-xs text-green-200/60">
+              Dengan berlangganan, Anda menyetujui Kebijakan Privasi kami.
+            </p>
+          </div>
+        </div>
+      </main>
+    </>
+  );
+};
+
 const LandingArticlesSection = ({
   blogs,
   loading,
@@ -688,6 +956,7 @@ const LandingArticlesSection = ({
       </section>
     );
   }
+
   return (
     <section id="artikel" className="py-40 bg-white">
       <div className="max-w-6xl mx-auto px-4">
@@ -867,7 +1136,7 @@ const App = () => {
         <InteractiveCarousel />
 
         {/* SECTION ARTIKEL UTAMA (5 ITEMS) */}
-        <LandingArticlesSection blogs={blogs} loading={loading} />
+        <ArticleSectionNew blogs={blogs} loading={loading} />
         <FAQ id="faq" />
         <NIBBanner />
         <CTA id="cta" />
