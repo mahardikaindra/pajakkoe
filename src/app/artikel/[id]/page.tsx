@@ -1,18 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ChevronLeft,
-  Twitter,
-  Linkedin,
-  Share2,
-  Bookmark,
-  ThumbsUp,
-  MessageCircle,
-} from "lucide-react";
+import { Metadata } from "next";
+import { Twitter, Linkedin } from "lucide-react";
 import axios from "axios";
-
+import ShareButton from "./ShareButton";
+import SiteHeader from "@/src/components/layout/SiteHeader";
+import Footer from "@/src/components/layout/Footer";
 interface ArtikelPageProps {
   id: string;
   authorId: string;
@@ -30,6 +24,56 @@ interface ArtikelPageProps {
   imageUrl: string;
   focusedKeyword: string;
   createdAt: string;
+}
+
+export async function generateMetadata(props: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
+  const { id } = params;
+
+  try {
+    const res = await axios.get(
+      `https://www.koegroupindonesia.id/api/articles/${id}`,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    const postData: ArtikelPageProps = res.data.data;
+
+    if (!postData) {
+      return {
+        title: "Artikel Tidak Ditemukan - Pajak!Koe",
+      };
+    }
+
+    return {
+      title: `${postData.title} - Pajak!Koe`,
+      description: postData.metaDescription,
+      openGraph: {
+        title: postData.title,
+        description: postData.metaDescription,
+        images: postData.imageUrl ? [{ url: postData.imageUrl }] : [],
+        type: "article",
+        publishedTime: postData.createdAt,
+        authors: ["Admin Pajak!Koe"],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: postData.title,
+        description: postData.metaDescription,
+        images: postData.imageUrl ? [postData.imageUrl] : [],
+      },
+    };
+  } catch (error) {
+    return {
+      title: "Artikel - Pajak!Koe",
+      description: "Baca artikel perpajakan terbaru.",
+    };
+  }
 }
 
 // Mock blog data for demonstration purposes
@@ -62,107 +106,141 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
 
   if (!postData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <p className="text-gray-500">Artikel tidak ditemukan</p>
-      </div>
+      <div className="min-h-screen flex items-center justify-center bg-white"></div>
     );
   }
+
+  const getSafeDate = (dateVal: any): string => {
+    try {
+      if (!dateVal) return new Date().toISOString();
+      const date = dateVal?.seconds
+        ? new Date(dateVal.seconds * 1000)
+        : new Date(dateVal);
+      return isNaN(date.getTime())
+        ? new Date().toISOString()
+        : date.toISOString();
+    } catch {
+      return new Date().toISOString();
+    }
+  };
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: postData.title,
+    image: postData.imageUrl ? [postData.imageUrl] : [],
+    datePublished: getSafeDate(postData.createdAt),
+    dateModified: getSafeDate(postData.updateAt || postData.createdAt),
+    author: {
+      "@type": "Person",
+      name: "Admin Pajak!Koe",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Pajak!Koe",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://pajakkoe.co.id/images/logo.png",
+      },
+    },
+    description: postData.metaDescription,
+  };
+
   return (
     <div className="animate-in fade-in duration-700 bg-white">
-      {/* Article Header */}
-      <header className="max-w-3xl mx-auto px-6 pt-12">
-        <div className="flex items-center gap-4 mb-8">
-          <Link
-            href="/artikel"
-            className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-emerald-900 transition-colors group"
-          >
-            <ChevronLeft
-              size={16}
-              className="group-hover:-translate-x-1 transition-transform"
-            />{" "}
-            Kembali
-          </Link>
-        </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <SiteHeader forceScrolled={true} />
 
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-emerald-950 digitale-heading leading-[1.1] mb-8 italic">
-          {postData.title}
-        </h1>
+      <main className="bg-grid pt-15">
+        {/* Article Header */}
+        <header className="max-w-3xl mx-auto px-6 pt-12">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-emerald-950 digitale-heading leading-[1.1] mb-8 italic">
+            {postData.title}
+          </h1>
 
-        {/* Author Bio Section */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between py-8 border-y border-gray-100 mb-10 gap-6">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-emerald-100 overflow-hidden flex-shrink-0">
-              <div className="w-full h-full bg-linear-to-br from-emerald-200 to-emerald-900/20" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h4 className="font-bold text-gray-900">{"Admin Pajak!Koe"}</h4>
-                <span className="text-emerald-600 font-bold text-xs hover:underline cursor-pointer">
+          {/* Author Bio Section */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between py-8 border-y border-gray-100 mb-10 gap-6">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-emerald-100 overflow-hidden shrink-0">
+                <div className="w-full h-full bg-linear-to-br from-emerald-200 to-emerald-900/20" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h4 className="font-bold text-gray-900">
+                    {"Admin Pajak!Koe"}
+                  </h4>
+                  {/* <span className="text-emerald-600 font-bold text-xs hover:underline cursor-pointer">
                   Ikuti
-                </span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                {/* <span>{postData.readTime} baca</span> */}
-                {/* <span>•</span> */}
-                <span>
-                  {new Date(postData.createdAt).toLocaleDateString("id-ID", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </span>
-              </div>
-            </div>
-          </div>
+                </span> */}
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  {/* <span>{postData.readTime} baca</span> */}
+                  {/* <span>•</span> */}
+                  <span>
+                    {(() => {
+                      const date = (postData.createdAt as any)?.seconds
+                        ? new Date((postData.createdAt as any).seconds * 1000)
+                        : new Date(postData.createdAt);
 
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-4 border-r border-gray-200 pr-4">
-              <Twitter
-                size={18}
-                className="text-gray-400 hover:text-black cursor-pointer"
-              />
-              <Linkedin
-                size={18}
-                className="text-gray-400 hover:text-black cursor-pointer"
-              />
-              <Share2
-                size={18}
-                className="text-gray-400 hover:text-black cursor-pointer"
-              />
+                      return date.toLocaleDateString("id-ID", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      });
+                    })()}
+                  </span>
+                </div>
+              </div>
             </div>
-            <Bookmark
+
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 border-r border-gray-200 pr-4">
+                <Twitter
+                  size={18}
+                  className="text-gray-400 hover:text-black cursor-pointer"
+                />
+                <Linkedin
+                  size={18}
+                  className="text-gray-400 hover:text-black cursor-pointer"
+                />
+                <ShareButton />
+              </div>
+              {/* <Bookmark
               size={20}
               className="text-gray-400 hover:text-emerald-900 cursor-pointer"
-            />
+            /> */}
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      {/* Hero Image */}
-      {postData.imageUrl && (
-        <figure className="max-w-5xl mx-auto mb-16 px-6 lg:px-0">
-          <Image
-            src={postData.imageUrl}
-            alt={postData.title}
-            className="w-full h-auto rounded-3xl shadow-xl"
-            width={800}
-            height={400}
+        {/* Hero Image */}
+        {postData.imageUrl && (
+          <figure className="max-w-5xl mx-auto mb-16 px-6 lg:px-0">
+            <Image
+              src={postData.imageUrl}
+              alt={postData.title}
+              className="w-full h-auto rounded-3xl shadow-xl"
+              width={800}
+              height={400}
+            />
+            <figcaption className="text-center text-sm text-gray-400 mt-4 italic font-medium">
+              Ilustrasi implementasi Coretax System - Dokumen Pajakkoe
+            </figcaption>
+          </figure>
+        )}
+
+        {/* Article Body */}
+        <div className="max-w-3xl mx-auto px-6">
+          <div
+            className="medium-serif text-lg md:text-xl text-gray-800 leading-relaxed space-y-8 prose prose-emerald prose-lg"
+            dangerouslySetInnerHTML={{ __html: postData.content || "" }}
           />
-          <figcaption className="text-center text-sm text-gray-400 mt-4 italic font-medium">
-            Ilustrasi implementasi Coretax System - Dokumen Pajakkoe
-          </figcaption>
-        </figure>
-      )}
 
-      {/* Article Body */}
-      <div className="max-w-3xl mx-auto px-6">
-        <div
-          className="medium-serif text-lg md:text-xl text-gray-800 leading-relaxed space-y-8 prose prose-emerald prose-lg"
-          dangerouslySetInnerHTML={{ __html: postData.content || "" }}
-        />
-
-        {/* Tags */}
-        {/* <div className="flex flex-wrap gap-2 mt-16 pb-12 border-b border-gray-100">
+          {/* Tags */}
+          {/* <div className="flex flex-wrap gap-2 mt-16 pb-12 border-b border-gray-100">
           {postData.tags.map((tag: any) => (
             <span
               key={tag}
@@ -173,8 +251,8 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
           ))}
         </div> */}
 
-        {/* Interaction Bar (Bottom) */}
-        <div className="flex items-center justify-between py-12">
+          {/* Interaction Bar (Bottom) */}
+          {/* <div className="flex items-center justify-between py-12">
           <div className="flex items-center gap-8 text-gray-500">
             <div className="flex items-center gap-2 group hover:text-emerald-900 transition-colors">
               <ThumbsUp
@@ -184,57 +262,48 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
               <span className="font-bold text-sm">{postData.likes || 0}</span>
             </div>
             <button className="flex items-center gap-2 group hover:text-emerald-900 transition-colors">
-              <MessageCircle size={24} />
+                <Share2 size={20} className="hover:text-black cursor-pointer" />
             </button>
           </div>
-          <div className="flex items-center gap-6 text-gray-400">
-            <Share2 size={20} className="hover:text-black cursor-pointer" />
-            <Bookmark
-              size={20}
-              className="hover:text-emerald-900 cursor-pointer"
-            />
-          </div>
+        </div> */}
         </div>
-      </div>
 
-      {/* Recommendations */}
-      <section className="bg-gray-50 mt-12 py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <h3 className="text-2xl font-black text-emerald-950 mb-12 digitale-heading italic">
-            Baca Juga
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {blogs
-              .filter((p) => p.id !== postData.id)
-              .slice(0, 3)
-              .map((rec) => (
-                <Link
-                  href={`/artikel/${rec.slug}`}
-                  key={rec.id}
-                  className="group cursor-pointer"
-                >
-                  <div className="aspect-video rounded-2xl overflow-hidden mb-4 bg-gray-100">
-                    {rec.imageUrl && (
-                      <Image
-                        src={rec.imageUrl}
-                        alt={rec.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        width={400}
-                        height={250}
-                      />
-                    )}
-                  </div>
-                  <h4 className="font-black text-emerald-950 group-hover:text-emerald-700 leading-tight mb-2">
-                    {rec.title}
-                  </h4>
-                  {/* <p className="text-xs text-gray-500 font-bold uppercase">
-                    {rec.date}
-                  </p> */}
-                </Link>
-              ))}
+        {/* Recommendations */}
+        <section className="bg-gray-50 mt-12 py-20 px-6">
+          <div className="max-w-7xl mx-auto">
+            <h3 className="text-2xl font-black text-emerald-950 mb-12 digitale-heading italic">
+              Baca Juga
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {blogs
+                .filter((p) => p.id !== postData.id)
+                .slice(0, 3)
+                .map((rec) => (
+                  <Link
+                    href={`/artikel/${rec.slug}`}
+                    key={rec.id}
+                    className="group cursor-pointer"
+                  >
+                    <div className="aspect-video rounded-2xl overflow-hidden mb-4 bg-gray-100">
+                      {rec.imageUrl && (
+                        <Image
+                          src={rec.imageUrl}
+                          alt={rec.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                          width={400}
+                          height={250}
+                        />
+                      )}
+                    </div>
+                    <h4 className="font-black text-emerald-950 group-hover:text-emerald-700 leading-tight mb-2">
+                      {rec.title}
+                    </h4>
+                  </Link>
+                ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
     </div>
   );
 };

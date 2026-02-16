@@ -206,16 +206,22 @@ const ArtikelPage = () => {
         <div className="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
           <div className="flex items-center gap-10">
             <div className="flex flex-col">
-              <Image
-                src={"/images/logo.png"}
-                alt="Pajak!Koe Logo"
-                width={100}
-                height={100}
-                className="w-8 h-8" // Removed onError as it's not a valid prop for Image component
-              />
-              <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
-                PAJAK!KOE
-              </span>
+              <div
+                className="cursor-pointer"
+                onClick={() => (window.location.href = "/")}
+              >
+                <Image
+                  src={"/images/logo.png"}
+                  alt="Pajak!Koe Logo"
+                  width={100}
+                  height={100}
+                  className="w-8 h-8"
+                  priority
+                />
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
+                  PAJAK!KOE
+                </span>
+              </div>
             </div>
 
             <div className="hidden lg:flex items-center bg-gray-50 px-5 py-2.5 rounded-full border border-gray-100 focus-within:ring-2 focus-within:ring-emerald-900/10 transition-all">
@@ -231,8 +237,11 @@ const ArtikelPage = () => {
           </div>
 
           <div className="flex items-center gap-6">
-            <button className="text-sm font-bold text-emerald-900 hover:opacity-70">
-              Layanan
+            <button
+              className="text-sm font-bold text-emerald-900 hover:opacity-70"
+              onClick={() => (window.location.href = "/")}
+            >
+              Halaman Utama
             </button>
             <div className="w-10 h-10 rounded-full bg-emerald-900 flex items-center justify-center text-white font-bold text-xs shadow-lg">
               PK
@@ -251,9 +260,10 @@ const ArtikelPage = () => {
                   <Image
                     src={featuredPost.imageUrl}
                     alt={featuredPost.title}
-                    className="w-full h-full object-fill hover:scale-110 transition-transform duration-1000"
-                    width={600}
-                    height={400}
+                    className="object-cover hover:scale-110 transition-transform duration-1000"
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-200" />
@@ -269,14 +279,19 @@ const ArtikelPage = () => {
                   </span>
                   <span className="text-gray-300">•</span>
                   <span className="text-xs text-gray-500 font-bold uppercase">
-                    {new Date(featuredPost.createdAt).toLocaleDateString(
-                      "id-ID",
-                      {
+                    {(() => {
+                      const date = (featuredPost.createdAt as any)?.seconds
+                        ? new Date(
+                            (featuredPost.createdAt as any).seconds * 1000,
+                          )
+                        : new Date(featuredPost.createdAt);
+
+                      return date.toLocaleDateString("id-ID", {
                         day: "2-digit",
                         month: "short",
                         year: "numeric",
-                      },
-                    )}
+                      });
+                    })()}
                   </span>
                 </div>
                 <h2
@@ -322,7 +337,7 @@ const ArtikelPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
           <div className="lg:col-span-8">
             {/* Navigasi Kategori */}
-            <div className="flex items-center gap-8 border-b border-gray-100 mb-12 overflow-x-auto scrollbar-hide">
+            {/* <div className="flex items-center gap-8 border-b border-gray-100 mb-12 overflow-x-auto scrollbar-hide">
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat}
@@ -339,7 +354,7 @@ const ArtikelPage = () => {
                   )}
                 </button>
               ))}
-            </div>
+            </div> */}
 
             {/* List Artikel */}
             <div className="space-y-20">
@@ -353,12 +368,6 @@ const ArtikelPage = () => {
                             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-900 bg-emerald-50 px-3 py-1.5 rounded-lg">
                               {post.category}
                             </span>
-                            {/* <div className="flex items-center gap-1.5 text-gray-400">
-                          <Clock size={12} />
-                          <span className="text-[10px] font-bold uppercase">
-                            {post.readTime}
-                          </span>
-                        </div> */}
                           </div>
 
                           <h3
@@ -374,35 +383,16 @@ const ArtikelPage = () => {
                             {post.content.replace(/<[^>]+>/g, "").slice(0, 150)}
                             ...
                           </p>
-
-                          <div className="flex items-center justify-between pt-4">
-                            {/* <div className="flex items-center gap-2">
-                          {post.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="text-[10px] font-bold text-gray-300 uppercase tracking-widest group-hover:text-emerald-200 transition-colors"
-                            >
-                              #{tag}
-                            </span>
-                          ))}
-                        </div> */}
-                            <div className="flex items-center gap-4 text-gray-300">
-                              <Bookmark
-                                size={18}
-                                className="hover:text-emerald-900"
-                              />
-                              <MoreHorizontal size={18} />
-                            </div>
-                          </div>
                         </div>
 
-                        <div className="w-full sm:w-48 h-40 flex-shrink-0 overflow-hidden rounded-lg relative">
+                        <div className="w-full sm:w-90 h-50 shrink-0 overflow-hidden rounded-lg relative">
                           <Image
                             src={post.imageUrl}
                             alt={post.title}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                            width={192}
-                            height={160}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                            width={400}
+                            height={250}
+                            // sizes="(max-width: 640px) 100vw, 200px"
                           />
                           <div className="absolute inset-0 ring-1 ring-inset ring-black/5 rounded-lg" />
                         </div>
@@ -429,7 +419,7 @@ const ArtikelPage = () => {
           <aside className="lg:col-span-4 space-y-12">
             <div className="sticky top-32 space-y-12">
               {/* Sidebar CTA Card */}
-              <div className="bg-emerald-950 rounded-[2.5rem] p-8 text-white relative overflow-hidden group">
+              <div className="bg-emerald-950 rounded-2xl p-8 text-white relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-400/10 rounded-full -mr-16 -mt-16 blur-3xl" />
                 <h4 className="text-xl font-black leading-tight mb-4">
                   Gagal Daftar NPWP Karena NIK?
@@ -460,7 +450,7 @@ const ArtikelPage = () => {
                         key={p.slug}
                         className="flex gap-6 group cursor-pointer"
                       >
-                        <span className="text-4xl font-black text-emerald-50/50 group-hover:text-emerald-100 transition-colors">
+                        <span className="text-4xl font-black text-black group-hover:text-emerald-100 transition-colors">
                           0{i + 1}
                         </span>
                         <div className="space-y-1">
