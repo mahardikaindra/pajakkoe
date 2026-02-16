@@ -13,8 +13,10 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Footer from "@/src/components/layout/Footer";
-import { handlePesanWA } from "@/src/lib/utils";
+import { handlePesanWA, encodeSlug } from "@/src/lib/utils";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useArticleStore } from "@/src/store/useArticleStore";
 
 // Data Lengkap Hasil Mapping dari Content Plan - Coretax Implementation Series
 const BLOG_DATA = [
@@ -151,6 +153,8 @@ const ArtikelPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [blogs, setBlogs] = useState<ArtikelPageProps[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const setArticleId = useArticleStore((state) => state.setArticleId);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -296,9 +300,10 @@ const ArtikelPage = () => {
                 </div>
                 <h2
                   className="text-4xl lg:text-5xl font-black leading-tight text-emerald-950 digitale-heading italic"
-                  onClick={() =>
-                    (window.location.href = `/artikel/${featuredPost.slug}`)
-                  }
+                  onClick={() => {
+                    setArticleId(featuredPost.slug);
+                    router.push(`/artikel/${encodeSlug(featuredPost.slug)}`);
+                  }}
                 >
                   {featuredPost.title.slice(0, 100)}
                 </h2>
@@ -322,9 +327,10 @@ const ArtikelPage = () => {
                   </div>
                   <button
                     className="flex items-center gap-2 bg-emerald-950 text-white px-8 py-4 rounded-lg font-bold hover:bg-emerald-800 transition-all shadow-xl active:scale-95"
-                    onClick={() =>
-                      (window.location.href = `/artikel/${featuredPost.slug}`)
-                    }
+                    onClick={() => {
+                      setArticleId(featuredPost.slug);
+                      router.push(`/artikel/${encodeSlug(featuredPost.slug)}`);
+                    }}
                   >
                     Baca Sekarang <ArrowRight size={18} />
                   </button>
@@ -372,9 +378,10 @@ const ArtikelPage = () => {
 
                           <h3
                             className="text-2xl font-black leading-tight text-emerald-950 group-hover:text-emerald-800 transition-colors digitale-heading"
-                            onClick={() =>
-                              (window.location.href = `/artikel/${post.slug}`)
-                            }
+                            onClick={() => {
+                              setArticleId(post.slug);
+                              router.push(`/artikel/${encodeSlug(post.slug)}`);
+                            }}
                           >
                             {post.title}
                           </h3>

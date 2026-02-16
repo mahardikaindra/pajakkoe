@@ -34,4 +34,16 @@ const handlePesanWA = (paket: string) => {
   window.open(url, "_blank");
 };
 
-export { formatCurrency, safeJsonParse, handlePesanWA };
+const slugify = (text: string) => {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/[^\w\-]+/g, "") // Remove all non-word chars
+    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
+};
+
+const encodeSlug = (slug: string) => encodeURIComponent(slug);
+
+export { formatCurrency, safeJsonParse, handlePesanWA, slugify, encodeSlug };

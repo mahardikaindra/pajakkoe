@@ -26,6 +26,7 @@ import {
   Mail,
 } from "lucide-react";
 import { motion, cubicBezier, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface ArtikelPageProps {
   id: string;
@@ -125,7 +126,8 @@ const partnerAdvantages = [
   },
 ];
 
-import { handlePesanWA } from "../lib/utils";
+import { handlePesanWA, encodeSlug } from "../lib/utils";
+import { useArticleStore } from "../store/useArticleStore";
 import WhatsAppIcon from "../components/ui/WhatsAppIcon";
 
 // --- SECTIONS ---
@@ -570,6 +572,8 @@ const ArticleSectionNew = ({
 }) => {
   const [activeCategory, setActiveCategory] = useState("Semua");
   const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
+  const setArticleId = useArticleStore((state) => state.setArticleId);
 
   const categories = ["Semua", "Regulasi", "PPh", "PPN", "UMKM", "Tutorial"];
 
@@ -694,9 +698,12 @@ const ArticleSectionNew = ({
                   </p>
                   <div className="flex items-center justify-between">
                     <button
-                      onClick={() =>
-                        (window.location.href = `/artikel/${featuredArticle.slug}`)
-                      }
+                      onClick={() => {
+                        setArticleId(featuredArticle.slug);
+                        router.push(
+                          `/artikel/${encodeSlug(featuredArticle.slug)}`,
+                        );
+                      }}
                       className="flex items-center gap-2 text-white bg-[#14532D] px-6 py-3 rounded-xl font-bold hover:bg-[#166534] transition-all shadow-lg shadow-green-900/10 group/btn"
                     >
                       Baca Selengkapnya
@@ -722,9 +729,10 @@ const ArticleSectionNew = ({
               <article
                 key={article.id}
                 className="group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full cursor-pointer"
-                onClick={() =>
-                  (window.location.href = `/artikel/${article.slug}`)
-                }
+                onClick={() => {
+                  setArticleId(article.slug);
+                  router.push(`/artikel/${encodeSlug(article.slug)}`);
+                }}
               >
                 {/* Image Container */}
                 <div className="relative h-52 overflow-hidden">

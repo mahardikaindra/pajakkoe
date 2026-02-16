@@ -6,7 +6,7 @@ import { Twitter, Linkedin } from "lucide-react";
 import axios from "axios";
 import ShareButton from "./ShareButton";
 import SiteHeader from "@/src/components/layout/SiteHeader";
-import Footer from "@/src/components/layout/Footer";
+import StoreInitializer from "./StoreInitializer";
 interface ArtikelPageProps {
   id: string;
   authorId: string;
@@ -85,7 +85,8 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
 
   try {
     const res = await axios.get(
-      `https://www.koegroupindonesia.id/api/articles/${id}`,
+      // `https://www.koegroupindonesia.id/api/articles/${id}`,
+      `http://localhost:3001/api/articles/${id}`,
       {
         headers: {
           Accept: "application/json",
@@ -97,7 +98,14 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
     console.log("✅ Fetched article data:", postData);
     // Fetch related articles
     const resBlogs = await axios.get(
-      "https://www.koegroupindonesia.id/api/articles",
+      // "https://www.koegroupindonesia.id/api/articles",
+      "http://localhost:3001/api/articles",
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      },
     );
     blogs = resBlogs.data;
   } catch (err) {
@@ -106,7 +114,24 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
 
   if (!postData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white"></div>
+      <div className="min-h-screen bg-white flex flex-col">
+        <SiteHeader forceScrolled={true} />
+        <div className="flex-1 flex flex-col items-center justify-center px-6 text-center pt-20">
+          <h1 className="text-3xl md:text-4xl font-black text-emerald-950 mb-4 digitale-heading italic">
+            Artikel Tidak Ditemukan
+          </h1>
+          <p className="text-gray-600 mb-8 max-w-md">
+            Mohon maaf, artikel yang Anda cari tidak dapat ditemukan atau sedang
+            terjadi gangguan pada server kami.
+          </p>
+          <Link
+            href="/artikel"
+            className="bg-emerald-950 text-white px-8 py-4 rounded-xl font-bold hover:bg-emerald-800 transition-all shadow-xl"
+          >
+            Kembali ke Artikel
+          </Link>
+        </div>
+      </div>
     );
   }
 
@@ -152,6 +177,7 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <StoreInitializer id={id} />
       <SiteHeader forceScrolled={true} />
 
       <main className="bg-grid pt-15">
