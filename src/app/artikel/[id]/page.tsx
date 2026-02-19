@@ -85,8 +85,7 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
 
   try {
     const res = await axios.get(
-      // `https://www.koegroupindonesia.id/api/articles/${id}`,
-      `http://localhost:3001/api/articles/${id}`,
+      `https://www.koegroupindonesia.id/api/articles/${id}`,
       {
         headers: {
           Accept: "application/json",
@@ -98,8 +97,7 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
     console.log("✅ Fetched article data:", postData);
     // Fetch related articles
     const resBlogs = await axios.get(
-      // "https://www.koegroupindonesia.id/api/articles",
-      "http://localhost:3001/api/articles",
+      "https://www.koegroupindonesia.id/api/articles",
       {
         headers: {
           Accept: "application/json",
