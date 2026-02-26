@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
@@ -7,6 +6,7 @@ import axios from "axios";
 import ShareButton from "./ShareButton";
 import SiteHeader from "@/src/components/layout/SiteHeader";
 import StoreInitializer from "./StoreInitializer";
+import ArticleAnalytics from "./ArticleAnalytics";
 interface ArtikelPageProps {
   id: string;
   authorId: string;
@@ -23,8 +23,25 @@ interface ArtikelPageProps {
   metaDescription: string;
   imageUrl: string;
   focusedKeyword: string;
-  createdAt: string;
+  createdAt: string | { seconds: number; nanoseconds: number };
 }
+
+const getSafeDate = (
+  dateVal: string | number | Date | { seconds: number } | null | undefined,
+): string => {
+  try {
+    if (!dateVal) return new Date().toISOString();
+    if (typeof dateVal === "object" && "seconds" in dateVal) {
+      return new Date(dateVal.seconds * 1000).toISOString();
+    }
+    const date = new Date(dateVal as string | number | Date);
+    return isNaN(date.getTime())
+      ? new Date().toISOString()
+      : date.toISOString();
+  } catch {
+    return new Date().toISOString();
+  }
+};
 
 export async function generateMetadata(props: {
   params: Promise<{ id: string }>;
@@ -58,7 +75,7 @@ export async function generateMetadata(props: {
         description: postData.metaDescription,
         images: postData.imageUrl ? [{ url: postData.imageUrl }] : [],
         type: "article",
-        publishedTime: postData.createdAt,
+        publishedTime: getSafeDate(postData.createdAt),
         authors: ["Admin Pajak!Koe"],
       },
       twitter: {
@@ -94,7 +111,6 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
       },
     );
     postData = res.data.data;
-    console.log("✅ Fetched article data:", postData);
     // Fetch related articles
     const resBlogs = await axios.get(
       "https://www.koegroupindonesia.id/api/articles",
@@ -133,20 +149,6 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
     );
   }
 
-  const getSafeDate = (dateVal: any): string => {
-    try {
-      if (!dateVal) return new Date().toISOString();
-      const date = dateVal?.seconds
-        ? new Date(dateVal.seconds * 1000)
-        : new Date(dateVal);
-      return isNaN(date.getTime())
-        ? new Date().toISOString()
-        : date.toISOString();
-    } catch {
-      return new Date().toISOString();
-    }
-  };
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -177,6 +179,7 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
       />
       <StoreInitializer id={id} />
       <SiteHeader forceScrolled={true} />
+      <ArticleAnalytics title={postData.title} slug={postData.slug} />
 
       <main className="bg-grid pt-15">
         {/* Article Header */}
@@ -204,17 +207,13 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
                   {/* <span>{postData.readTime} baca</span> */}
                   {/* <span>•</span> */}
                   <span>
-                    {(() => {
-                      const date = (postData.createdAt as any)?.seconds
-                        ? new Date((postData.createdAt as any).seconds * 1000)
-                        : new Date(postData.createdAt);
-
-                      return date.toLocaleDateString("id-ID", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      });
-                    })()}
+                    {new Date(
+                      getSafeDate(postData.createdAt),
+                    ).toLocaleDateString("id-ID", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
                   </span>
                 </div>
               </div>
@@ -263,18 +262,6 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
             dangerouslySetInnerHTML={{ __html: postData.content || "" }}
           />
 
-          {/* Tags */}
-          {/* <div className="flex flex-wrap gap-2 mt-16 pb-12 border-b border-gray-100">
-          {postData.tags.map((tag: any) => (
-            <span
-              key={tag}
-              className="px-4 py-2 bg-gray-50 rounded-full text-xs font-bold text-gray-500 uppercase tracking-widest hover:bg-emerald-50 hover:text-emerald-900 cursor-pointer transition-colors"
-            >
-              {tag}
-            </span>
-          ))}
-        </div> */}
-
           {/* Interaction Bar (Bottom) */}
           {/* <div className="flex items-center justify-between py-12">
           <div className="flex items-center gap-8 text-gray-500">
@@ -305,7 +292,7 @@ const BlogDetail = async (props: { params: Promise<{ id: string }> }) => {
                 .map((rec) => (
                   <Link
                     href={`/artikel/${rec.slug}`}
-                    key={rec.id}
+                    key={rec.id || rec.slug}
                     className="group cursor-pointer"
                   >
                     <div className="aspect-video rounded-2xl overflow-hidden mb-4 bg-gray-100">

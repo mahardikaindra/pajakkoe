@@ -400,7 +400,7 @@ const PricingSection = () => (
               ))}
             </ul>
             <button
-              onClick={() => handlePesanWA("Paket NPWP 95rb")}
+              onClick={() => handlePesanWA("Paket NPWP 100rb")}
               className="w-full py-5 bg-green-500 text-white rounded-2xl font-black tracking-widest uppercase text-xs hover:bg-black transition-all"
             >
               Pesan Sekarang

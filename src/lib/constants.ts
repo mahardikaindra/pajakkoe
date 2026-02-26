@@ -17,7 +17,7 @@ export const PACKAGES = [
       "Email Gratis (Opsi)",
       "Passphrase Setting",
     ],
-    cta: "Paket NPWP 95rb",
+    cta: "Paket NPWP 100rb",
     popular: true,
     borderColor: "border-brand-blue",
     buttonStyle:

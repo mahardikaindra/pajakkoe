@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/lib/utils.ts
 
 import { WA_PHONE_NUMBER } from "./constants";
+import { analytics } from "./firebase";
+import { logEvent } from "firebase/analytics";
 
 // format currency
 const formatCurrency = (amount: number, currency: string = "USD"): string => {
@@ -19,8 +22,22 @@ const safeJsonParse = <T>(jsonString: string, defaultValue: T): T => {
   }
 };
 
+const sendAnalyticsEvent = (
+  eventName: string,
+  eventParams?: { [key: string]: any },
+) => {
+  if (analytics) {
+    logEvent(analytics, eventName, eventParams);
+  }
+};
+
 const handlePesanWA = (paket: string) => {
   const nomorWA = WA_PHONE_NUMBER;
+
+  sendAnalyticsEvent("click_consultation", {
+    package: paket,
+  });
+
   let pesan = "";
 
   if (paket === "Tanya-tanya" || paket === "Umum") {
@@ -46,4 +63,11 @@ const slugify = (text: string) => {
 
 const encodeSlug = (slug: string) => encodeURIComponent(slug);
 
-export { formatCurrency, safeJsonParse, handlePesanWA, slugify, encodeSlug };
+export {
+  formatCurrency,
+  safeJsonParse,
+  handlePesanWA,
+  slugify,
+  encodeSlug,
+  sendAnalyticsEvent,
+};
