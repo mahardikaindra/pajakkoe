@@ -42,9 +42,11 @@ const Footer: React.FC = () => {
               <MapPin size={22} />
             </div>
             <p className="text-slate-400 leading-relaxed text-sm font-medium">
-              HQuarters Lantai 20
+              Garden View Resort Dago Pakar, 
               <br />
-              Jl Asia Afrika No 158, Kota Bandung
+              Jl. Dago Pakar Mawar V Lavender No. 37, Kav. 20
+              <br />
+              Kabupaten Bandung, Jawa Barat 40198
             </p>
           </div>
           <div className="flex space-x-6">

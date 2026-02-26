@@ -96,7 +96,7 @@ const SiteHeader = ({ forceScrolled = false }: SiteHeaderProps) => {
                 isScrolled ? "text-[#2c4f40]" : "text-white"
               } uppercase tracking-widest ml-28 -mt-2 group-hover:text-[#2c4f40] transition-colors`}
             >
-              Part of PT Koe Group Indonesia
+              Part of PT Koe Legali Indonesia
             </span>
           </div>
 
