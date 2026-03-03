@@ -384,13 +384,13 @@ const OrderForm = () => {
           <p className="text-slate-600 mb-6">
             Silakan konfirmasi data Anda melalui WhatsApp CS kami di{" "}
             <strong>
-              <a href="https://wa.me/6282240072717">+6282240072717</a>
+              <a href="https://wa.me/6285624346312">+6285624346312</a>
             </strong>
             . Kami akan menghubungi Anda segera.
           </p>
           <button
             onClick={() =>
-              (window.location.href = "https://wa.me/6282240072717")
+              (window.location.href = "https://wa.me/6285624346312")
             }
             className="bg-[#2c4f40] text-white px-6 py-3 rounded-xl font-bold w-full hover:bg-[#223d32] transition"
           >
