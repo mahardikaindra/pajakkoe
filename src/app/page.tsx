@@ -593,8 +593,10 @@ const ArticleSectionNew = ({
   const featuredArticle = showFeatured ? filteredBlogs[0] : null;
   const regularArticles = showFeatured ? filteredBlogs.slice(1) : filteredBlogs;
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("id-ID", {
+  const formatDate = (date: any) => {
+    if (!date) return "";
+    const d = date.seconds ? new Date(date.seconds * 1000) : new Date(date);
+    return d.toLocaleDateString("id-ID", {
       day: "2-digit",
       month: "long",
       year: "numeric",
