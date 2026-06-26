@@ -105,7 +105,7 @@ const Footer: React.FC = () => {
           </h4>
           <ul className="space-y-5 text-slate-400 text-sm font-medium">
             <li className="flex items-center gap-3">
-              <WhatsAppIcon className="w-5 h-5 text-green-500" /> 0857-9794-6263
+              <WhatsAppIcon className="w-5 h-5 text-green-500" /> 0895-1222-8176
             </li>
             <li className="flex items-center gap-3">
               <Clock className="w-5 h-5 text-green-500" />

@@ -39,7 +39,7 @@ const CTA: React.FC<CTAProps> = ({ id, title, subtitle, ctaText, ctaLink }) => {
               <div className="flex items-center justify-center gap-4 bg-white/5 px-8 py-6 rounded-3xl border border-white/10">
                 <Phone className="text-green-400" size={24} />
                 <span className="text-white font-black text-xl tracking-tighter">
-                  0857-9794-6263
+                  0895-1222-8176
                 </span>
               </div>
             </div>
