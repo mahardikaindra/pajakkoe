@@ -1066,4 +1066,55 @@ const App = () => {
   );
 };
 
-export default App;
+
+const UnderMaintenance = () => {
+  return (
+    <div className="min-h-screen bg-[#2C4F40] flex items-center justify-center px-6 overflow-hidden relative">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-green-400/10 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-yellow-400/10 rounded-full blur-[120px]"></div>
+      </div>
+
+      <div className="max-w-2xl w-full text-center relative z-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="mb-12 inline-flex items-center justify-center w-24 h-24 bg-white/10 backdrop-blur-xl rounded-[2rem] border border-white/20"
+        >
+          <Clock className="text-yellow-400 w-12 h-12 animate-pulse" />
+        </motion.div>
+
+        <Reveal animation="fade-up" delay={200}>
+          <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tighter leading-none">
+            SEDANG <br />
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-green-400 to-emerald-200">
+              PEMELIHARAAN
+            </span>
+          </h1>
+        </Reveal>
+
+        <Reveal animation="fade-up" delay={400}>
+          <p className="text-xl text-slate-300 mb-12 leading-relaxed font-medium">
+            Kami sedang melakukan pemeliharaan untuk meningkatkan layanan. <br />
+            Mohon maaf atas ketidaknyamanan ini. <br />
+            Kami akan segera kembali dengan pengalaman yang lebih baik!
+          </p>
+        </Reveal>
+
+        <Reveal animation="fade-up" delay={600}>
+          <button
+            onClick={() => {}}
+            className="bg-green-500 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-green-400 transition-all"
+          >
+            Hubungi CS Kami
+          </button>
+        </Reveal>
+      </div>
+    </div>
+  );
+};
+
+export default UnderMaintenance;
+            
