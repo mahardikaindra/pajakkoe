@@ -1,8 +1,8 @@
 // src/lib/constants.ts
 
 export const APP_NAME = "Pajak!Koe";
-export const PHONE_NUMBER = "089512228176";
-export const WA_PHONE_NUMBER = "6289512228176";
+export const PHONE_NUMBER = "081214117403";
+export const WA_PHONE_NUMBER = "6281214117403";
 export const PACKAGES = [
   {
     id: "pribadi",
