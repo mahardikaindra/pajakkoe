@@ -1116,5 +1116,5 @@ const UnderMaintenance = () => {
   );
 };
 
-export default App;
+export default UnderMaintenance;
             
